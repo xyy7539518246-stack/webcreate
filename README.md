@@ -89,13 +89,25 @@ npm run dev
 
 ## 部署
 
-```bash
-# 1. 构建生产产物
-npm run build
+本项目通过 GitHub Actions 自动构建并部署到 GitHub Pages。
 
-# 2. 将 dist/ 目录部署到静态托管平台
-# 3. 配置 SPA 回退（rewrites / fallback 到 index.html），避免刷新 404
+```bash
+# 1. 本地构建生产产物（可选，用于本地预览）
+npm run build
+npm run preview
 ```
+
+### GitHub Pages 部署（推荐）
+
+1. 将代码推送到远程 `develop` 分支（`.github/workflows/deploy.yml` 会自动构建并部署）
+2. 在仓库 **Settings → Pages** 中，将 **Build and deployment → Source** 设置为 **GitHub Actions**
+3. 部署完成后访问：`https://<用户名>.github.io/webcreate/`
+
+### 说明
+
+- 构建产物资源路径基于 `/webcreate/`（见 `vite.config.js` 的 `base`），本地开发不受影响
+- GitHub Pages 不支持 SPA rewrites，构建后会自动生成 `404.html` 作为路由回退（见 `scripts/postbuild.mjs`），深层路由刷新不会 404
+- 如需部署到自定义域名或用户主页（`<用户名>.github.io`），需同步修改 `base` 配置
 
 > 部署地址：____（待部署后补充）
 
