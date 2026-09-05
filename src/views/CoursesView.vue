@@ -16,26 +16,37 @@ function togglePoint(key) {
   expandedPoints.value = next
 }
 
-// ===== ③ 课程 / 竞赛：类型过滤 =====
+// ===== ③ 课程 / 竞赛：类型过滤（tab 按数据动态生成） =====
 const contentFilter = ref('all')
 const filteredContents = computed(() =>
   contentFilter.value === 'all'
     ? courses.contents
     : courses.contents.filter((c) => c.type === contentFilter.value)
 )
-const filterTabs = computed(() => [
-  { key: 'all', label: '全部', count: courses.contents.length },
-  {
-    key: 'course',
-    label: '课程',
-    count: courses.contents.filter((c) => c.type === 'course').length
-  },
-  {
-    key: 'contest',
-    label: '竞赛',
-    count: courses.contents.filter((c) => c.type === 'contest').length
-  }
-])
+
+// 资源类型显示名（新增类型时只需在此登记，tab 与徽标自动生效）
+const TYPE_LABELS = {
+  course: '课程',
+  tutorial: '教程',
+  documentation: '文档',
+  practice: '练习平台',
+  contest: '竞赛'
+}
+
+const filterTabs = computed(() => {
+  const counts = {}
+  courses.contents.forEach((c) => {
+    counts[c.type] = (counts[c.type] || 0) + 1
+  })
+  return [
+    { key: 'all', label: '全部', count: courses.contents.length },
+    ...Object.entries(counts).map(([key, count]) => ({
+      key,
+      label: TYPE_LABELS[key] || key,
+      count
+    }))
+  ]
+})
 
 // 有外链的条目点击跳转新窗口；无外链的不触发跳转
 function openContent(item) {
@@ -146,7 +157,7 @@ function openContent(item) {
               class="content-card__type"
               :class="`content-card__type--${item.type}`"
             >
-              {{ item.type === 'course' ? '课程' : '竞赛' }}
+              {{ TYPE_LABELS[item.type] || item.type }}
             </span>
             <span class="content-card__level">{{ item.level }}</span>
           </div>
@@ -444,6 +455,21 @@ function openContent(item) {
 .content-card__type--course {
   background: rgba(47, 107, 255, 0.1);
   color: var(--color-primary);
+}
+
+.content-card__type--tutorial {
+  background: rgba(22, 163, 74, 0.12);
+  color: #16a34a;
+}
+
+.content-card__type--documentation {
+  background: rgba(124, 58, 237, 0.12);
+  color: #7c3aed;
+}
+
+.content-card__type--practice {
+  background: rgba(8, 145, 178, 0.12);
+  color: #0891b2;
 }
 
 .content-card__type--contest {
