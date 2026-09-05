@@ -109,7 +109,7 @@ npm run preview
 - GitHub Pages 不支持 SPA rewrites，构建后会自动生成 `404.html` 作为路由回退（见 `scripts/postbuild.mjs`），深层路由刷新不会 404
 - 如需部署到自定义域名或用户主页（`<用户名>.github.io`），需同步修改 `base` 配置
 
-> 部署地址：____（待部署后补充）
+> 部署地址：https://xyy7539518246-stack.github.io/webcreate/
 
 ## 约束与合规说明
 
