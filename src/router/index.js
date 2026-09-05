@@ -14,6 +14,12 @@ const routes = [
     meta: { title: '注册', hideNav: true }
   },
   {
+    path: '/forgot-password',
+    name: 'forgot-password',
+    component: () => import('@/views/ForgotPasswordView.vue'),
+    meta: { title: '忘记密码', hideNav: true }
+  },
+  {
     path: '/',
     name: 'home',
     component: () => import('@/views/HomeView.vue'),
