@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { getStorage, setStorage, removeStorage } from '@/utils/storage'
+import courses from '@/data/courses.json'
 
 // 会话凭证（登录后写入 storage，作为登录凭证）
 const TOKEN_KEY = 'token'
@@ -8,6 +9,10 @@ const USER_KEY = 'user'
 const USERS_KEY = 'users'
 // 验证码记录：手机号 → { code, expireAt }（每个手机号对应一个验证码）
 const CODES_KEY = 'codes'
+
+// 合法学习方向：空（未选择）+ 学习资源 courses.json 中定义的全部路线
+// 后续新增路线只需改 courses.json，此处自动生效
+const VALID_DIRECTIONS = ['', ...courses.roadmap.map((r) => r.lane)]
 
 // 验证码有效期：60 秒
 export const CODE_TTL = 60 * 1000
@@ -134,9 +139,9 @@ export const useUserStore = defineStore('user', {
 
     /* ============ 学习方向 ============ */
 
-    // 设置学习方向：web / contest / ''（清除），同步更新用户库与当前会话
+    // 设置学习方向：空（清除）或 courses.json 中的任一路线，同步更新用户库与当前会话
     setDirection(direction) {
-      if (!['web', 'contest', ''].includes(direction)) {
+      if (!VALID_DIRECTIONS.includes(direction)) {
         return { ok: false, message: '无效的学习方向' }
       }
       if (!this.user) {
