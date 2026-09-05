@@ -3,7 +3,10 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 
 // https://vitejs.dev/config/
-export default defineConfig({
+// base：构建产物用于 GitHub Pages 项目站点（https://<user>.github.io/webcreate/），
+// 本地开发（dev）保持根路径，不受影响
+export default defineConfig(({ command }) => ({
+  base: command === 'build' ? '/webcreate/' : '/',
   plugins: [vue()],
   resolve: {
     alias: {
@@ -25,4 +28,4 @@ export default defineConfig({
       }
     }
   }
-})
+}))
