@@ -101,6 +101,7 @@ export const useUserStore = defineStore('user', {
         username: phone,
         nickname: `用户${phone.slice(-4)}`,
         password,
+        direction: '', // 学习方向：web / contest / 空（未选择）
         createdAt: Date.now()
       }
       this.users.push(user)
@@ -129,6 +130,26 @@ export const useUserStore = defineStore('user', {
       this.user = user
       setStorage(TOKEN_KEY, token)
       setStorage(USER_KEY, user)
+    },
+
+    /* ============ 学习方向 ============ */
+
+    // 设置学习方向：web / contest / ''（清除），同步更新用户库与当前会话
+    setDirection(direction) {
+      if (!['web', 'contest', ''].includes(direction)) {
+        return { ok: false, message: '无效的学习方向' }
+      }
+      if (!this.user) {
+        return { ok: false, message: '请先登录' }
+      }
+      const target = this.findByPhone(this.user.phone)
+      if (target) {
+        target.direction = direction
+        this.saveUsers()
+      }
+      this.user = { ...this.user, direction }
+      setStorage(USER_KEY, this.user)
+      return { ok: true, user: this.user }
     },
 
     logout() {
