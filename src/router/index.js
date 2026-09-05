@@ -8,6 +8,12 @@ const routes = [
     meta: { title: '登录', hideNav: true }
   },
   {
+    path: '/register',
+    name: 'register',
+    component: () => import('@/views/RegisterView.vue'),
+    meta: { title: '注册', hideNav: true }
+  },
+  {
     path: '/',
     name: 'home',
     component: () => import('@/views/HomeView.vue'),
