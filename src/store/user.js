@@ -128,6 +128,22 @@ export const useUserStore = defineStore('user', {
       return { ok: true, user }
     },
 
+    // 忘记密码：验证码通过后重置密码
+    resetPassword({ phone, newPassword }) {
+      const user = this.findByPhone(phone)
+      if (!user) {
+        return { ok: false, message: '该手机号尚未注册，无法找回密码' }
+      }
+      user.password = newPassword
+      this.saveUsers()
+      // 若当前登录会话恰好是同一用户，同步缓存中的用户数据
+      if (this.user && this.user.phone === phone) {
+        this.user = { ...user }
+        setStorage(USER_KEY, user)
+      }
+      return { ok: true, user }
+    },
+
     // 建立登录凭证：写入 storage 的临时数据 + 会话 token
     establishSession(user) {
       const token = genToken()
