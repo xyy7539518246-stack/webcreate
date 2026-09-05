@@ -115,7 +115,9 @@ function handleSubmit() {
       </div>
 
       <p class="login__switch">
-        没有账号？<router-link to="/register">去注册</router-link>
+        <router-link to="/forgot-password" class="login__forgot">忘记密码？</router-link>
+        <span class="login__switch-sep">·</span>
+        <router-link to="/register">没有账号？去注册</router-link>
       </p>
     </div>
   </div>
@@ -225,8 +227,15 @@ function handleSubmit() {
 
 .login__switch {
   margin-top: 16px;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
   font-size: 13px;
   color: var(--color-text-secondary);
+}
+
+.login__switch-sep {
+  color: #d5d9e0;
 }
 </style>
