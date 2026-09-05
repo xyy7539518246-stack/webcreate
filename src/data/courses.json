@@ -220,6 +220,90 @@
           "topics": ["模拟赛", "题单复盘", "ICPC / CCPC 组队"]
         }
       ]
+    },
+    {
+      "lane": "java",
+      "laneName": "Java 后端方向",
+      "desc": "面向 Java 就业与课程项目，从语法基础到 Spring Boot 项目实战。",
+      "phases": [
+        {
+          "no": 1,
+          "title": "入门 · 语法与面向对象",
+          "goal": "掌握 Java 核心语法与 OOP",
+          "duration": "4 周",
+          "topics": ["基础语法", "面向对象", "集合框架"]
+        },
+        {
+          "no": 2,
+          "title": "进阶 · 集合与 IO",
+          "goal": "熟练使用集合与文件操作",
+          "duration": "4 周",
+          "topics": ["集合框架", "异常处理", "IO 流"]
+        },
+        {
+          "no": 3,
+          "title": "实战 · 数据库与 SQL",
+          "goal": "掌握 MySQL 与 JDBC",
+          "duration": "4 周",
+          "topics": ["MySQL", "SQL", "JDBC"]
+        },
+        {
+          "no": 4,
+          "title": "框架 · Spring Boot 入门",
+          "goal": "完成 RESTful 接口开发",
+          "duration": "6 周",
+          "topics": ["Spring Boot", "Maven", "MyBatis"]
+        },
+        {
+          "no": 5,
+          "title": "项目 · 综合实战与面试",
+          "goal": "完成可展示的后端项目",
+          "duration": "持续",
+          "topics": ["项目实战", "Redis", "面试八股"]
+        }
+      ]
+    },
+    {
+      "lane": "frontend-pro",
+      "laneName": "前端进阶方向",
+      "desc": "面向大前端与就业，从 JS 深入、TypeScript 到工程化与源码。",
+      "phases": [
+        {
+          "no": 1,
+          "title": "深入 · JavaScript 核心",
+          "goal": "理解闭包、原型与异步",
+          "duration": "4 周",
+          "topics": ["闭包与原型", "异步编程", "ES 新特性"]
+        },
+        {
+          "no": 2,
+          "title": "类型 · TypeScript",
+          "goal": "用 TS 编写类型安全的代码",
+          "duration": "3 周",
+          "topics": ["类型系统", "泛型", "工程配置"]
+        },
+        {
+          "no": 3,
+          "title": "进阶 · Vue 3 深入",
+          "goal": "理解响应式与组合式最佳实践",
+          "duration": "4 周",
+          "topics": ["响应式原理", "组件设计", "Pinia 进阶"]
+        },
+        {
+          "no": 4,
+          "title": "工程 · 构建与性能",
+          "goal": "掌握工程化与性能优化",
+          "duration": "4 周",
+          "topics": ["Vite 深入", "代码分割", "性能优化"]
+        },
+        {
+          "no": 5,
+          "title": "面试 · 八股与手写",
+          "goal": "通过前端岗位面试",
+          "duration": "持续",
+          "topics": ["手写实现", "框架原理", "面试题"]
+        }
+      ]
     }
   ],
   "contents": [
@@ -234,8 +318,18 @@
       "link": ""
     },
     {
-      "id": "vue3-official",
+      "id": "mooc",
       "type": "course",
+      "title": "中国大学 MOOC",
+      "org": "中国大学MOOC",
+      "intro": "国家精品课程平台，含程序设计、数据结构、Web 开发等系统课程，多为高校名师讲授，适合按体系系统学习。",
+      "tags": ["课程", "系统学习"],
+      "level": "入门",
+      "link": "https://www.icourse163.org/"
+    },
+    {
+      "id": "vue3-official",
+      "type": "tutorial",
       "title": "Vue 3 官方教程",
       "org": "Vue.js",
       "intro": "官方入门教程与 API 文档，含响应式、组件、路由等完整体系，适合系统学习 Vue 3。",
@@ -244,8 +338,28 @@
       "link": "https://cn.vuejs.org/"
     },
     {
+      "id": "javascript-info",
+      "type": "tutorial",
+      "title": "现代 JavaScript 教程",
+      "org": "JavaScript.info",
+      "intro": "深入浅出的 JS 教程，从语言基础到异步编程、模块化，适合系统补齐 JavaScript 短板。",
+      "tags": ["教程", "深入"],
+      "level": "进阶",
+      "link": "https://zh.javascript.info/"
+    },
+    {
+      "id": "runoob",
+      "type": "tutorial",
+      "title": "菜鸟教程",
+      "org": "runoob.com",
+      "intro": "涵盖 HTML/CSS/JS/Java/C++/Python 等大量编程入门教程，语法速查与快速上手很方便，适合新手查漏补缺。",
+      "tags": ["教程", "语法速查"],
+      "level": "入门",
+      "link": "https://www.runoob.com/"
+    },
+    {
       "id": "mdn-web-docs",
-      "type": "course",
+      "type": "documentation",
       "title": "MDN Web Docs",
       "org": "Mozilla",
       "intro": "Web 开发权威文档，覆盖 HTML / CSS / JavaScript 全部内容，遇到兼容性问题首选查阅。",
@@ -254,8 +368,28 @@
       "link": "https://developer.mozilla.org/zh-CN/"
     },
     {
+      "id": "cppreference",
+      "type": "documentation",
+      "title": "cppreference 中文版",
+      "org": "cppreference.com",
+      "intro": "C / C++ 标准库与语言的权威参考手册，涵盖 STL、算法、并发等全部细节，竞赛与开发查阅必备。",
+      "tags": ["文档", "C/C++ 权威"],
+      "level": "进阶",
+      "link": "https://zh.cppreference.com/"
+    },
+    {
+      "id": "typescript",
+      "type": "documentation",
+      "title": "TypeScript 官方文档",
+      "org": "Microsoft",
+      "intro": "JavaScript 的超集，官方文档含手册、配置与类型进阶示例，是前端进阶方向的必读资料。",
+      "tags": ["文档", "类型系统"],
+      "level": "进阶",
+      "link": "https://www.typescriptlang.org/"
+    },
+    {
       "id": "freecodecamp",
-      "type": "course",
+      "type": "practice",
       "title": "freeCodeCamp 中文",
       "org": "freeCodeCamp",
       "intro": "免费且带实战项目的编程学习平台，通过闯关式练习巩固前端技能，完成后可获得认证。",
@@ -264,14 +398,34 @@
       "link": "https://www.freecodecamp.org/chinese/"
     },
     {
-      "id": "javascript-info",
-      "type": "course",
-      "title": "现代 JavaScript 教程",
-      "org": "JavaScript.info",
-      "intro": "深入浅出的 JS 教程，从语言基础到异步编程、模块化，适合系统补齐 JavaScript 短板。",
-      "tags": ["教程", "深入"],
-      "level": "进阶",
-      "link": "https://zh.javascript.info/"
+      "id": "leetcode",
+      "type": "practice",
+      "title": "LeetCode 力扣",
+      "org": "LeetCode",
+      "intro": "在线刷题与周赛平台，覆盖面试高频题与竞赛题，支持多种语言，是日常训练与面试准备的重要工具。",
+      "tags": ["刷题", "周赛"],
+      "level": "入门",
+      "link": "https://leetcode.cn/"
+    },
+    {
+      "id": "luogu",
+      "type": "practice",
+      "title": "洛谷",
+      "org": "洛谷",
+      "intro": "国内主流算法竞赛刷题平台，含历年真题、题单、题解与模拟赛，是竞赛训练的主战场之一。",
+      "tags": ["刷题", "竞赛 OJ"],
+      "level": "入门",
+      "link": "https://www.luogu.com.cn/"
+    },
+    {
+      "id": "nowcoder",
+      "type": "practice",
+      "title": "牛客网",
+      "org": "牛客网",
+      "intro": "校招笔试面试刷题、竞赛题库与面经分享，Java / C++ / 前端岗位备考的常用平台。",
+      "tags": ["刷题", "校招"],
+      "level": "入门",
+      "link": "https://www.nowcoder.com/"
     },
     {
       "id": "lanqiao",
@@ -312,16 +466,6 @@
       "tags": ["国际赛", "组队赛"],
       "level": "进阶",
       "link": "https://icpc.global/"
-    },
-    {
-      "id": "leetcode",
-      "type": "contest",
-      "title": "LeetCode 力扣",
-      "org": "LeetCode",
-      "intro": "在线刷题与周赛平台，覆盖面试高频题与竞赛题，支持多种语言，是日常训练与面试准备的重要工具。",
-      "tags": ["刷题", "周赛"],
-      "level": "入门",
-      "link": "https://leetcode.cn/"
     }
   ]
 }
