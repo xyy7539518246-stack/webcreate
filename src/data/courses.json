@@ -1,0 +1,471 @@
+{
+  "categories": [
+    {
+      "id": "frontend",
+      "name": "前端基础",
+      "desc": "HTML、CSS、JavaScript 三大基石，一切网页开发的起点，WebCreate 课程项目的前置知识。",
+      "points": [
+        {
+          "title": "HTML5 语义化标签",
+          "brief": "header / nav / main / section / footer 等结构化标签",
+          "detail": "用语义化标签描述页面结构，替代无意义的 div 堆叠，能提升代码可读性与无障碍访问（SEO 与屏幕阅读器友好）。"
+        },
+        {
+          "title": "CSS3 弹性布局 Flex",
+          "brief": "主轴 / 交叉轴、justify-content、align-items",
+          "detail": "Flex 是一维布局方案，适合导航栏、卡片行等场景；项目在 NavBar 与卡片布局中已大量使用，需掌握 flex-direction 与对齐属性。"
+        },
+        {
+          "title": "CSS Grid 网格布局",
+          "brief": "grid-template-columns / areas 二维布局",
+          "detail": "Grid 是二维布局方案，适合整体页面骨架与复杂区域划分；与 Flex 搭配使用可覆盖绝大多数现代布局需求。"
+        },
+        {
+          "title": "JavaScript ES6+ 语法",
+          "brief": "let/const、箭头函数、解构、模块化",
+          "detail": "ES6+ 是现代前端开发的基础，Vue 3 组合式 API 大量依赖这些语法；建议掌握解构赋值、模板字符串、Promise 与 import/export。"
+        }
+      ]
+    },
+    {
+      "id": "vue",
+      "name": "Vue 3",
+      "desc": "本项目核心框架，掌握组合式 API 与组件化开发，是完成 WebCreate 的关键。",
+      "points": [
+        {
+          "title": "组合式 API 与响应式",
+          "brief": "setup、ref / reactive、computed、watch",
+          "detail": "组合式 API 将逻辑按功能组织；ref/reactive 定义响应式数据，computed 派生状态，watch 监听变化，是 Vue 3 开发的核心心智模型。"
+        },
+        {
+          "title": "模板语法与指令",
+          "brief": "v-if / v-for / v-bind / v-on / v-model",
+          "detail": "指令是模板与数据绑定的桥梁：v-for 渲染列表、v-model 双向绑定表单、v-on 绑定事件；本项目列表渲染即基于此。"
+        },
+        {
+          "title": "组件通信",
+          "brief": "props / emit、provide / inject、Pinia",
+          "detail": "父子组件用 props 传值、emit 触发事件；跨层共享用 provide/inject；全局状态用 Pinia（本项目用户状态即存放于 Pinia store）。"
+        },
+        {
+          "title": "路由与工程化",
+          "brief": "vue-router、Vite、SFC 单文件组件",
+          "detail": "vue-router 管理页面路由（本项目已配置前置守卫），Vite 提供开发与构建，SFC 将模板、脚本、样式组织在单个 .vue 文件中。"
+        }
+      ]
+    },
+    {
+      "id": "cpp",
+      "name": "C++ 基础",
+      "desc": "竞赛主攻方向与课程语言基础，重点掌握 STL 与面向对象思想。",
+      "points": [
+        {
+          "title": "输入输出与基本语法",
+          "brief": "cin / cout、变量、控制流",
+          "detail": "掌握 cin/cout 及加速读写（ios::sync_with_stdio(false)），熟悉分支、循环等控制流结构，是竞赛编码的基本功。"
+        },
+        {
+          "title": "STL 标准库",
+          "brief": "vector、map、set、string、algorithm",
+          "detail": "STL 是竞赛提效利器：vector 动态数组、map 键值对、set 去重排序、sort 排序；熟练使用能大幅缩短编码时间。"
+        },
+        {
+          "title": "面向对象基础",
+          "brief": "类、封装、继承、多态、虚函数",
+          "detail": "掌握类的定义与访问控制、继承关系、虚函数实现多态；课程项目与后续大型工程都会大量运用。"
+        },
+        {
+          "title": "内存与指针",
+          "brief": "指针、引用、new / delete、智能指针",
+          "detail": "理解栈区与堆区、指针与引用的区别，掌握 new/delete 配对使用；现代 C++ 推荐用 unique_ptr / shared_ptr 管理资源。"
+        }
+      ]
+    },
+    {
+      "id": "java",
+      "name": "Java 基础",
+      "desc": "面向对象语言的代表，集合框架与异常处理是面试与课设常考点。",
+      "points": [
+        {
+          "title": "语法与数据类型",
+          "brief": "基本类型、控制流、数组",
+          "detail": "掌握基本数据类型与引用类型区别、分支循环结构、数组与增强 for；理解 Java 强类型与自动装箱拆箱机制。"
+        },
+        {
+          "title": "集合框架",
+          "brief": "ArrayList、HashMap、HashSet、迭代器",
+          "detail": "Collection 与 Map 两大体系是 Java 开发高频 API：ArrayList 动态数组、HashMap 键值查询、HashSet 去重；注意线程安全差异。"
+        },
+        {
+          "title": "面向对象核心",
+          "brief": "封装、继承、多态、接口、抽象类",
+          "detail": "Java 是纯面向对象语言：类与对象、继承单根、接口多实现、多态的动态绑定；掌握这些概念才能理解主流框架设计。"
+        },
+        {
+          "title": "异常与 IO",
+          "brief": "try-catch、文件读写、流",
+          "detail": "掌握异常体系（checked / unchecked）、try-with-resources 自动关闭资源、字节流与字符流的文件读写。"
+        }
+      ]
+    },
+    {
+      "id": "algorithm",
+      "name": "算法与数据结构",
+      "desc": "竞赛与面试的核心，本分类覆盖从基础结构到动态规划、图论的主干内容。",
+      "points": [
+        {
+          "title": "基础数据结构",
+          "brief": "栈、队列、链表、堆",
+          "detail": "栈（后进先出）、队列（先进先出）、链表（动态插入删除）、堆（优先队列）；STL 中对应 stack、queue、list、priority_queue。"
+        },
+        {
+          "title": "排序与查找",
+          "brief": "快速排序、归并排序、二分查找",
+          "detail": "掌握快排与归并的思想与实现（含逆序对应用），熟悉二分查找的边界写法（左闭右开 / 左闭右闭），时间复杂度分析。"
+        },
+        {
+          "title": "动态规划",
+          "brief": "背包问题、线性 DP、状态设计",
+          "detail": "DP 的核心是状态定义与转移方程：01 背包、完全背包、最长上升子序列等经典模型；从暴力递归到记忆化再到递推的优化路径。"
+        },
+        {
+          "title": "图论基础",
+          "brief": "图的存储、DFS / BFS、最短路、并查集",
+          "detail": "掌握邻接表与链式前向星存储、深度优先与广度优先遍历、Dijkstra 最短路、并查集维护连通性，是竞赛进阶的必备模块。"
+        }
+      ]
+    }
+  ],
+  "roadmap": [
+    {
+      "lane": "web",
+      "laneName": "Web 开发方向",
+      "desc": "面向《Web开发实践》课程与前端就业，从三件套到项目落地。",
+      "phases": [
+        {
+          "no": 1,
+          "title": "入门 · 前端三件套",
+          "goal": "能独立完成一个静态网页",
+          "duration": "4 周",
+          "topics": ["HTML5", "CSS3 布局", "JavaScript 基础"]
+        },
+        {
+          "no": 2,
+          "title": "进阶 · Vue 3 与工程化",
+          "goal": "能开发单页应用（SPA）",
+          "duration": "4 周",
+          "topics": ["组合式 API", "组件通信", "vue-router", "Pinia"]
+        },
+        {
+          "no": 3,
+          "title": "实战 · 前后端衔接",
+          "goal": "跑通一个完整前后端项目",
+          "duration": "4 周",
+          "topics": ["HTTP 基础", "Node.js 入门", "接口联调"]
+        },
+        {
+          "no": 4,
+          "title": "上线 · 构建与部署",
+          "goal": "将项目部署到线上并可访问",
+          "duration": "2 周",
+          "topics": ["Vite 构建", "静态托管", "SPA 回退配置"]
+        },
+        {
+          "no": 5,
+          "title": "深化 · 课程项目迭代",
+          "goal": "完成课程设计与技术报告",
+          "duration": "持续",
+          "topics": ["WebCreate 迭代", "Git 规范", "演示与答辩"]
+        }
+      ]
+    },
+    {
+      "lane": "contest",
+      "laneName": "算法竞赛方向",
+      "desc": "面向蓝桥杯、CCPC / ICPC 等竞赛，主攻 C++ 语言。",
+      "phases": [
+        {
+          "no": 1,
+          "title": "入门 · 语法与 STL",
+          "goal": "独立完成简单模拟题",
+          "duration": "4 周",
+          "topics": ["C++ 语法", "STL 容器", "简单模拟"]
+        },
+        {
+          "no": 2,
+          "title": "基础 · 枚举与排序",
+          "goal": "达到蓝桥杯省三水平",
+          "duration": "6 周",
+          "topics": ["枚举", "排序", "二分查找"]
+        },
+        {
+          "no": 3,
+          "title": "进阶 · 数据结构与 DP",
+          "goal": "达到蓝桥杯省二水平",
+          "duration": "8 周",
+          "topics": ["栈队列堆", "线性 DP", "背包问题"]
+        },
+        {
+          "no": 4,
+          "title": "提高 · 图论与搜索",
+          "goal": "冲击蓝桥杯省一 / 国赛",
+          "duration": "8 周",
+          "topics": ["DFS / BFS", "最短路", "并查集"]
+        },
+        {
+          "no": 5,
+          "title": "冲刺 · 模拟赛与复盘",
+          "goal": "组队参赛并稳定得分",
+          "duration": "持续",
+          "topics": ["模拟赛", "题单复盘", "ICPC / CCPC 组队"]
+        }
+      ]
+    },
+    {
+      "lane": "java",
+      "laneName": "Java 后端方向",
+      "desc": "面向 Java 就业与课程项目，从语法基础到 Spring Boot 项目实战。",
+      "phases": [
+        {
+          "no": 1,
+          "title": "入门 · 语法与面向对象",
+          "goal": "掌握 Java 核心语法与 OOP",
+          "duration": "4 周",
+          "topics": ["基础语法", "面向对象", "集合框架"]
+        },
+        {
+          "no": 2,
+          "title": "进阶 · 集合与 IO",
+          "goal": "熟练使用集合与文件操作",
+          "duration": "4 周",
+          "topics": ["集合框架", "异常处理", "IO 流"]
+        },
+        {
+          "no": 3,
+          "title": "实战 · 数据库与 SQL",
+          "goal": "掌握 MySQL 与 JDBC",
+          "duration": "4 周",
+          "topics": ["MySQL", "SQL", "JDBC"]
+        },
+        {
+          "no": 4,
+          "title": "框架 · Spring Boot 入门",
+          "goal": "完成 RESTful 接口开发",
+          "duration": "6 周",
+          "topics": ["Spring Boot", "Maven", "MyBatis"]
+        },
+        {
+          "no": 5,
+          "title": "项目 · 综合实战与面试",
+          "goal": "完成可展示的后端项目",
+          "duration": "持续",
+          "topics": ["项目实战", "Redis", "面试八股"]
+        }
+      ]
+    },
+    {
+      "lane": "frontend-pro",
+      "laneName": "前端进阶方向",
+      "desc": "面向大前端与就业，从 JS 深入、TypeScript 到工程化与源码。",
+      "phases": [
+        {
+          "no": 1,
+          "title": "深入 · JavaScript 核心",
+          "goal": "理解闭包、原型与异步",
+          "duration": "4 周",
+          "topics": ["闭包与原型", "异步编程", "ES 新特性"]
+        },
+        {
+          "no": 2,
+          "title": "类型 · TypeScript",
+          "goal": "用 TS 编写类型安全的代码",
+          "duration": "3 周",
+          "topics": ["类型系统", "泛型", "工程配置"]
+        },
+        {
+          "no": 3,
+          "title": "进阶 · Vue 3 深入",
+          "goal": "理解响应式与组合式最佳实践",
+          "duration": "4 周",
+          "topics": ["响应式原理", "组件设计", "Pinia 进阶"]
+        },
+        {
+          "no": 4,
+          "title": "工程 · 构建与性能",
+          "goal": "掌握工程化与性能优化",
+          "duration": "4 周",
+          "topics": ["Vite 深入", "代码分割", "性能优化"]
+        },
+        {
+          "no": 5,
+          "title": "面试 · 八股与手写",
+          "goal": "通过前端岗位面试",
+          "duration": "持续",
+          "topics": ["手写实现", "框架原理", "面试题"]
+        }
+      ]
+    }
+  ],
+  "contents": [
+    {
+      "id": "web-dev-course",
+      "type": "course",
+      "title": "《Web开发实践》课程",
+      "org": "河北科技大学",
+      "intro": "本项目对应的课程设计（课程号 07100130），覆盖前端三件套、Vue 3 组件化、静态部署与 AI 工具使用边界。",
+      "tags": ["课程", "课设项目"],
+      "level": "入门",
+      "link": ""
+    },
+    {
+      "id": "mooc",
+      "type": "course",
+      "title": "中国大学 MOOC",
+      "org": "中国大学MOOC",
+      "intro": "国家精品课程平台，含程序设计、数据结构、Web 开发等系统课程，多为高校名师讲授，适合按体系系统学习。",
+      "tags": ["课程", "系统学习"],
+      "level": "入门",
+      "link": "https://www.icourse163.org/"
+    },
+    {
+      "id": "vue3-official",
+      "type": "tutorial",
+      "title": "Vue 3 官方教程",
+      "org": "Vue.js",
+      "intro": "官方入门教程与 API 文档，含响应式、组件、路由等完整体系，适合系统学习 Vue 3。",
+      "tags": ["教程", "官方文档"],
+      "level": "入门",
+      "link": "https://cn.vuejs.org/"
+    },
+    {
+      "id": "javascript-info",
+      "type": "tutorial",
+      "title": "现代 JavaScript 教程",
+      "org": "JavaScript.info",
+      "intro": "深入浅出的 JS 教程，从语言基础到异步编程、模块化，适合系统补齐 JavaScript 短板。",
+      "tags": ["教程", "深入"],
+      "level": "进阶",
+      "link": "https://zh.javascript.info/"
+    },
+    {
+      "id": "runoob",
+      "type": "tutorial",
+      "title": "菜鸟教程",
+      "org": "runoob.com",
+      "intro": "涵盖 HTML/CSS/JS/Java/C++/Python 等大量编程入门教程，语法速查与快速上手很方便，适合新手查漏补缺。",
+      "tags": ["教程", "语法速查"],
+      "level": "入门",
+      "link": "https://www.runoob.com/"
+    },
+    {
+      "id": "mdn-web-docs",
+      "type": "documentation",
+      "title": "MDN Web Docs",
+      "org": "Mozilla",
+      "intro": "Web 开发权威文档，覆盖 HTML / CSS / JavaScript 全部内容，遇到兼容性问题首选查阅。",
+      "tags": ["文档", "查漏补缺"],
+      "level": "入门",
+      "link": "https://developer.mozilla.org/zh-CN/"
+    },
+    {
+      "id": "cppreference",
+      "type": "documentation",
+      "title": "cppreference 中文版",
+      "org": "cppreference.com",
+      "intro": "C / C++ 标准库与语言的权威参考手册，涵盖 STL、算法、并发等全部细节，竞赛与开发查阅必备。",
+      "tags": ["文档", "C/C++ 权威"],
+      "level": "进阶",
+      "link": "https://zh.cppreference.com/"
+    },
+    {
+      "id": "typescript",
+      "type": "documentation",
+      "title": "TypeScript 官方文档",
+      "org": "Microsoft",
+      "intro": "JavaScript 的超集，官方文档含手册、配置与类型进阶示例，是前端进阶方向的必读资料。",
+      "tags": ["文档", "类型系统"],
+      "level": "进阶",
+      "link": "https://www.typescriptlang.org/"
+    },
+    {
+      "id": "freecodecamp",
+      "type": "practice",
+      "title": "freeCodeCamp 中文",
+      "org": "freeCodeCamp",
+      "intro": "免费且带实战项目的编程学习平台，通过闯关式练习巩固前端技能，完成后可获得认证。",
+      "tags": ["实战", "免费"],
+      "level": "入门",
+      "link": "https://www.freecodecamp.org/chinese/"
+    },
+    {
+      "id": "leetcode",
+      "type": "practice",
+      "title": "LeetCode 力扣",
+      "org": "LeetCode",
+      "intro": "在线刷题与周赛平台，覆盖面试高频题与竞赛题，支持多种语言，是日常训练与面试准备的重要工具。",
+      "tags": ["刷题", "周赛"],
+      "level": "入门",
+      "link": "https://leetcode.cn/"
+    },
+    {
+      "id": "luogu",
+      "type": "practice",
+      "title": "洛谷",
+      "org": "洛谷",
+      "intro": "国内主流算法竞赛刷题平台，含历年真题、题单、题解与模拟赛，是竞赛训练的主战场之一。",
+      "tags": ["刷题", "竞赛 OJ"],
+      "level": "入门",
+      "link": "https://www.luogu.com.cn/"
+    },
+    {
+      "id": "nowcoder",
+      "type": "practice",
+      "title": "牛客网",
+      "org": "牛客网",
+      "intro": "校招笔试面试刷题、竞赛题库与面经分享，Java / C++ / 前端岗位备考的常用平台。",
+      "tags": ["刷题", "校招"],
+      "level": "入门",
+      "link": "https://www.nowcoder.com/"
+    },
+    {
+      "id": "lanqiao",
+      "type": "contest",
+      "title": "蓝桥杯软件赛",
+      "org": "工业和信息化部人才交流中心",
+      "intro": "含 C/C++、Java、Python 组别，题目由易到难，是入门级竞赛的首选，适合大一到大三同学积累经验。",
+      "tags": ["省赛", "C/C++ 组"],
+      "level": "入门",
+      "link": "https://dasai.lanqiao.cn/"
+    },
+    {
+      "id": "gplt",
+      "type": "contest",
+      "title": "团体程序设计天梯赛",
+      "org": "教育部高等学校计算机类专业教学指导委员会",
+      "intro": "以团队为单位参赛，题目分基础、进阶、登顶三个层级，重团队配合与基本功，获奖面较宽。",
+      "tags": ["团队赛", "分级题目"],
+      "level": "入门",
+      "link": "https://gplt.patest.cn/"
+    },
+    {
+      "id": "ccpc",
+      "type": "contest",
+      "title": "CCPC 中国大学生程序设计竞赛",
+      "org": "中国大学生程序设计竞赛组委会",
+      "intro": "国内高水平算法竞赛，含省赛、全国赛，题目质量高、竞争激烈，适合冲击奖项的进阶选手。",
+      "tags": ["省赛", "国赛"],
+      "level": "进阶",
+      "link": "https://ccpc.io/"
+    },
+    {
+      "id": "icpc",
+      "type": "contest",
+      "title": "ICPC 国际大学生程序设计竞赛",
+      "org": "ACM / ICPC 基金会",
+      "intro": "全球顶级算法赛事，3 人一队现场解题，是算法能力的最高检验，也是保研与求职的硬通货。",
+      "tags": ["国际赛", "组队赛"],
+      "level": "进阶",
+      "link": "https://icpc.global/"
+    }
+  ]
+}
