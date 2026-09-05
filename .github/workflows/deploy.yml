@@ -1,10 +1,10 @@
 # 自动构建并部署到 GitHub Pages
-# 触发：推送到 develop 分支时（也可在 Actions 页面手动触发）
+# 触发：推送到 test（测试托管）或 main（正式发布）分支时；develop 仅用于开发，不触发部署
 name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [develop]
+    branches: [test, main]
   workflow_dispatch:
 
 # 授予 GITHUB_TOKEN 部署 Pages 所需的权限

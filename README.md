@@ -99,9 +99,22 @@ npm run preview
 
 ### GitHub Pages 部署（推荐）
 
-1. 将代码推送到远程 `develop` 分支（`.github/workflows/deploy.yml` 会自动构建并部署）
-2. 在仓库 **Settings → Pages** 中，将 **Build and deployment → Source** 设置为 **GitHub Actions**
-3. 部署完成后访问：`https://<用户名>.github.io/webcreate/`
+本项目采用三分支工作流：
+
+| 分支 | 用途 | 是否触发部署 |
+| --- | --- | --- |
+| `develop` | 日常开发、提交代码 | ❌ 不触发 |
+| `test` | 测试托管（验证线上效果） | ✅ 自动部署 |
+| `main` | 正式发布 | ✅ 自动部署 |
+
+流程：`develop` 开发完成 → 合并到 `test` 测试托管 → 验证通过后合并到 `main` 正式发布。
+
+1. 将代码合并推送到 `test` 或 `main` 分支（`.github/workflows/deploy.yml` 会自动构建并部署）
+2. 确保仓库 **Settings → Pages** 中 **Build and deployment → Source** 为 **GitHub Actions**
+3. 首次使用 `test` 分支部署前，需在 **Settings → Environments → github-pages** 中将 Deployment branches 配置为允许 `test` 和 `main`
+4. 部署完成后访问：`https://xyy7539518246-stack.github.io/webcreate/`
+
+> 注意：`test` 与 `main` 共享同一个 Pages 地址，后部署的分支会覆盖先部署的内容，因此测试通过后应及时合并到 `main`。
 
 ### 说明
 
