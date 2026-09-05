@@ -19,6 +19,11 @@ export function isEmail(value) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value || '')
 }
 
+// 中国大陆手机号：1 开头，第二位 3~9，共 11 位
+export function isValidPhone(value) {
+  return /^1[3-9]\d{9}$/.test(value || '')
+}
+
 // 非空（去空格）
 export function notEmpty(value) {
   return (value || '').trim().length > 0
