@@ -40,6 +40,7 @@ function normalize(text) {
  * 本地知识库关键词检索
  * 打分规则：keywords（强词）命中 ≥1 即命中，权重 2；weakKeywords（弱词）需命中 ≥2 才单独命中，权重 1
  * 泛词（vue / 是什么 / 技术 等）一律放 weakKeywords，避免抢答
+ * 同分优先级：强词命中数多 > 弱词命中数多 > 条目先出现
  * @param {string} question 用户问题
  * @returns {{ hit: boolean, entry?: object, score?: number }}
  */
@@ -59,14 +60,15 @@ export function matchLocalKnowledge(question) {
       const kwNorm = normalize(kw)
       if (kwNorm && text.includes(kwNorm)) weak += 1
     }
-    // 提问接近条目示例问题时直接加权，提升命中质量
-    if (strong > 0 && entry.question && text.includes(normalize(entry.question).slice(0, 6))) {
-      strong += 1
-    }
     const score = strong * 2 + weak
     const isHit = strong >= 1 || weak >= 2
-    if (isHit && (!best || score > best.score)) {
-      best = { entry, score }
+    if (isHit) {
+      const better =
+        !best ||
+        score > best.score ||
+        (score === best.score && strong > best.strong) ||
+        (score === best.score && strong === best.strong && weak > best.weak)
+      if (better) best = { entry, score, strong, weak }
     }
   }
   return best ? { hit: true, entry: best.entry, score: best.score } : { hit: false, score: 0 }

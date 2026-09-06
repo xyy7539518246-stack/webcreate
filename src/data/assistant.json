@@ -7,38 +7,41 @@
     {
       "id": "kb-001",
       "category": "project",
-      "keywords": ["webcreate", "这个项目", "项目介绍", "介绍项目"],
-      "weakKeywords": ["是什么", "项目"],
+      "keywords": ["webcreate", "这个项目", "本项目", "本网站", "这个网站"],
+      "weakKeywords": ["项目介绍", "介绍项目", "介绍一下"],
       "question": "WebCreate 是什么项目？",
       "answer": "WebCreate 是河北科技大学《Web开发实践》课程设计项目（课程号 07100130，单人完成），一个面向高校学生的 AI 辅助编程学习平台，提供「学习资源 → 题库练习 → 示例代码 → AI 问答」一体化学习路径。前端基于 Vue 3 + Vite，数据用本地 JSON + localStorage 模拟，通过 GitHub Actions 自动部署到 GitHub Pages。"
     },
     {
       "id": "kb-002",
       "category": "project",
-      "keywords": ["启动", "运行", "开发", "npm run dev", "怎么打开", "本地运行"],
-      "question": "如何启动项目？",
+      "keywords": ["本项目", "本网站", "这个项目", "这个网站", "webcreate"],
+      "weakKeywords": ["启动", "运行", "怎么打开", "本地运行", "npm run dev"],
+      "question": "本项目如何启动？",
       "answer": "环境要求 Node.js 20 LTS 及以上。在项目根目录执行：1) npm install 安装依赖；2) npm run dev 启动开发服务器；3) 浏览器访问 http://localhost:5173。生产构建用 npm run build（输出到 dist/），本地预览用 npm run preview。"
     },
     {
       "id": "kb-003",
       "category": "project",
-      "keywords": ["技术栈", "用了什么技术", "用了哪些技术", "用什么技术", "框架", "vite", "pinia"],
-      "weakKeywords": ["vue", "技术"],
-      "question": "项目用了哪些技术？",
+      "keywords": ["本项目", "本网站", "这个项目", "这个网站", "webcreate"],
+      "weakKeywords": ["技术栈", "用了什么技术", "用了哪些技术", "用什么技术", "框架", "vite", "pinia", "vue"],
+      "question": "本项目用了哪些技术？",
       "answer": "前端基础：HTML5、CSS3、JavaScript（ES6+）；框架与脚手架：Vue 3（Composition API）+ Vite 5；状态与路由：Pinia + Vue Router（history 模式，带登录守卫）；数据存储：本地 JSON（src/data）+ localStorage；版本管理：Git + GitHub；部署：GitHub Actions 自动构建到 GitHub Pages。"
     },
     {
       "id": "kb-004",
       "category": "project",
-      "keywords": ["目录", "结构", "文件", "src", "源码"],
-      "question": "项目目录结构是怎样的？",
+      "keywords": ["本项目", "本网站", "这个项目", "这个网站", "webcreate"],
+      "weakKeywords": ["目录结构", "文件结构", "src目录", "源码结构"],
+      "question": "本项目目录结构是怎样的？",
       "answer": "根目录：index.html 入口、vite.config.js 配置、package.json 依赖与脚本。src/ 下：main.js 应用入口、App.vue 根组件、router/ 路由配置、views/ 页面层（登录/首页/学习资源/题库/示例代码/AI 问答/个人中心）、components/ 组件层、store/ 状态层（Pinia）、utils/ 工具、data/ 本地数据（JSON）、assets/ 全局样式。dist/ 为构建产物，不纳入版本管理。"
     },
     {
       "id": "kb-005",
       "category": "project",
-      "keywords": ["部署", "github pages", "上线", "发布", "test分支", "main分支"],
-      "question": "项目如何部署上线？",
+      "keywords": ["本项目", "本网站", "这个项目", "这个网站", "webcreate"],
+      "weakKeywords": ["部署", "上线", "发布", "github pages", "test分支", "main分支"],
+      "question": "本项目如何部署上线？",
       "answer": "采用三分支工作流：develop 日常开发（不触发部署）；test 测试托管（自动部署）；main 正式发布（自动部署）。推送 test 或 main 分支后，.github/workflows/deploy.yml 会自动构建并部署到 GitHub Pages，地址为 https://xyy7539518246-stack.github.io/webcreate/。注意 test 与 main 共享同一 Pages 地址，后部署的会覆盖先部署的。"
     },
     {
@@ -238,8 +241,8 @@
     {
       "id": "kb-032",
       "category": "cpp",
-      "keywords": ["栈", "队列", "stack", "queue", "先进后出", "先进先出", "deque"],
-      "weakKeywords": ["数据结构", "c++"],
+      "keywords": ["栈和队列", "stack", "queue", "先进后出", "先进先出", "deque", "双端队列"],
+      "weakKeywords": ["栈", "队列", "数据结构", "c++"],
       "question": "栈和队列有什么区别？",
       "answer": "栈（Stack）：后进先出（LIFO），只能在栈顶操作（push 入栈、pop 出栈、top 取栈顶、empty 判空），C++ 用 std::stack（底层默认 deque）。队列（Queue）：先进先出（FIFO），队尾入队（push）、队头出队（pop）、front 取队头，C++ 用 std::queue。双端队列 deque 两端都可 push/pop，竞赛常用。应用：栈用于括号匹配、表达式求值、函数调用栈、DFS、单调栈；队列用于 BFS、滑动窗口、任务调度、拓扑排序、单调队列。优先队列 priority_queue 用堆实现，每次取最大/最小元素，用于 Dijkstra、哈夫曼、TopK。"
     },
