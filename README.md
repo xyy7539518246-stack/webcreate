@@ -74,18 +74,24 @@ webcreate/
 # 1. 安装依赖
 npm install
 
-# 2. 本地启动（开发模式）
+# 2. 配置 DeepSeek API key（AI 问答库外问题使用；不配置则未命中时返回降级提示）
+#    在项目根目录创建 .env 文件：
+#    VITE_DEEPSEEK_API_KEY=sk-你的key
+
+# 3. 本地启动（开发模式）
 npm run dev
 # 浏览器访问 http://localhost:5173
 ```
+
+> 说明：`VITE_` 前缀变量会由 Vite 在构建时注入前端代码，浏览器直连 `api.deepseek.com`（接口支持跨域），因此本地与线上部署均可使用 AI 问答。key 会随前端代码公开，请仅在可接受的范围内使用。
 
 ### 常用命令
 
 | 命令 | 说明 |
 | --- | --- |
 | `npm run dev` | 本地开发，热更新 |
-| `npm run build` | 构建生产产物到 `dist/` |
-| `npm run preview` | 本地预览构建结果 |
+| `npm run build` | 构建生产产物到 `dist/`（GitHub Pages 部署版，base 为 `/webcreate/`） |
+| `npm run preview` | 本地预览构建结果（先以 base `/` 重新构建再启动预览，解决 `vite preview` 直接预览部署版资源路径 404 导致的空白页问题） |
 
 ## 部署
 
@@ -93,9 +99,12 @@ npm run dev
 
 ```bash
 # 1. 本地构建生产产物（可选，用于本地预览）
-npm run build
 npm run preview
+# 等价于：npm run build:local && vite preview（以根路径构建并预览，页面可直接访问）
 ```
+
+> 说明：`npm run preview` 以 base `/` 构建后预览，产物路径不带 `/webcreate/` 前缀，适合本地验证；
+> 线上部署请使用 `npm run build`（GitHub Actions 部署时自动执行，产物 base 为 `/webcreate/`），两者互不影响。
 
 ### GitHub Pages 部署（推荐）
 

@@ -1,0 +1,150 @@
+{
+  "meta": {
+    "version": 1,
+    "desc": "WebCreate AI 问答本地知识库：关键词检索命中直接返回 answer，未命中走 DeepSeek API 或降级提示。内容与 courses.json / quiz.json / examples.json 保持一致。"
+  },
+  "entries": [
+    {
+      "id": "kb-001",
+      "category": "project",
+      "keywords": ["webcreate", "这个项目", "项目介绍", "介绍项目"],
+      "weakKeywords": ["是什么", "项目"],
+      "question": "WebCreate 是什么项目？",
+      "answer": "WebCreate 是河北科技大学《Web开发实践》课程设计项目（课程号 07100130，单人完成），一个面向高校学生的 AI 辅助编程学习平台，提供「学习资源 → 题库练习 → 示例代码 → AI 问答」一体化学习路径。前端基于 Vue 3 + Vite，数据用本地 JSON + localStorage 模拟，通过 GitHub Actions 自动部署到 GitHub Pages。"
+    },
+    {
+      "id": "kb-002",
+      "category": "project",
+      "keywords": ["启动", "运行", "开发", "npm run dev", "怎么打开", "本地运行"],
+      "question": "如何启动项目？",
+      "answer": "环境要求 Node.js 20 LTS 及以上。在项目根目录执行：1) npm install 安装依赖；2) npm run dev 启动开发服务器；3) 浏览器访问 http://localhost:5173。生产构建用 npm run build（输出到 dist/），本地预览用 npm run preview。"
+    },
+    {
+      "id": "kb-003",
+      "category": "project",
+      "keywords": ["技术栈", "用了什么技术", "用了哪些技术", "用什么技术", "框架", "vite", "pinia"],
+      "weakKeywords": ["vue", "技术"],
+      "question": "项目用了哪些技术？",
+      "answer": "前端基础：HTML5、CSS3、JavaScript（ES6+）；框架与脚手架：Vue 3（Composition API）+ Vite 5；状态与路由：Pinia + Vue Router（history 模式，带登录守卫）；数据存储：本地 JSON（src/data）+ localStorage；版本管理：Git + GitHub；部署：GitHub Actions 自动构建到 GitHub Pages。"
+    },
+    {
+      "id": "kb-004",
+      "category": "project",
+      "keywords": ["目录", "结构", "文件", "src", "源码"],
+      "question": "项目目录结构是怎样的？",
+      "answer": "根目录：index.html 入口、vite.config.js 配置、package.json 依赖与脚本。src/ 下：main.js 应用入口、App.vue 根组件、router/ 路由配置、views/ 页面层（登录/首页/学习资源/题库/示例代码/AI 问答/个人中心）、components/ 组件层、store/ 状态层（Pinia）、utils/ 工具、data/ 本地数据（JSON）、assets/ 全局样式。dist/ 为构建产物，不纳入版本管理。"
+    },
+    {
+      "id": "kb-005",
+      "category": "project",
+      "keywords": ["部署", "github pages", "上线", "发布", "test分支", "main分支"],
+      "question": "项目如何部署上线？",
+      "answer": "采用三分支工作流：develop 日常开发（不触发部署）；test 测试托管（自动部署）；main 正式发布（自动部署）。推送 test 或 main 分支后，.github/workflows/deploy.yml 会自动构建并部署到 GitHub Pages，地址为 https://xyy7539518246-stack.github.io/webcreate/。注意 test 与 main 共享同一 Pages 地址，后部署的会覆盖先部署的。"
+    },
+    {
+      "id": "kb-006",
+      "category": "frontend",
+      "keywords": ["语义化", "semantic", "html5", "标签", "article", "header", "nav"],
+      "question": "HTML5 语义化标签是什么？",
+      "answer": "语义化标签用有意义的标签名描述页面结构，替代无意义的 div 堆叠，如 header（页头）、nav（导航）、main（主体）、section（区块）、article（独立内容）、footer（页脚）。好处：代码可读性高、利于 SEO、屏幕阅读器等无障碍访问友好。Vue 组件中同样建议用语义化标签组织模板结构。"
+    },
+    {
+      "id": "kb-007",
+      "category": "frontend",
+      "keywords": ["flex", "弹性布局", "justify-content", "align-items", "居中", "一维"],
+      "question": "CSS Flex 弹性布局怎么用？",
+      "answer": "Flex 是一维布局方案，适合导航栏、卡片行等场景。容器设置 display: flex 后，子元素沿主轴排列：justify-content 控制主轴方向对齐（flex-start / center / space-between 等），align-items 控制交叉轴对齐（center / stretch 等）。flex-direction 决定主轴方向（row / column）。想让子元素水平居中用 justify-content: center，垂直居中用 align-items: center。本项目 NavBar 与卡片布局大量使用 Flex。"
+    },
+    {
+      "id": "kb-008",
+      "category": "frontend",
+      "keywords": ["grid", "网格", "二维", "grid-template"],
+      "question": "CSS Grid 网格布局是什么？",
+      "answer": "Grid 是二维布局方案（同时控制行和列），适合整体页面骨架与复杂区域划分。核心：grid-template-columns 定义列（如 repeat(3, 1fr) 三等分），grid-template-areas 命名区域，grid-gap 控制间距。与 Flex 搭配使用可覆盖绝大多数现代布局需求——Flex 处理一维排列，Grid 处理二维划分。"
+    },
+    {
+      "id": "kb-009",
+      "category": "frontend",
+      "keywords": ["es6", "es6+", "let", "const", "箭头函数", "解构", "模块化"],
+      "question": "JavaScript ES6+ 有哪些核心语法？",
+      "answer": "核心：let/const 声明（块级作用域，const 不可重新赋值）、箭头函数（简洁写法且不绑定自己的 this）、解构赋值（const { a } = obj）、模板字符串（`${var}`）、Promise 异步处理、import/export 模块化。Vue 3 组合式 API 大量依赖这些语法，是前端开发的基础。"
+    },
+    {
+      "id": "kb-010",
+      "category": "vue",
+      "keywords": ["组合式", "setup", "ref", "reactive", "computed", "watch", "响应式"],
+      "question": "Vue 3 组合式 API 与响应式是什么？",
+      "answer": "组合式 API 把逻辑按功能组织在 setup 中：ref 定义基础类型响应式数据（访问需 .value），reactive 定义对象响应式数据，computed 派生状态（依赖变化自动更新），watch 监听数据变化执行副作用。这是 Vue 3 开发的核心心智模型，本项目页面组件均采用 <script setup> 写法。"
+    },
+    {
+      "id": "kb-011",
+      "category": "vue",
+      "keywords": ["指令", "v-if", "v-for", "v-model", "v-bind", "v-on", "模板语法"],
+      "question": "Vue 模板语法与常用指令有哪些？",
+      "answer": "指令是模板与数据绑定的桥梁：v-if / v-else 条件渲染，v-for 列表渲染（:key 绑定唯一标识），v-bind（简写 :）单向绑定属性，v-on（简写 @）绑定事件，v-model 表单双向绑定。本项目列表渲染、表单登录、输入框均基于这些指令实现。"
+    },
+    {
+      "id": "kb-012",
+      "category": "vue",
+      "keywords": ["组件通信", "props", "emit", "provide", "inject", "传值", "父组件", "子组件"],
+      "question": "Vue 3 组件之间如何通信？",
+      "answer": "父子组件：父传子用 props（defineProps 声明），子传父用 emit（defineEmits 触发事件）；跨层级共享用 provide / inject；全局状态用 Pinia（defineStore 定义，如本项目 src/store/user.js 的用户状态）。原则：优先 props/emit，全局状态仅放真正跨组件共享的数据。"
+    },
+    {
+      "id": "kb-013",
+      "category": "vue",
+      "keywords": ["路由", "router", "vue-router", "跳转", "守卫", "redirect"],
+      "question": "vue-router 路由如何配置与守卫？",
+      "answer": "router/index.js 中定义 routes 数组：path 路径、name 名称、component 懒加载组件、meta 元信息（如 requiresAuth 需要登录）。createRouter 创建实例，beforeEach 全局前置守卫做登录校验——本项目未登录访问需登录页面会跳转到 /login 并携带 redirect 参数，登录后回跳。afterEach 里根据 meta.title 设置 document.title。"
+    },
+    {
+      "id": "kb-014",
+      "category": "cpp",
+      "keywords": ["快速排序", "快排", "quicksort", "分治", "排序"],
+      "question": "快速排序怎么写？复杂度是多少？",
+      "answer": "快速排序是经典分治排序：取基准 pivot，双指针从两端向中间扫描，把小于 pivot 的放左边、大于的放右边，再递归处理左右两段。平均时间复杂度 O(n log n)，最坏 O(n²)（已排序数据）。竞赛手写排序首选模板，本项目示例代码模块（examples.json）提供完整 C++ 实现，含 i <= j 的边界写法。"
+    },
+    {
+      "id": "kb-015",
+      "category": "cpp",
+      "keywords": ["二分", "二分查找", "binarysearch", "binary search", "查找"],
+      "question": "二分查找怎么写？",
+      "answer": "二分查找在有序数组中找目标值：维护左闭右闭区间 [l, r]，每次取 mid = l + ((r - l) >> 1)（防溢出写法），比较 a[mid] 与 target，相等返回下标，小于则 l = mid + 1，大于则 r = mid - 1。复杂度 O(log n)。注意边界条件与防止整数溢出，examples.json 中有完整模板。"
+    },
+    {
+      "id": "kb-016",
+      "category": "cpp",
+      "keywords": ["最大公约数", "gcd", "最小公倍数", "lcm", "辗转相除", "欧几里得"],
+      "question": "如何求最大公约数和最小公倍数？",
+      "answer": "最大公约数用欧几里得算法（辗转相除法）：gcd(a, b) = b == 0 ? a : gcd(b, a % b)。最小公倍数 lcm(a, b) = a / gcd(a, b) * b，注意先除后乘防止溢出。这两个是数论基础，蓝桥杯等竞赛高频使用，examples.json 有对应模板。"
+    },
+    {
+      "id": "kb-017",
+      "category": "cpp",
+      "keywords": ["素数", "质数", "埃氏筛", "筛法", "sieve"],
+      "question": "如何高效求素数？",
+      "answer": "求 [2, n] 内全部素数推荐埃氏筛（埃拉托斯特尼筛法）：开一个布尔数组初始全为 true，从 2 开始，把每个素数的倍数标记为合数，复杂度 O(n log log n)。关键优化：外层循环只需到 i * i <= n。examples.json 中有 C++ 完整实现，是蓝桥杯数论高频模板。"
+    },
+    {
+      "id": "kb-018",
+      "category": "app",
+      "keywords": ["题库", "刷题", "练习", "判题", "答题"],
+      "question": "题库练习功能怎么用？",
+      "answer": "进入「题库练习」页（/quiz），题库按知识点分组（前端基础 / Vue 3 / C++ 等），选择分组后逐题作答，选择答案后即时判题并显示解析。答题记录与错题会写入本地（localStorage），可在个人中心查看答题统计与错题本，方便复习薄弱知识点。"
+    },
+    {
+      "id": "kb-019",
+      "category": "app",
+      "keywords": ["错题", "错题本", "个人中心", "学习记录", "收藏"],
+      "question": "错题本和学习记录在哪里看？",
+      "answer": "登录后进入「个人中心」页（/profile）即可查看：学习记录（答题统计）、收藏与错题本。这些用户产生的数据统一存储在浏览器 localStorage 中（key 前缀 webcreate_），不会上传服务器，清除浏览器数据前请留意。"
+    },
+    {
+      "id": "kb-020",
+      "category": "app",
+      "keywords": ["登录", "注册", "账号", "忘记密码", "验证码", "密码"],
+      "question": "账号如何注册和登录？",
+      "answer": "首次使用在「注册」页输入手机号 + 密码即可创建本地账号（同一浏览器内有效，数据存 localStorage 模拟数据库）。之后用手机号 + 密码登录；忘记密码可在登录页点「忘记密码」，通过手机验证码（60 秒有效，页面会提示样例验证码）重置密码。这是课程演示用的本地模拟方案，未接真实短信服务。"
+    }
+  ]
+}
