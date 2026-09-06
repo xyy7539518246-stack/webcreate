@@ -125,10 +125,12 @@ function handleSubmit() {
 
 <style scoped>
 .login {
-  min-height: calc(100vh - var(--nav-height));
+  min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 24px 16px;
 }
 
 .login__card {
@@ -237,5 +239,17 @@ function handleSubmit() {
 
 .login__switch-sep {
   color: #d5d9e0;
+}
+
+/* ===== 移动端微调 ===== */
+@media (max-width: 768px) {
+  .login__card {
+    padding: 24px 20px;
+  }
+
+  .login__prompt {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
 }
 </style>

@@ -595,4 +595,62 @@ onMounted(() => {
 .key-modal__tip a {
   color: var(--color-primary);
 }
+
+/* ===== 移动端微调 ===== */
+@media (max-width: 768px) {
+  .page__title {
+    font-size: 20px;
+  }
+
+  .page__actions {
+    width: 100%;
+  }
+
+  .assistant__msg {
+    max-width: 92%;
+  }
+
+  .assistant__messages {
+    min-height: 300px;
+    max-height: 480px;
+    padding: 12px;
+  }
+
+  .welcome {
+    padding: 32px 12px 24px;
+  }
+
+  .welcome__greeting {
+    font-size: 19px;
+  }
+
+  .assistant__input {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .assistant__input .btn {
+    width: 100%;
+  }
+
+  .key-modal {
+    padding: 20px 16px;
+  }
+
+  .key-modal__input-row {
+    flex-wrap: wrap;
+  }
+
+  .key-modal__toggle {
+    width: 100%;
+  }
+
+  .key-modal__actions {
+    flex-direction: column;
+  }
+
+  .key-modal__actions .btn {
+    width: 100%;
+  }
+}
 </style>

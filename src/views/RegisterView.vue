@@ -176,10 +176,12 @@ function handleSubmit() {
 
 <style scoped>
 .register {
-  min-height: calc(100vh - var(--nav-height));
+  min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 24px 16px;
 }
 
 .register__card {
@@ -282,5 +284,24 @@ function handleSubmit() {
   text-align: center;
   font-size: 13px;
   color: var(--color-text-secondary);
+}
+
+/* ===== 移动端微调 ===== */
+@media (max-width: 768px) {
+  .register__card {
+    padding: 24px 20px;
+  }
+
+  .register__code-row {
+    flex-wrap: wrap;
+  }
+
+  .register__code-row input {
+    flex: 1 1 100%;
+  }
+
+  .register__code-btn {
+    width: 100%;
+  }
 }
 </style>

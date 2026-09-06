@@ -406,4 +406,36 @@ async function copyCode() {
     max-height: 260px;
   }
 }
+
+/* 移动端微调 */
+@media (max-width: 768px) {
+  .page__title {
+    font-size: 20px;
+  }
+
+  .ex-tab {
+    padding: 8px 14px;
+    font-size: 13px;
+  }
+
+  .ex-code__head {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .ex-code__copy {
+    align-self: flex-start;
+  }
+
+  .ex-code__pre {
+    padding: 12px 14px;
+    font-size: 12px;
+    line-height: 1.6;
+  }
+
+  .ex-list__items {
+    max-height: 220px;
+  }
+}
 </style>

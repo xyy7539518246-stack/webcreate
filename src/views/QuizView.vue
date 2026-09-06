@@ -645,6 +645,7 @@ onMounted(() => {
   align-items: center;
   justify-content: space-between;
   gap: 8px;
+  flex-wrap: wrap;
   margin-bottom: 8px;
 }
 
@@ -979,5 +980,53 @@ onMounted(() => {
 .complete-btn {
   width: 100%;
   padding: 10px 18px;
+}
+
+/* ===== 移动端微调 ===== */
+@media (max-width: 768px) {
+  .page__title {
+    font-size: 20px;
+  }
+
+  .view-tabs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .view-tab {
+    text-align: center;
+    padding: 10px 8px;
+  }
+
+  .stat-card {
+    gap: 8px 16px;
+  }
+
+  .stat-num {
+    font-size: 18px;
+  }
+
+  .option {
+    padding: 10px 12px;
+    font-size: 14px;
+  }
+
+  .round-head h2 {
+    font-size: 15px;
+  }
+
+  .complete-modal {
+    padding: 24px 16px;
+  }
+
+  .complete-links {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .complete-link {
+    text-align: center;
+    padding: 10px 14px;
+  }
 }
 </style>
