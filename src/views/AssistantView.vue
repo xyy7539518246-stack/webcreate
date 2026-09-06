@@ -7,25 +7,33 @@ import {
   buildFallbackAnswer,
   hasApiKey,
   setApiKey,
-  clearApiKey
+  clearApiKey,
+  getFeaturedQuestions
 } from '@/utils/assistant'
 
 // AI 问答页：本地知识检索命中直接答；未命中且已配置 Key 时走 DeepSeek API；未配置/调用失败时降级提示
 // 连续问答记录：对话历史持久化到 localStorage（webcreate_assistant_messages）
 // API Key：用户在页面弹窗中输入，存 localStorage（webcreate_deepseek_api_key），不进代码仓库
+// 欢迎页：对话为空时显示问候语 + 推荐问题（点击命中本地库），用户自由输入走正常检索（库外大概率 AI）
 
 const HISTORY_KEY = 'assistant_messages'
 
-const WELCOME = {
-  role: 'assistant',
-  content: '你好，我是 WebCreate 学习助手。你可以问我编程问题（如“什么是语义化标签”“快速排序怎么写”）、项目相关（如“怎么启动项目”）或竞赛内容。',
-  source: 'local'
-}
-
 const question = ref('')
 const sending = ref(false)
-const messages = ref([WELCOME])
+const messages = ref([])
 const listRef = ref(null)
+
+// 欢迎页精选推荐问题（本地知识库内可命中）
+const featuredQuestions = getFeaturedQuestions()
+
+// 根据时间生成问候语
+const greeting = computed(() => {
+  const h = new Date().getHours()
+  if (h >= 6 && h < 12) return '早上好'
+  if (h >= 12 && h < 18) return '下午好'
+  if (h >= 18 && h < 22) return '晚上好'
+  return '夜深了'
+})
 
 // API Key 配置状态
 const showKeyModal = ref(false)
@@ -52,9 +60,15 @@ function saveHistory() {
 }
 
 function clearChat() {
-  messages.value = [WELCOME]
+  messages.value = []
   removeStorage(HISTORY_KEY)
-  scrollToBottom()
+}
+
+// 点击推荐问题：填入输入框并发送（走正常检索流程，推荐问题均为库内可命中）
+function sendFeaturedQuestion(q) {
+  if (sending.value) return
+  question.value = q
+  handleSend()
 }
 
 function scrollToBottom() {
@@ -160,6 +174,21 @@ onMounted(() => {
 
     <section class="page__section card assistant">
       <div ref="listRef" class="assistant__messages">
+        <!-- 欢迎卡片：对话为空时显示问候语 + 推荐问题（点击命中本地库） -->
+        <div v-if="messages.length === 0" class="welcome">
+          <div class="welcome__greeting">{{ greeting }}！我是 WebCreate AI 助手</div>
+          <p class="welcome__desc">可以帮你解答编程学习中的问题。点击下方问题快速获取答案，或输入关键词/问题向我提问。</p>
+          <div class="welcome__questions">
+            <button
+              v-for="q in featuredQuestions"
+              :key="q"
+              class="welcome__q-btn"
+              :disabled="sending"
+              @click="sendFeaturedQuestion(q)"
+            >{{ q }}</button>
+          </div>
+        </div>
+
         <div
           v-for="(m, i) in messages"
           :key="i"
@@ -320,6 +349,61 @@ onMounted(() => {
   background: var(--color-bg);
   border-radius: 8px;
   margin-bottom: 12px;
+}
+
+/* 欢迎卡片（对话为空时显示） */
+.welcome {
+  text-align: center;
+  padding: 48px 20px 32px;
+}
+
+.welcome__greeting {
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: var(--color-text);
+}
+
+.welcome__desc {
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  margin-bottom: 28px;
+  line-height: 1.7;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.welcome__questions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.welcome__q-btn {
+  padding: 9px 18px;
+  border: 1px solid #dfe2e8;
+  border-radius: 999px;
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.welcome__q-btn:hover:not(:disabled) {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  background: #f5f7ff;
+  transform: translateY(-1px);
+}
+
+.welcome__q-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .assistant__msg {

@@ -79,6 +79,13 @@ export function getSuggestedQuestions() {
   return assistantData.entries.map((e) => e.question)
 }
 
+// 欢迎页精选推荐问题（快捷入口，均为本地知识库内可命中的问题，按分类覆盖前端/Vue/C++/竞赛）
+const FEATURED_IDS = ['kb-021', 'kb-023', 'kb-025', 'kb-027', 'kb-028', 'kb-035', 'kb-038', 'kb-044']
+export function getFeaturedQuestions() {
+  const map = new Map(assistantData.entries.map((e) => [e.id, e]))
+  return FEATURED_IDS.map((id) => map.get(id)).filter(Boolean).map((e) => e.question)
+}
+
 const SYSTEM_PROMPT =
   '你是 WebCreate（AI 编程学习助手）的内置 AI 助手，面向高校编程初学者与竞赛备赛学生。' +
   '请用简体中文、简洁清晰地回答问题，必要时给出代码示例；涉及本项目（Vue 3 / 题库 / 示例代码 / 部署）的问题请结合项目实际情况回答。'
