@@ -1,10 +1,18 @@
 <script setup>
-import { ref, nextTick, onMounted } from 'vue'
+import { ref, nextTick, onMounted, computed } from 'vue'
 import { getStorage, setStorage, removeStorage } from '@/utils/storage'
-import { matchLocalKnowledge, askDeepSeek, buildFallbackAnswer, CAN_USE_API } from '@/utils/assistant'
+import {
+  matchLocalKnowledge,
+  askDeepSeek,
+  buildFallbackAnswer,
+  hasApiKey,
+  setApiKey,
+  clearApiKey
+} from '@/utils/assistant'
 
-// AI 问答页：本地知识检索命中直接答；未命中走 DeepSeek API（仅开发模式）；均不可用时降级提示
+// AI 问答页：本地知识检索命中直接答；未命中且已配置 Key 时走 DeepSeek API；未配置/调用失败时降级提示
 // 连续问答记录：对话历史持久化到 localStorage（webcreate_assistant_messages）
+// API Key：用户在页面弹窗中输入，存 localStorage（webcreate_deepseek_api_key），不进代码仓库
 
 const HISTORY_KEY = 'assistant_messages'
 
@@ -18,6 +26,12 @@ const question = ref('')
 const sending = ref(false)
 const messages = ref([WELCOME])
 const listRef = ref(null)
+
+// API Key 配置状态
+const showKeyModal = ref(false)
+const keyInput = ref('')
+const showKeyText = ref(false)
+const apiKeyConfigured = ref(hasApiKey())
 
 const sourceLabels = {
   local: '本地知识库',
@@ -60,6 +74,26 @@ function toApiHistory(list) {
     .map((m) => ({ role: m.role, content: m.content }))
 }
 
+/* ============ API Key 配置 ============ */
+
+function openKeyModal() {
+  keyInput.value = ''
+  showKeyText.value = false
+  showKeyModal.value = true
+}
+
+function saveKey() {
+  const ok = setApiKey(keyInput.value)
+  apiKeyConfigured.value = ok
+  showKeyModal.value = false
+}
+
+function removeKey() {
+  clearApiKey()
+  apiKeyConfigured.value = false
+  keyInput.value = ''
+}
+
 async function handleSend() {
   const text = question.value.trim()
   if (!text || sending.value) return
@@ -75,8 +109,8 @@ async function handleSend() {
     if (matched.hit) {
       await sleep(300) // 轻微延迟，交互更自然
       messages.value.push({ role: 'assistant', content: matched.entry.answer, source: 'local' })
-    } else if (CAN_USE_API) {
-      // ② 未命中 → 开发模式调用 DeepSeek API（经 Vite proxy）
+    } else if (apiKeyConfigured.value) {
+      // ② 未命中且已配置 Key → 调用 DeepSeek API（浏览器直连）
       try {
         const answer = await askDeepSeek(toApiHistory(messages.value))
         messages.value.push({ role: 'assistant', content: answer, source: 'ai' })
@@ -86,7 +120,7 @@ async function handleSend() {
         messages.value.push({ role: 'assistant', content: buildFallbackAnswer(text), source: 'fallback' })
       }
     } else {
-      // 生产环境无代理 → 直接降级提示
+      // 未配置 Key → 直接降级提示（引导用户配置）
       messages.value.push({ role: 'assistant', content: buildFallbackAnswer(text), source: 'fallback' })
     }
   } finally {
@@ -109,7 +143,19 @@ onMounted(() => {
         <h1 class="page__title">AI 问答</h1>
         <p class="page__subtitle">本地知识检索 + AI 辅助生成（含降级方案）</p>
       </div>
-      <button class="btn btn--ghost" :disabled="sending" @click="clearChat">清空对话</button>
+      <div class="page__actions">
+        <span class="key-status" :class="{ 'key-status--on': apiKeyConfigured }">
+          {{ apiKeyConfigured ? 'AI 已就绪' : 'AI 未配置' }}
+        </span>
+        <button class="btn btn--ghost" @click="openKeyModal">配置 Key</button>
+        <button class="btn btn--ghost" :disabled="sending" @click="clearChat">清空对话</button>
+      </div>
+    </div>
+
+    <!-- 未配置 Key 时的引导提示 -->
+    <div v-if="!apiKeyConfigured" class="key-notice">
+      <span>未配置 DeepSeek API Key，库外问题将使用降级回答。</span>
+      <a class="key-notice__link" @click="openKeyModal">点此配置 Key →</a>
     </div>
 
     <section class="page__section card assistant">
@@ -146,6 +192,41 @@ onMounted(() => {
         </button>
       </div>
     </section>
+
+    <!-- API Key 配置弹窗 -->
+    <div v-if="showKeyModal" class="key-modal-mask" @click.self="showKeyModal = false">
+      <div class="key-modal">
+        <h3 class="key-modal__title">配置 DeepSeek API Key</h3>
+        <p class="key-modal__hint">
+          Key 仅保存在当前浏览器（localStorage），不会上传服务器、不会写入代码仓库。清除浏览器数据后需重新配置。
+        </p>
+        <div class="key-modal__input-row">
+          <input
+            v-model="keyInput"
+            :type="showKeyText ? 'text' : 'password'"
+            placeholder="sk-..."
+            class="key-modal__input"
+            @keyup.enter="saveKey"
+          />
+          <button class="btn btn--ghost key-modal__toggle" @click="showKeyText = !showKeyText">
+            {{ showKeyText ? '隐藏' : '显示' }}
+          </button>
+        </div>
+        <div class="key-modal__status">
+          当前状态：<strong :class="apiKeyConfigured ? 'key-status--on' : ''">
+            {{ apiKeyConfigured ? '已配置' : '未配置' }}
+          </strong>
+        </div>
+        <div class="key-modal__actions">
+          <button class="btn" :disabled="!keyInput.trim()" @click="saveKey">保存</button>
+          <button class="btn btn--ghost" :disabled="!apiKeyConfigured" @click="removeKey">清除已存 Key</button>
+          <button class="btn btn--ghost" @click="showKeyModal = false">关闭</button>
+        </div>
+        <p class="key-modal__tip">
+          获取 Key：前往 <a href="https://platform.deepseek.com/api_keys" target="_blank" rel="noopener">DeepSeek 开放平台</a> → API Keys → 创建。
+        </p>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -154,6 +235,8 @@ onMounted(() => {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
+  gap: 12px;
+  flex-wrap: wrap;
 }
 
 .page__title {
@@ -167,6 +250,13 @@ onMounted(() => {
   margin-bottom: 20px;
 }
 
+.page__actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
 .page__section {
   margin-bottom: 16px;
 }
@@ -178,10 +268,50 @@ onMounted(() => {
 }
 
 .btn--ghost:hover:not(:disabled) {
-  color: var(--color-danger, #e5484d);
-  border-color: var(--color-danger, #e5484d);
+  color: var(--color-primary);
+  border-color: var(--color-primary);
 }
 
+/* API Key 状态标签 */
+.key-status {
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #f2f3f5;
+  color: #8a919f;
+}
+
+.key-status--on {
+  background: #e6f7ee;
+  color: #18a058;
+}
+
+/* 未配置 Key 引导条 */
+.key-notice {
+  background: #fff8e6;
+  border: 1px solid #ffe0a3;
+  color: #8a6d1f;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.key-notice__link {
+  color: var(--color-primary);
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.key-notice__link:hover {
+  text-decoration: underline;
+}
+
+/* 对话区 */
 .assistant__messages {
   min-height: 360px;
   max-height: 520px;
@@ -299,5 +429,86 @@ onMounted(() => {
 .assistant__input input:disabled {
   background: var(--color-bg);
   color: var(--color-text-secondary);
+}
+
+/* API Key 配置弹窗 */
+.key-modal-mask {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.key-modal {
+  background: var(--color-surface);
+  border-radius: 12px;
+  padding: 24px;
+  width: 100%;
+  max-width: 460px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+}
+
+.key-modal__title {
+  font-size: 18px;
+  margin-bottom: 8px;
+  color: var(--color-text);
+}
+
+.key-modal__hint {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+.key-modal__input-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.key-modal__input {
+  flex: 1;
+  padding: 10px 12px;
+  border: 1px solid #dfe2e8;
+  border-radius: 8px;
+  outline: none;
+  font-family: 'Courier New', monospace;
+  font-size: 13px;
+}
+
+.key-modal__input:focus {
+  border-color: var(--color-primary);
+}
+
+.key-modal__toggle {
+  white-space: nowrap;
+}
+
+.key-modal__status {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  margin-bottom: 16px;
+}
+
+.key-modal__actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.key-modal__tip {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+
+.key-modal__tip a {
+  color: var(--color-primary);
 }
 </style>

@@ -74,16 +74,12 @@ webcreate/
 # 1. 安装依赖
 npm install
 
-# 2. 配置 DeepSeek API key（AI 问答库外问题使用；不配置则未命中时返回降级提示）
-#    在项目根目录创建 .env 文件：
-#    VITE_DEEPSEEK_API_KEY=sk-你的key
-
-# 3. 本地启动（开发模式）
+# 2. 本地启动（开发模式）
 npm run dev
 # 浏览器访问 http://localhost:5173
 ```
 
-> 说明：`VITE_` 前缀变量会由 Vite 在构建时注入前端代码，浏览器直连 `api.deepseek.com`（接口支持跨域），因此本地与线上部署均可使用 AI 问答。key 会随前端代码公开，请仅在可接受的范围内使用。
+> AI 问答的 DeepSeek API Key **不硬编码在代码中**：进入「AI 问答」页后点击右上角「配置 Key」，在弹窗中输入你的 DeepSeek API Key 即可。Key 仅保存在当前浏览器的 localStorage 中，不会上传服务器或写入代码仓库；未配置 Key 时，库外问题会返回降级提示。
 
 ### 常用命令
 

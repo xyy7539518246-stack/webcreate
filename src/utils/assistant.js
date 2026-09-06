@@ -1,10 +1,33 @@
 // AI 问答核心逻辑：本地知识库关键词检索 + DeepSeek API 直连 + 降级
+// API Key 不硬编码：由用户在页面上输入，存到当前浏览器 localStorage（仅本地可见，不进代码仓库）
 import assistantData from '@/data/assistant.json'
+import { getStorage, setStorage, removeStorage } from '@/utils/storage'
 
-// DeepSeek API key：由 .env 的 VITE_DEEPSEEK_API_KEY 注入，构建时打进前端 bundle
-// 浏览器直连 api.deepseek.com（该接口允许跨域），开发与生产环境行为一致
-const API_KEY = import.meta.env.VITE_DEEPSEEK_API_KEY || ''
-export const CAN_USE_API = !!API_KEY
+const API_KEY_STORAGE_KEY = 'deepseek_api_key'
+
+/* ============ API Key 管理（用户在页面配置，存 localStorage） ============ */
+
+export function getApiKey() {
+  return (getStorage(API_KEY_STORAGE_KEY, '') || '').trim()
+}
+
+export function setApiKey(key) {
+  const trimmed = (key || '').trim()
+  if (trimmed) {
+    setStorage(API_KEY_STORAGE_KEY, trimmed)
+  } else {
+    removeStorage(API_KEY_STORAGE_KEY)
+  }
+  return !!trimmed
+}
+
+export function clearApiKey() {
+  removeStorage(API_KEY_STORAGE_KEY)
+}
+
+export function hasApiKey() {
+  return !!getApiKey()
+}
 
 // 归一化：小写、去空白与常见标点
 function normalize(text) {
@@ -59,16 +82,19 @@ const SYSTEM_PROMPT =
   '请用简体中文、简洁清晰地回答问题，必要时给出代码示例；涉及本项目（Vue 3 / 题库 / 示例代码 / 部署）的问题请结合项目实际情况回答。'
 
 /**
- * 调用 DeepSeek API（浏览器直连 https://api.deepseek.com）
+ * 调用 DeepSeek API（浏览器直连 https://api.deepseek.com，key 从 localStorage 读取）
  * @param {Array<{role: string, content: string}>} history 对话历史（含最新用户消息）
  * @returns {Promise<string>} 模型回答文本
  */
 export async function askDeepSeek(history) {
+  const apiKey = getApiKey()
+  if (!apiKey) throw new Error('未配置 DeepSeek API Key')
+
   const res = await fetch('https://api.deepseek.com/chat/completions', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${API_KEY}`
+      Authorization: `Bearer ${apiKey}`
     },
     body: JSON.stringify({
       // deepseek-chat：DeepSeek 对话模型，价格最低档
@@ -96,9 +122,9 @@ export function buildFallbackAnswer(question) {
   const suggestions = getSuggestedQuestions().slice(0, 3)
   return [
     `这个问题（${question}）暂时不在我的本地知识库里，我还没法给出准确的回答。`,
-    CAN_USE_API
+    hasApiKey()
       ? '在线 AI 调用失败（请检查网络连接或 API 账户额度），已切换为降级回答。'
-      : '当前未配置 DeepSeek API key（.env 中的 VITE_DEEPSEEK_API_KEY），已使用降级回答。',
+      : '当前未配置 DeepSeek API Key，已使用降级回答。点击页面右上角「配置 Key」输入你的 DeepSeek API Key 即可启用 AI 回答（Key 仅保存在当前浏览器，不会上传或写入代码）。',
     '你可以换个问法，或试试这些本地知识库内的问题：',
     ...suggestions.map((q) => `· ${q}`)
   ].join('\n')

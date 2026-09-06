@@ -15,6 +15,6 @@
 ## 说明
 
 - 数据均为课程教学演示用途，内容待开发对应模块时补充。
-- `assistant.json` 结构：`entries` 数组（字段：id / category / keywords（强关键词，命中即答）/ weakKeywords（弱关键词，命中 ≥2 个才答）/ question / answer），由 `src/utils/assistant.js` 的 `matchLocalKnowledge` 检索；未命中时浏览器直连 DeepSeek API（key 由 `.env` 的 `VITE_DEEPSEEK_API_KEY` 注入，接口支持跨域），调用失败返回降级提示。
+- `assistant.json` 结构：`entries` 数组（字段：id / category / keywords（强关键词，命中即答）/ weakKeywords（弱关键词，命中 ≥2 个才答）/ question / answer），由 `src/utils/assistant.js` 的 `matchLocalKnowledge` 检索；未命中时浏览器直连 DeepSeek API（API Key 由用户在页面弹窗中输入并存 localStorage，不进代码仓库），调用失败返回降级提示。
 - `examples.json` 结构：`categories`（分类定义：id / name / desc）+ `examples`（示例数组，字段：id / category / title / tags / description / code），由 ExamplesView 按 `category` 过滤展示。
 - 答题记录、错题本、收藏等**用户产生**的数据不放在本目录，统一写入 `localStorage`（见 `src/utils/storage.js`）。
