@@ -170,10 +170,12 @@ function handleSubmit() {
 
 <style scoped>
 .forgot {
-  min-height: calc(100vh - var(--nav-height));
+  min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 24px 16px;
 }
 
 .forgot__card {
@@ -272,5 +274,24 @@ function handleSubmit() {
   text-align: center;
   font-size: 13px;
   color: var(--color-text-secondary);
+}
+
+/* ===== 移动端微调 ===== */
+@media (max-width: 768px) {
+  .forgot__card {
+    padding: 24px 20px;
+  }
+
+  .forgot__code-row {
+    flex-wrap: wrap;
+  }
+
+  .forgot__code-row input {
+    flex: 1 1 100%;
+  }
+
+  .forgot__code-btn {
+    width: 100%;
+  }
 }
 </style>

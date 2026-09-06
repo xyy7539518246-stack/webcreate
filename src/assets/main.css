@@ -30,9 +30,19 @@
   padding: 0;
 }
 
-html,
+html {
+  height: 100%;
+  /* 移动端：禁止横屏时字体自动放大 */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  /* 移动端：去掉点击灰色高亮，提升触控跟手度 */
+  -webkit-tap-highlight-color: transparent;
+}
+
 body {
   height: 100%;
+  /* 兜底：防止个别内容在窄屏产生横向滚动 */
+  overflow-x: hidden;
 }
 
 body {
@@ -85,6 +95,29 @@ ol {
   border-radius: var(--radius);
   box-shadow: var(--shadow);
   padding: 20px;
+}
+
+/* ===== 移动端全局微调 ===== */
+@media (max-width: 768px) {
+  .container {
+    padding: 0 12px;
+  }
+
+  .card {
+    padding: 16px;
+  }
+
+  /* 触控友好：移动端按钮/链接最小可点区域 */
+  .btn {
+    min-height: 40px;
+  }
+
+  /* 输入框字号不小于 16px，避免 iOS 聚焦时自动缩放页面 */
+  input,
+  textarea,
+  select {
+    font-size: 16px;
+  }
 }
 
 .btn {

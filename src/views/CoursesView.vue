@@ -519,4 +519,23 @@ function openContent(item) {
   transform: none;
   box-shadow: none;
 }
+
+/* ===== 移动端微调 ===== */
+@media (max-width: 768px) {
+  .page__title {
+    font-size: 20px;
+  }
+
+  .point-head {
+    gap: 8px;
+  }
+
+  .point-title {
+    font-size: 13px;
+  }
+
+  .content-card {
+    flex-basis: 100%;
+  }
+}
 </style>

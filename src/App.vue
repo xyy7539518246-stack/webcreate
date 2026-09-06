@@ -34,4 +34,10 @@ const requiresAuth = computed(() => route.meta.requiresAuth === true)
   margin: 0 auto;
   padding: 24px 20px 48px;
 }
+
+@media (max-width: 768px) {
+  .app-main {
+    padding: 16px 12px 32px;
+  }
+}
 </style>

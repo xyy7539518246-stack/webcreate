@@ -402,6 +402,7 @@ function goPractice(groupId) {
   align-items: center;
   justify-content: space-between;
   gap: 8px;
+  flex-wrap: wrap;
   margin-bottom: 8px;
 }
 
@@ -467,5 +468,20 @@ function goPractice(groupId) {
 
 .fav-btn:hover {
   background: rgba(245, 158, 11, 0.18);
+}
+
+/* ===== 移动端微调 ===== */
+@media (max-width: 768px) {
+  .page__title {
+    font-size: 20px;
+  }
+
+  .summary-row {
+    gap: 12px 24px;
+  }
+
+  .wrong-actions .btn {
+    flex: 1 1 auto;
+  }
 }
 </style>

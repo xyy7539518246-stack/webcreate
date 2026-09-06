@@ -327,4 +327,24 @@ function clearDirection() {
   padding: 2px 8px;
   border-radius: 6px;
 }
+
+/* ===== 移动端微调 ===== */
+@media (max-width: 768px) {
+  .home__hero {
+    padding: 28px 16px;
+  }
+
+  .home__hero h1 {
+    font-size: 22px;
+  }
+
+  .home__modules {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .home__module h2 {
+    font-size: 16px;
+  }
+}
 </style>
