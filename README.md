@@ -79,13 +79,15 @@ npm run dev
 # 浏览器访问 http://localhost:5173
 ```
 
+> AI 问答的 DeepSeek API Key **不硬编码在代码中**：进入「AI 问答」页后点击右上角「配置 Key」，在弹窗中输入你的 DeepSeek API Key 即可。Key 仅保存在当前浏览器的 localStorage 中，不会上传服务器或写入代码仓库；未配置 Key 时，库外问题会返回降级提示。
+
 ### 常用命令
 
 | 命令 | 说明 |
 | --- | --- |
 | `npm run dev` | 本地开发，热更新 |
-| `npm run build` | 构建生产产物到 `dist/` |
-| `npm run preview` | 本地预览构建结果 |
+| `npm run build` | 构建生产产物到 `dist/`（GitHub Pages 部署版，base 为 `/webcreate/`） |
+| `npm run preview` | 本地预览构建结果（先以 base `/` 重新构建再启动预览，解决 `vite preview` 直接预览部署版资源路径 404 导致的空白页问题） |
 
 ## 部署
 
@@ -93,9 +95,12 @@ npm run dev
 
 ```bash
 # 1. 本地构建生产产物（可选，用于本地预览）
-npm run build
 npm run preview
+# 等价于：npm run build:local && vite preview（以根路径构建并预览，页面可直接访问）
 ```
+
+> 说明：`npm run preview` 以 base `/` 构建后预览，产物路径不带 `/webcreate/` 前缀，适合本地验证；
+> 线上部署请使用 `npm run build`（GitHub Actions 部署时自动执行，产物 base 为 `/webcreate/`），两者互不影响。
 
 ### GitHub Pages 部署（推荐）
 
@@ -146,7 +151,8 @@ npm run preview
 - [x] 项目初始化与仓库托管
 - [ ] 登录认证与页面骨架
 - [ ] 学习资源与题库模块
-- [ ] 示例代码与 AI 问答模块
+- [x] 示例代码模块（C++ / Java / 前端示例，分类切换、语法高亮与一键复制）
+- [ ] AI 问答模块
 - [ ] 线上部署与功能测试
 - [ ] 演示视频与课程报告
 

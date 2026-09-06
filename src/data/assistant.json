@@ -1,0 +1,354 @@
+{
+  "meta": {
+    "version": 1,
+    "desc": "WebCreate AI 问答本地知识库：关键词检索命中直接返回 answer，未命中走 DeepSeek API 或降级提示。内容与 courses.json / quiz.json / examples.json 保持一致。"
+  },
+  "entries": [
+    {
+      "id": "kb-001",
+      "category": "project",
+      "keywords": ["webcreate", "这个项目", "本项目", "本网站", "这个网站"],
+      "weakKeywords": ["项目介绍", "介绍项目", "介绍一下"],
+      "question": "WebCreate 是什么项目？",
+      "answer": "WebCreate 是河北科技大学《Web开发实践》课程设计项目（课程号 07100130，单人完成），一个面向高校学生的 AI 辅助编程学习平台，提供「学习资源 → 题库练习 → 示例代码 → AI 问答」一体化学习路径。前端基于 Vue 3 + Vite，数据用本地 JSON + localStorage 模拟，通过 GitHub Actions 自动部署到 GitHub Pages。"
+    },
+    {
+      "id": "kb-002",
+      "category": "project",
+      "keywords": ["本项目", "本网站", "这个项目", "这个网站", "webcreate"],
+      "weakKeywords": ["启动", "运行", "怎么打开", "本地运行", "npm run dev"],
+      "question": "本项目如何启动？",
+      "answer": "环境要求 Node.js 20 LTS 及以上。在项目根目录执行：1) npm install 安装依赖；2) npm run dev 启动开发服务器；3) 浏览器访问 http://localhost:5173。生产构建用 npm run build（输出到 dist/），本地预览用 npm run preview。"
+    },
+    {
+      "id": "kb-003",
+      "category": "project",
+      "keywords": ["本项目", "本网站", "这个项目", "这个网站", "webcreate"],
+      "weakKeywords": ["技术栈", "用了什么技术", "用了哪些技术", "用什么技术", "框架", "vite", "pinia", "vue"],
+      "question": "本项目用了哪些技术？",
+      "answer": "前端基础：HTML5、CSS3、JavaScript（ES6+）；框架与脚手架：Vue 3（Composition API）+ Vite 5；状态与路由：Pinia + Vue Router（history 模式，带登录守卫）；数据存储：本地 JSON（src/data）+ localStorage；版本管理：Git + GitHub；部署：GitHub Actions 自动构建到 GitHub Pages。"
+    },
+    {
+      "id": "kb-004",
+      "category": "project",
+      "keywords": ["本项目", "本网站", "这个项目", "这个网站", "webcreate"],
+      "weakKeywords": ["目录结构", "文件结构", "src目录", "源码结构"],
+      "question": "本项目目录结构是怎样的？",
+      "answer": "根目录：index.html 入口、vite.config.js 配置、package.json 依赖与脚本。src/ 下：main.js 应用入口、App.vue 根组件、router/ 路由配置、views/ 页面层（登录/首页/学习资源/题库/示例代码/AI 问答/个人中心）、components/ 组件层、store/ 状态层（Pinia）、utils/ 工具、data/ 本地数据（JSON）、assets/ 全局样式。dist/ 为构建产物，不纳入版本管理。"
+    },
+    {
+      "id": "kb-005",
+      "category": "project",
+      "keywords": ["本项目", "本网站", "这个项目", "这个网站", "webcreate"],
+      "weakKeywords": ["部署", "上线", "发布", "github pages", "test分支", "main分支"],
+      "question": "本项目如何部署上线？",
+      "answer": "采用三分支工作流：develop 日常开发（不触发部署）；test 测试托管（自动部署）；main 正式发布（自动部署）。推送 test 或 main 分支后，.github/workflows/deploy.yml 会自动构建并部署到 GitHub Pages，地址为 https://xyy7539518246-stack.github.io/webcreate/。注意 test 与 main 共享同一 Pages 地址，后部署的会覆盖先部署的。"
+    },
+    {
+      "id": "kb-006",
+      "category": "frontend",
+      "keywords": ["语义化", "semantic", "html5", "标签", "article", "header", "nav"],
+      "question": "HTML5 语义化标签是什么？",
+      "answer": "语义化标签用有意义的标签名描述页面结构，替代无意义的 div 堆叠，如 header（页头）、nav（导航）、main（主体）、section（区块）、article（独立内容）、footer（页脚）。好处：代码可读性高、利于 SEO、屏幕阅读器等无障碍访问友好。Vue 组件中同样建议用语义化标签组织模板结构。"
+    },
+    {
+      "id": "kb-007",
+      "category": "frontend",
+      "keywords": ["flex", "弹性布局", "justify-content", "align-items", "居中", "一维"],
+      "question": "CSS Flex 弹性布局怎么用？",
+      "answer": "Flex 是一维布局方案，适合导航栏、卡片行等场景。容器设置 display: flex 后，子元素沿主轴排列：justify-content 控制主轴方向对齐（flex-start / center / space-between 等），align-items 控制交叉轴对齐（center / stretch 等）。flex-direction 决定主轴方向（row / column）。想让子元素水平居中用 justify-content: center，垂直居中用 align-items: center。本项目 NavBar 与卡片布局大量使用 Flex。"
+    },
+    {
+      "id": "kb-008",
+      "category": "frontend",
+      "keywords": ["grid", "网格", "二维", "grid-template"],
+      "question": "CSS Grid 网格布局是什么？",
+      "answer": "Grid 是二维布局方案（同时控制行和列），适合整体页面骨架与复杂区域划分。核心：grid-template-columns 定义列（如 repeat(3, 1fr) 三等分），grid-template-areas 命名区域，grid-gap 控制间距。与 Flex 搭配使用可覆盖绝大多数现代布局需求——Flex 处理一维排列，Grid 处理二维划分。"
+    },
+    {
+      "id": "kb-009",
+      "category": "frontend",
+      "keywords": ["es6", "es6+", "let", "const", "箭头函数", "解构", "模块化"],
+      "question": "JavaScript ES6+ 有哪些核心语法？",
+      "answer": "核心：let/const 声明（块级作用域，const 不可重新赋值）、箭头函数（简洁写法且不绑定自己的 this）、解构赋值（const { a } = obj）、模板字符串（`${var}`）、Promise 异步处理、import/export 模块化。Vue 3 组合式 API 大量依赖这些语法，是前端开发的基础。"
+    },
+    {
+      "id": "kb-010",
+      "category": "vue",
+      "keywords": ["组合式", "setup", "ref", "reactive", "响应式"],
+      "weakKeywords": ["computed", "watch", "vue"],
+      "question": "Vue 3 组合式 API 与响应式是什么？",
+      "answer": "组合式 API 把逻辑按功能组织在 setup 中：ref 定义基础类型响应式数据（访问需 .value），reactive 定义对象响应式数据，computed 派生状态（依赖变化自动更新），watch 监听数据变化执行副作用。这是 Vue 3 开发的核心心智模型，本项目页面组件均采用 <script setup> 写法。"
+    },
+    {
+      "id": "kb-011",
+      "category": "vue",
+      "keywords": ["指令", "v-if", "v-for", "v-model", "v-bind", "v-on", "模板语法"],
+      "question": "Vue 模板语法与常用指令有哪些？",
+      "answer": "指令是模板与数据绑定的桥梁：v-if / v-else 条件渲染，v-for 列表渲染（:key 绑定唯一标识），v-bind（简写 :）单向绑定属性，v-on（简写 @）绑定事件，v-model 表单双向绑定。本项目列表渲染、表单登录、输入框均基于这些指令实现。"
+    },
+    {
+      "id": "kb-012",
+      "category": "vue",
+      "keywords": ["组件通信", "props", "emit", "provide", "inject", "传值", "父组件", "子组件"],
+      "question": "Vue 3 组件之间如何通信？",
+      "answer": "父子组件：父传子用 props（defineProps 声明），子传父用 emit（defineEmits 触发事件）；跨层级共享用 provide / inject；全局状态用 Pinia（defineStore 定义，如本项目 src/store/user.js 的用户状态）。原则：优先 props/emit，全局状态仅放真正跨组件共享的数据。"
+    },
+    {
+      "id": "kb-013",
+      "category": "vue",
+      "keywords": ["路由", "router", "vue-router", "跳转", "守卫", "redirect"],
+      "question": "vue-router 路由如何配置与守卫？",
+      "answer": "router/index.js 中定义 routes 数组：path 路径、name 名称、component 懒加载组件、meta 元信息（如 requiresAuth 需要登录）。createRouter 创建实例，beforeEach 全局前置守卫做登录校验——本项目未登录访问需登录页面会跳转到 /login 并携带 redirect 参数，登录后回跳。afterEach 里根据 meta.title 设置 document.title。"
+    },
+    {
+      "id": "kb-014",
+      "category": "cpp",
+      "keywords": ["快速排序", "快排", "quicksort", "分治", "排序"],
+      "question": "快速排序怎么写？复杂度是多少？",
+      "answer": "快速排序是经典分治排序：取基准 pivot，双指针从两端向中间扫描，把小于 pivot 的放左边、大于的放右边，再递归处理左右两段。平均时间复杂度 O(n log n)，最坏 O(n²)（已排序数据）。竞赛手写排序首选模板，本项目示例代码模块（examples.json）提供完整 C++ 实现，含 i <= j 的边界写法。"
+    },
+    {
+      "id": "kb-015",
+      "category": "cpp",
+      "keywords": ["二分", "二分查找", "binarysearch", "binary search", "查找"],
+      "question": "二分查找怎么写？",
+      "answer": "二分查找在有序数组中找目标值：维护左闭右闭区间 [l, r]，每次取 mid = l + ((r - l) >> 1)（防溢出写法），比较 a[mid] 与 target，相等返回下标，小于则 l = mid + 1，大于则 r = mid - 1。复杂度 O(log n)。注意边界条件与防止整数溢出，examples.json 中有完整模板。"
+    },
+    {
+      "id": "kb-016",
+      "category": "cpp",
+      "keywords": ["最大公约数", "gcd", "最小公倍数", "lcm", "辗转相除", "欧几里得"],
+      "question": "如何求最大公约数和最小公倍数？",
+      "answer": "最大公约数用欧几里得算法（辗转相除法）：gcd(a, b) = b == 0 ? a : gcd(b, a % b)。最小公倍数 lcm(a, b) = a / gcd(a, b) * b，注意先除后乘防止溢出。这两个是数论基础，蓝桥杯等竞赛高频使用，examples.json 有对应模板。"
+    },
+    {
+      "id": "kb-017",
+      "category": "cpp",
+      "keywords": ["素数", "质数", "埃氏筛", "筛法", "sieve"],
+      "question": "如何高效求素数？",
+      "answer": "求 [2, n] 内全部素数推荐埃氏筛（埃拉托斯特尼筛法）：开一个布尔数组初始全为 true，从 2 开始，把每个素数的倍数标记为合数，复杂度 O(n log log n)。关键优化：外层循环只需到 i * i <= n。examples.json 中有 C++ 完整实现，是蓝桥杯数论高频模板。"
+    },
+    {
+      "id": "kb-018",
+      "category": "app",
+      "keywords": ["题库", "刷题", "练习", "判题", "答题"],
+      "question": "题库练习功能怎么用？",
+      "answer": "进入「题库练习」页（/quiz），题库按知识点分组（前端基础 / Vue 3 / C++ 等），选择分组后逐题作答，选择答案后即时判题并显示解析。答题记录与错题会写入本地（localStorage），可在个人中心查看答题统计与错题本，方便复习薄弱知识点。"
+    },
+    {
+      "id": "kb-019",
+      "category": "app",
+      "keywords": ["错题", "错题本", "个人中心", "学习记录", "收藏"],
+      "question": "错题本和学习记录在哪里看？",
+      "answer": "登录后进入「个人中心」页（/profile）即可查看：学习记录（答题统计）、收藏与错题本。这些用户产生的数据统一存储在浏览器 localStorage 中（key 前缀 webcreate_），不会上传服务器，清除浏览器数据前请留意。"
+    },
+    {
+      "id": "kb-020",
+      "category": "app",
+      "keywords": ["登录", "注册", "账号", "忘记密码", "验证码", "密码"],
+      "question": "账号如何注册和登录？",
+      "answer": "首次使用在「注册」页输入手机号 + 密码即可创建本地账号（同一浏览器内有效，数据存 localStorage 模拟数据库）。之后用手机号 + 密码登录；忘记密码可在登录页点「忘记密码」，通过手机验证码（60 秒有效，页面会提示样例验证码）重置密码。这是课程演示用的本地模拟方案，未接真实短信服务。"
+    },
+    {
+      "id": "kb-021",
+      "category": "frontend",
+      "keywords": ["盒模型", "box-sizing", "content-box", "border-box", "内边距", "外边距"],
+      "weakKeywords": ["css", "盒子"],
+      "question": "CSS 盒模型是什么？",
+      "answer": "CSS 把每个元素看作矩形盒子，由内到外为 content（内容）、padding（内边距）、border（边框）、margin（外边距）。box-sizing 控制宽度计算方式：content-box（默认，width 只算 content，padding/border 额外叠加，容易撑破布局）、border-box（width 包含 content+padding+border，布局更直观，推荐全局设 * { box-sizing: border-box }）。本项目全局样式已设 border-box。"
+    },
+    {
+      "id": "kb-022",
+      "category": "frontend",
+      "keywords": ["选择器优先级", "优先级", "!important", "id选择器", "类选择器", "层叠"],
+      "weakKeywords": ["css", "样式"],
+      "question": "CSS 选择器优先级怎么算？",
+      "answer": "CSS 优先级从高到低：!important > 内联样式（style属性） > id 选择器 > 类/属性/伪类选择器 > 标签/伪元素选择器。同优先级时后写的覆盖先写的（层叠）。记忆：行内 > id > 类 > 标签。注意 !important 会覆盖一切，非必要不使用，否则后续难以维护；通配符 *、继承样式优先级最低。"
+    },
+    {
+      "id": "kb-023",
+      "category": "frontend",
+      "keywords": ["闭包", "closure", "函数嵌套", "作用域链"],
+      "weakKeywords": ["js", "javascript"],
+      "question": "什么是 JavaScript 闭包？",
+      "answer": "闭包是指有权访问另一个函数作用域中变量的函数。常见形式：函数 A 内部定义函数 B，B 引用了 A 的变量，即使 A 执行完毕，B 仍能记住并访问这些变量（因为作用域链保留了 A 的活动对象）。用途：数据私有化、函数柯里化、防抖节流、模块化。注意：闭包会使变量常驻内存不被垃圾回收，滥用可能导致内存泄漏，用完可手动置 null 释放。"
+    },
+    {
+      "id": "kb-024",
+      "category": "frontend",
+      "keywords": ["原型链", "prototype", "__proto__", "原型"],
+      "weakKeywords": ["继承", "js", "javascript"],
+      "question": "JavaScript 原型链是什么？",
+      "answer": "JavaScript 是基于原型的面向对象语言。每个对象都有 __proto__（隐式原型）指向其构造函数的 prototype（显式原型），prototype 本身也是对象，也有自己的 __proto__，层层向上形成原型链。访问对象属性时先找自身，找不到沿原型链向上找，直到 Object.prototype（终点，其 __proto__ 为 null）。ES6 的 class 本质是原型继承的语法糖。经典面试题：Object.__proto__ === Function.prototype，Function.prototype.__proto__ === Object.prototype。"
+    },
+    {
+      "id": "kb-025",
+      "category": "frontend",
+      "keywords": ["异步", "promise", "async", "await", "回调", "事件循环"],
+      "weakKeywords": ["js", "javascript"],
+      "question": "JavaScript 异步编程有哪些方式？",
+      "answer": "JavaScript 异步演进：回调函数（Callback，易形成回调地狱）→ Promise（链式调用 .then/.catch，解决回调地狱，三种状态 pending/fulfilled/rejected）→ async/await（ES2017，基于 Promise，用同步写法写异步，最推荐）。底层是事件循环（Event Loop）：同步代码先在调用栈执行，异步任务放入任务队列，分宏任务（setTimeout/setInterval/I/O）和微任务（Promise.then/MutationObserver），同步栈清空后先执行所有微任务，再取一个宏任务，如此循环。"
+    },
+    {
+      "id": "kb-026",
+      "category": "frontend",
+      "keywords": ["http", "状态码", "请求方法", "get", "post", "https"],
+      "weakKeywords": ["网络", "请求", "协议"],
+      "question": "HTTP 常见状态码和请求方法有哪些？",
+      "answer": "HTTP 请求方法：GET（获取资源，幂等）、POST（提交数据，非幂等）、PUT（全量更新，幂等）、DELETE（删除，幂等）、PATCH（部分更新）、HEAD（只取响应头）、OPTIONS（预检请求，跨域时自动发）。常见状态码：2xx 成功（200 OK、201 Created、204 No Content）、3xx 重定向（301 永久、302 临时、304 协商缓存命中）、4xx 客户端错误（400 参数错、401 未认证、403 禁止、404 未找到、405 方法不允许）、5xx 服务端错误（500 内部错误、502 网关错误、503 不可用、504 网关超时）。"
+    },
+    {
+      "id": "kb-027",
+      "category": "vue",
+      "keywords": ["生命周期", "钩子", "onMounted", "onUnmounted", "created", "mounted"],
+      "weakKeywords": ["vue", "组件"],
+      "question": "Vue 3 生命周期钩子有哪些？",
+      "answer": "Vue 3 组合式 API 常用生命周期钩子（需从 vue import）：onBeforeMount（挂载前，DOM 未生成）、onMounted（挂载后，可操作 DOM、发请求、初始化定时器，最常用）、onBeforeUpdate（更新前）、onUpdated（更新后，DOM 已更新）、onBeforeUnmount（卸载前，清理定时器/事件监听/取消请求，防止内存泄漏，最常用）、onUnmounted（卸载后）。对应选项式 API 的 beforeMount/mounted/beforeUpdate/updated/beforeUnmount/unmounted。注意：setup 本身相当于 beforeCreate + created，不需要单独写。"
+    },
+    {
+      "id": "kb-028",
+      "category": "vue",
+      "keywords": ["computed", "watch", "计算属性", "侦听器", "监听", "watchEffect"],
+      "weakKeywords": ["vue", "响应式"],
+      "question": "computed 和 watch 有什么区别？",
+      "answer": "computed（计算属性）：基于依赖缓存派生值，依赖不变则不重新计算，有返回值，模板中直接用，适合过滤、拼接、派生状态（如 fullName = firstName + lastName、购物车总价）。watch（侦听器）：监听数据变化执行副作用（异步请求、DOM 操作、存 localStorage、路由跳转），无返回值，适合一个数据影响多个数据或需要异步操作。watchEffect 自动收集依赖，不需要指定监听源。简单记：需要派生值用 computed，需要执行副作用用 watch。computed 不能做异步，watch 可以。"
+    },
+    {
+      "id": "kb-029",
+      "category": "vue",
+      "keywords": ["插槽", "slot", "内容分发", "具名插槽", "作用域插槽"],
+      "weakKeywords": ["vue", "组件"],
+      "question": "Vue 插槽 slot 是什么？",
+      "answer": "插槽（slot）是 Vue 的内容分发机制，让父组件可以向子组件模板中插入内容，实现组件的灵活复用。三种类型：默认插槽（<slot>，父组件直接写内容填充）、具名插槽（<slot name=\"xxx\">，父组件用 v-slot:xxx 或 #xxx 指定插入位置）、作用域插槽（子组件通过 <slot :data=\"xxx\"> 把数据传给父组件，父组件用 v-slot=\"props\" 接收，实现子传父数据的内容分发）。典型应用场景：弹窗（自定义底部按钮）、卡片（自定义内容区）、表格（自定义列渲染）、布局组件。"
+    },
+    {
+      "id": "kb-030",
+      "category": "vue",
+      "keywords": ["响应式原理", "proxy", "双向绑定", "依赖收集"],
+      "weakKeywords": ["ref", "reactive", "vue", "原理"],
+      "question": "Vue 3 响应式原理是什么？",
+      "answer": "Vue 3 用 ES6 的 Proxy（代理）实现响应式：reactive 用 new Proxy 拦截对象的 get/set/deleteProperty/has/ownKeys 等操作，读取属性时收集依赖（track，把当前 effect 存到该属性的依赖集合），修改属性时触发更新（trigger，遍历依赖集合重新执行 effect）。ref 对基础类型用对象包装（.value 访问，内部也用 reactive 处理对象）。相比 Vue 2 的 Object.defineProperty，Proxy 能拦截数组下标、新增属性、删除属性等操作，不需要 $set，性能更好且支持 Map/Set。组件渲染函数就是一个 effect，数据变化触发重新渲染。"
+    },
+    {
+      "id": "kb-031",
+      "category": "cpp",
+      "keywords": ["链表", "linked list", "单链表", "双链表", "指针", "节点"],
+      "weakKeywords": ["数据结构", "c++"],
+      "question": "链表是什么？和数组有什么区别？",
+      "answer": "链表是线性数据结构，每个节点包含数据域和指针域（指向下一节点），通过指针串联，内存不连续。单链表只有 next 指针，双链表有 prev 和 next，循环链表尾节点指向头。与数组区别：数组内存连续、支持 O(1) 随机访问、插入删除需移动元素 O(n)；链表不支持随机访问（查找 O(n)）、插入删除只需改指针 O(1)（已知节点位置时）。C++ STL 有 std::list（双链表）。竞赛中链表常用于邻接表存图、哈希表拉链法、LRU 缓存。手写链表注意指针操作顺序，避免内存泄漏。"
+    },
+    {
+      "id": "kb-032",
+      "category": "cpp",
+      "keywords": ["栈和队列", "stack", "queue", "先进后出", "先进先出", "deque", "双端队列"],
+      "weakKeywords": ["栈", "队列", "数据结构", "c++"],
+      "question": "栈和队列有什么区别？",
+      "answer": "栈（Stack）：后进先出（LIFO），只能在栈顶操作（push 入栈、pop 出栈、top 取栈顶、empty 判空），C++ 用 std::stack（底层默认 deque）。队列（Queue）：先进先出（FIFO），队尾入队（push）、队头出队（pop）、front 取队头，C++ 用 std::queue。双端队列 deque 两端都可 push/pop，竞赛常用。应用：栈用于括号匹配、表达式求值、函数调用栈、DFS、单调栈；队列用于 BFS、滑动窗口、任务调度、拓扑排序、单调队列。优先队列 priority_queue 用堆实现，每次取最大/最小元素，用于 Dijkstra、哈夫曼、TopK。"
+    },
+    {
+      "id": "kb-033",
+      "category": "cpp",
+      "keywords": ["二叉树", "binary tree", "遍历", "前序", "中序", "后序", "层序", "树"],
+      "weakKeywords": ["数据结构"],
+      "question": "二叉树的遍历方式有哪些？",
+      "answer": "二叉树每个节点最多两个子节点（左/右）。四种遍历：前序（根→左→右，先访问根）、中序（左→根→右，BST 中序是升序）、后序（左→右→根，适合删树/求高度），这三种用递归或栈实现；层序（按层从上到下、每层从左到右）用队列实现（BFS）。性质：中序+前序或中序+后序可唯一确定一棵二叉树，前序+后序不能。满二叉树每层都满，完全二叉树除最后一层外都满且最后一层靠左。堆是完全二叉树（大根堆/小根堆），用于优先队列。二叉搜索树（BST）左<根<右，中序有序。"
+    },
+    {
+      "id": "kb-034",
+      "category": "cpp",
+      "keywords": ["哈希表", "散列表", "hash", "哈希函数", "冲突", "unordered_map", "拉链法"],
+      "weakKeywords": ["数据结构", "c++"],
+      "question": "哈希表是什么？如何解决冲突？",
+      "answer": "哈希表（Hash Table）通过哈希函数把 key 映射到数组下标，实现平均 O(1) 的查找/插入/删除。C++ 用 std::unordered_map / unordered_set（基于哈希，无序，平均 O(1)），而 map/set 基于红黑树（有序，O(log n)）。哈希冲突（不同 key 映射到同一位置）解决方法：链地址法（拉链法，每个位置挂链表，最常用，unordered_map 用此）、开放寻址法（线性探测/二次探测/双重哈希，找下一个空位）。注意：哈希表无序，需要有序遍历时用 map；自定义类型作 key 需自定义哈希函数和相等判断；最坏情况冲突严重会退化成 O(n)。"
+    },
+    {
+      "id": "kb-035",
+      "category": "cpp",
+      "keywords": ["动态规划", "dp", "状态转移", "最优子结构", "重叠子问题", "背包"],
+      "weakKeywords": ["算法", "c++"],
+      "question": "动态规划是什么？",
+      "answer": "动态规划（DP）把复杂问题分解为重叠子问题，通过保存子问题的解避免重复计算，适用于有最优子结构和重叠子问题的问题。三要素：状态定义（dp[i] 或 dp[i][j] 表示什么）、状态转移方程（当前状态怎么从之前的状态推来）、初始条件和边界。思考顺序：先想暴力递归 → 发现重叠子问题 → 加记忆化搜索（memo）→ 改写成递推 DP（自底向上）。经典问题：斐波那契、爬楼梯、01背包/完全背包、最长上升子序列（LIS）、最长公共子序列（LCS）、编辑距离、区间DP、树形DP、状压DP。注意空间优化（滚动数组把二维降一维）。"
+    },
+    {
+      "id": "kb-036",
+      "category": "cpp",
+      "keywords": ["贪心", "greedy", "局部最优", "全局最优", "霍夫曼", "区间"],
+      "weakKeywords": ["算法", "c++"],
+      "question": "贪心算法是什么？",
+      "answer": "贪心算法在每一步都选择当前看起来最优的选择（局部最优），期望最终得到全局最优。特点：简单高效，但不是所有问题都适用，需要证明贪心选择性质（局部最优能导致全局最优）和无后效性。经典问题：活动选择（按结束时间排序选不冲突）、区间覆盖、霍夫曼编码（每次合并最小两个）、Dijkstra（单源最短路，每次选最近未访问点）、Kruskal/Prim（最小生成树）、部分背包（按单位价值排序）、找零钱（特定面额体系）。与 DP 区别：贪心不回溯，一旦选择就不改；DP 会考虑所有子问题的最优解。贪心能用的前提是每步最优不影响后续，否则需用 DP。"
+    },
+    {
+      "id": "kb-037",
+      "category": "cpp",
+      "keywords": ["dfs", "bfs", "深度优先", "广度优先", "搜索", "回溯", "剪枝"],
+      "weakKeywords": ["算法", "图", "搜索"],
+      "question": "DFS 和 BFS 有什么区别？",
+      "answer": "DFS（深度优先搜索）：一条路走到黑，走不通再回溯，用栈（递归系统栈或手动栈）实现，适合遍历所有路径、拓扑排序、连通分量、回溯枚举、求方案数。BFS（广度优先搜索）：按层扩展，先访问所有距离为 1 的点，再距离 2，用队列实现，适合求无权图最短路径、层序遍历、最近距离、多源 BFS（洪水填充）。时间复杂度都是 O(V+E)，空间复杂度 BFS 可能更高（队列存一层节点）。DFS 注意递归深度过大会栈溢出，改用手动栈或迭代；回溯题注意恢复现场（撤销选择）。优化：记忆化搜索、剪枝（可行性剪枝/最优性剪枝）、双向 BFS。"
+    },
+    {
+      "id": "kb-038",
+      "category": "cpp",
+      "keywords": ["并查集", "dsu", "union find", "连通块", "路径压缩", "按秩合并", "kruskal"],
+      "weakKeywords": ["数据结构", "图"],
+      "question": "并查集是什么？",
+      "answer": "并查集（Disjoint Set Union, DSU）是管理不相交集合的数据结构，支持两个核心操作：find（查元素所属集合的根）、union（合并两个集合）。核心优化：路径压缩（find 时把节点直接连到根，摊还复杂度 O(α(n))，α 是反阿克曼函数，增长极慢几乎常数）、按秩合并/按大小合并（小树挂到大树下，避免退化成链）。应用：Kruskal 最小生成树（加边前判断两端是否连通，避免成环）、连通分量计数、朋友圈/亲戚关系、岛屿合并、食物链（带权并查集）。实现极其简洁（一个 parent 数组 + find/union 两个函数），竞赛中几乎是必备工具，遇到分组/连通/合并问题优先想到它。"
+    },
+    {
+      "id": "kb-039",
+      "category": "cpp",
+      "keywords": ["kmp", "字符串匹配", "next数组", "模式匹配", "前缀函数", "失配"],
+      "weakKeywords": ["算法", "字符串"],
+      "question": "KMP 算法是什么？",
+      "answer": "KMP 是高效的字符串模式匹配算法，在文本串中找模式串，时间复杂度 O(n+m)（暴力匹配最坏 O(nm)）。核心是 next 数组（前缀函数）：next[i] 表示模式串前 i 个字符的最长相等真前缀和真后缀的长度。匹配失配时，利用 next 数组让模式串回退到合适位置（j = next[j-1]），而不是从头开始，文本指针 i 不回溯。步骤：先算 next 数组（模式串自我匹配），再用双指针 i（文本）、j（模式）匹配，匹配成功 j==m 时记录位置并 j=next[j-1] 继续找下一个。竞赛中字符串匹配、求循环节（最短循环节 = m - next[m-1]）、求最短回文串、Border 理论都用 KMP 思想。"
+    },
+    {
+      "id": "kb-040",
+      "category": "cpp",
+      "keywords": ["高精度", "大整数", "大数", "进位", "借位", "模拟"],
+      "weakKeywords": ["算法", "c++"],
+      "question": "高精度运算怎么做？",
+      "answer": "高精度用于处理超过基本数据类型范围的大整数（如 100 位甚至 1000 位的数），用数组/字符串模拟竖式运算。加法：从低位到高位逐位相加，sum = a[i]+b[i]+carry，本位 sum%10，进位 sum/10。减法：先比较大小（大减小加负号），逐位相减，不够减向高位借 1（借 1 当 10）。乘法：一位乘多位，结果存到对应位置后统一处理进位；多位乘多位用 i*j → i+j 位置（a[i]*b[j] 加到 c[i+j]），最后统一进位。除法：从高位到低位，试商+减法（高精度减单精度），较复杂。C++ 中用 vector<int> 存每一位（低位在前方便进位，即 c[0] 存个位）。Java 有 BigInteger，Python 原生支持大整数，C++ 需手写。蓝桥杯/竞赛中高精度是常考模板题，注意前导零处理和结果为 0 的特殊情况。"
+    },
+    {
+      "id": "kb-041",
+      "category": "java",
+      "keywords": ["java", "面向对象", "类", "对象", "继承", "多态", "封装", "oop"],
+      "weakKeywords": ["java基础"],
+      "question": "Java 面向对象三大特性是什么？",
+      "answer": "封装：把数据（属性）和操作数据的方法封装在类中，用 private 隐藏内部状态，通过 public 的 getter/setter 方法暴露接口，提高安全性、可维护性和内聚性。继承：子类 extends 父类，继承父类的非私有属性和方法，实现代码复用，Java 是单继承（一个类只能 extends 一个父类），但可 implements 多个接口；子类构造器默认调用 super()。多态：同一方法在不同对象上有不同表现，通过方法重写（Override，子类重写父类方法）和向上转型（父类引用指向子类对象）实现，运行时动态绑定（JVM 根据实际对象类型调用方法）。抽象类（abstract，可含抽象方法和普通方法，单继承）和接口（interface，全抽象，JDK8 后可有 default 方法，多实现）是实现多态和规范的常用手段。"
+    },
+    {
+      "id": "kb-042",
+      "category": "java",
+      "keywords": ["java集合", "集合框架", "list", "map", "set", "arraylist", "hashmap", "collection"],
+      "weakKeywords": ["java", "容器"],
+      "question": "Java 集合框架有哪些常用类？",
+      "answer": "Java 集合框架（JCF）分两大接口：Collection（List/Set/Queue）和 Map（键值对）。List（有序可重复）：ArrayList（数组实现，随机访问 O(1)，尾部增删 O(1)，中间增删 O(n)，最常用）、LinkedList（双链表实现，增删 O(1)，随机访问 O(n)，可作栈/队列/双端队列）、Vector（线程安全，已过时）。Set（无序不重复）：HashSet（哈希表，O(1)，最常用）、TreeSet（红黑树，有序 O(log n)）、LinkedHashSet（哈希+链表，保持插入顺序）。Map（key 不重复）：HashMap（哈希表，O(1)，最常用，允许 null，JDK8 后数组+链表+红黑树，链表长度>8 转红黑树）、TreeMap（红黑树，按 key 排序 O(log n)）、LinkedHashMap（保持插入顺序）、Hashtable（线程安全，已过时）、ConcurrentHashMap（线程安全，并发场景用）。Queue：LinkedList、ArrayDeque、PriorityQueue（优先队列，堆实现）。"
+    },
+    {
+      "id": "kb-043",
+      "category": "tool",
+      "keywords": ["git", "版本控制", "commit", "push", "pull", "分支", "merge", "常用命令"],
+      "weakKeywords": ["工具", "命令"],
+      "question": "Git 常用命令有哪些？",
+      "answer": "基础：git init（初始化仓库）、git clone 地址（克隆远程仓库）、git add 文件名（暂存，git add . 暂存所有）、git commit -m \"消息\"（提交，推荐格式 类型:简述，如 feat:/fix:/docs:）、git push（推送到远程）、git pull（拉取并合并远程更新）、git status（查看工作区状态）、git log（查看提交历史，--oneline 简洁显示）、git diff（查看修改内容）。分支：git branch（查看分支）、git checkout -b 名（创建并切换分支）、git switch 分支名（切换分支，Git 2.23+）、git merge 分支名（合并分支到当前）、git branch -d 名（删除分支）。撤销：git restore 文件名（撤销工作区修改）、git restore --staged 文件名（取消暂存）、git reset（回退版本，--soft/--mixed/--hard，--hard 慎用会丢工作区）、git revert（生成新提交撤销某次提交，安全）。远程：git remote -v（查看远程）、git remote add origin 地址（添加远程）。本项目遵循 develop 开发→test 测试→main 发布的三分支流程。"
+    },
+    {
+      "id": "kb-044",
+      "category": "contest",
+      "keywords": ["蓝桥杯", "竞赛", "lanqiao", "省赛", "国赛", "备赛"],
+      "weakKeywords": ["比赛", "算法"],
+      "question": "蓝桥杯竞赛是什么？怎么备赛？",
+      "answer": "蓝桥杯全国软件和信息技术专业人才大赛是国内参赛规模最大的算法竞赛之一，分省赛（每年4月左右）和国赛（每年5-6月）两轮，省赛一等奖晋级国赛。软件类（C/C++/Java/Python）主要考算法与数据结构，题型为填空题（结果填空，只需答案）和编程题（代码设计，提交完整代码），共 5-6 题，时长 4 小时，难度低于 ACM/ICPC 但题量大、重基础、数据范围友好。常考知识点：枚举、模拟、排序、搜索（DFS/BFS）、动态规划、贪心、数论（gcd/素数/快速幂）、图论（最短路/并查集）、字符串、高精度、二分答案。备赛建议：1) 刷历年真题（蓝桥杯官网/洛谷/AcWing 有真题集），熟悉题型和难度；2) 掌握常用模板（快排/二分/gcd/埃氏筛/并查集/Dijkstra/KMP/高精度）；3) 注意数据范围和时间复杂度，1 秒约 1e8 次简单操作；4) 善用暴力骗分（部分分），填空题可用程序跑结果；5) 考前模拟限时训练，适应 4 小时节奏。"
+    },
+    {
+      "id": "kb-045",
+      "category": "algorithm",
+      "keywords": ["时间复杂度", "空间复杂度", "复杂度", "大o", "big o", "算法效率"],
+      "weakKeywords": ["算法", "效率"],
+      "question": "时间复杂度和空间复杂度怎么分析？",
+      "answer": "时间复杂度衡量算法运行时间随数据规模 n 的增长趋势，用大 O 表示，忽略常数系数和低阶项，只看最高阶。常见复杂度从快到慢：O(1) 常数（哈希查找、数组随机访问）、O(log n) 对数（二分查找、平衡树操作）、O(n) 线性（遍历数组/链表）、O(n log n)（快速排序/归并排序/堆排序）、O(n²)（冒泡/选择/插入排序、双重循环）、O(n³)（三重循环、Floyd）、O(2ⁿ) 指数（暴力递归、子集枚举）、O(n!)（全排列、旅行商暴力）。空间复杂度衡量额外内存占用，同样用大 O，如 O(1) 原地算法、O(n) 需开 n 大小数组、O(n²) 二维数组、递归深度也算空间（DFS O(深度)）。分析方法：数循环嵌套层数、递归调用次数和分支数、额外开辟的空间大小。竞赛中 1 秒约能跑 1e8 次简单操作（C++），据此判断算法是否会超时：n≤20 可 O(2ⁿ)，n≤100 可 O(n³)，n≤1000 可 O(n²)，n≤1e5 需 O(n log n)，n≤1e6 需 O(n)。"
+    }
+  ]
+}

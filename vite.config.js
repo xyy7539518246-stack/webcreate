@@ -5,6 +5,7 @@ import vue from '@vitejs/plugin-vue'
 // https://vitejs.dev/config/
 // base：构建产物用于 GitHub Pages 项目站点（https://<user>.github.io/webcreate/），
 // 本地开发（dev）保持根路径，不受影响
+// AI 问答：DeepSeek API 由浏览器直连（接口允许跨域），key 通过 .env 的 VITE_DEEPSEEK_API_KEY 注入
 export default defineConfig(({ command }) => ({
   base: command === 'build' ? '/webcreate/' : '/',
   plugins: [vue()],
