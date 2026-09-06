@@ -19,6 +19,7 @@ const loading = ref(false)
 // 验证码 60 秒倒计时（与注册页共用机制）
 const COUNT_DOWN = 60
 const countdown = ref(0)
+const sentCode = ref('') // 页面内显示当前验证码（替代 alert，避免阻塞导致计时不同步）
 let timer = null
 
 function startCountdown() {
@@ -29,6 +30,7 @@ function startCountdown() {
     if (countdown.value <= 0) {
       clearInterval(timer)
       timer = null
+      sentCode.value = ''
     }
   }, 1000)
 }
@@ -47,8 +49,8 @@ function sendCode() {
     return
   }
   const { code } = userStore.createCode(form.phone)
-  // 模拟短信下发：真实场景由后端生成并发送，此处以提示方式给出，作为后端样例
-  alert(`【WebCreate】您的验证码为 ${code}，60 秒内有效（后端样例：实际由服务端下发短信）`)
+  // 页面内显示验证码：替代 alert，避免阻塞导致倒计时与实际有效期不同步
+  sentCode.value = code
   startCountdown()
 }
 
@@ -137,6 +139,9 @@ function handleSubmit() {
             </button>
           </div>
           <span v-if="errors.code" class="forgot__error">{{ errors.code }}</span>
+          <div v-if="sentCode && countdown > 0" class="forgot__code-hint">
+            验证码：<strong>{{ sentCode }}</strong>（{{ countdown }}s 内有效，后端样例）
+          </div>
         </label>
 
         <label class="forgot__field">
@@ -242,6 +247,19 @@ function handleSubmit() {
   color: #d93026;
   font-size: 12px;
   margin-top: 4px;
+}
+
+.forgot__code-hint {
+  margin-top: 6px;
+  font-size: 12px;
+  color: var(--color-text-secondary);
+}
+
+.forgot__code-hint strong {
+  color: var(--color-primary);
+  font-size: 15px;
+  letter-spacing: 3px;
+  font-family: 'Courier New', monospace;
 }
 
 .forgot__submit {
