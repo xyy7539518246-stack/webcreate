@@ -1,0 +1,144 @@
+/* ===== WebCreate 全局基础样式（reset + 设计变量） ===== */
+
+:root {
+  /* 主题色 */
+  --color-primary: #2f6bff;
+  --color-primary-dark: #2454d6;
+  --color-bg: #f5f7fb;
+  --color-surface: #ffffff;
+  --color-text: #1f2329;
+  --color-text-secondary: #646a73;
+
+  /* 布局 */
+  --nav-height: 60px;
+  --radius: 10px;
+  --shadow: 0 2px 12px rgba(31, 35, 41, 0.08);
+
+  /* 字体 */
+  font-family: 'PingFang SC', 'Microsoft YaHei', 'Helvetica Neue', Arial,
+    sans-serif;
+  line-height: 1.6;
+  color: var(--color-text);
+}
+
+/* reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  height: 100%;
+  /* 移动端：禁止横屏时字体自动放大 */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  /* 移动端：去掉点击灰色高亮，提升触控跟手度 */
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  height: 100%;
+  /* 兜底：防止个别内容在窄屏产生横向滚动 */
+  overflow-x: hidden;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--color-primary-dark);
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+}
+
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+/* 通用工具类 */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.card {
+  background: var(--color-surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 20px;
+}
+
+/* ===== 移动端全局微调 ===== */
+@media (max-width: 768px) {
+  .container {
+    padding: 0 12px;
+  }
+
+  .card {
+    padding: 16px;
+  }
+
+  /* 触控友好：移动端按钮/链接最小可点区域 */
+  .btn {
+    min-height: 40px;
+  }
+
+  /* 输入框字号不小于 16px，避免 iOS 聚焦时自动缩放页面 */
+  input,
+  textarea,
+  select {
+    font-size: 16px;
+  }
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 18px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: var(--color-primary);
+  color: #fff;
+  transition: opacity 0.2s;
+}
+
+.btn:hover {
+  opacity: 0.88;
+}
+
+.btn--ghost {
+  background: transparent;
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}

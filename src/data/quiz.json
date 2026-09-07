@@ -1,0 +1,739 @@
+{
+  "groups": [
+    {
+      "id": "frontend",
+      "name": "前端基础",
+      "desc": "HTML5 · CSS3 · JavaScript ES6+",
+      "questions": [
+        {
+          "id": "frontend-01",
+          "question": "下列标签中，属于 HTML5 语义化标签的是？",
+          "options": ["div", "span", "article", "font"],
+          "answer": "C",
+          "explanation": "article 表示页面中独立的、可复用的内容区块，是 HTML5 语义化标签；div / span 无语义，font 标签已废弃。语义化标签能提升可读性与无障碍访问（SEO、屏幕阅读器友好）。"
+        },
+        {
+          "id": "frontend-02",
+          "question": "Flex 布局中，想让子元素沿主轴（水平方向）居中，应使用？",
+          "options": ["justify-content: center", "align-items: center", "text-align: center", "margin: 0 auto"],
+          "answer": "A",
+          "explanation": "justify-content 控制主轴（main axis）方向的排列与对齐；align-items 控制交叉轴方向；text-align 作用于文本，margin 居中依赖定宽，都不是 Flex 下沿主轴的推荐做法。"
+        },
+        {
+          "id": "frontend-03",
+          "question": "下列 CSS 样式中，优先级最高的是？",
+          "options": ["标签选择器 p", "类选择器 .box", "id 选择器 #main", "内联样式 style=\"...\""],
+          "answer": "D",
+          "explanation": "CSS 优先级：内联样式 > id 选择器 > 类 / 属性 / 伪类选择器 > 标签 / 伪元素选择器。内联样式直接写在元素上，优先级最高（!important 除外）。"
+        },
+        {
+          "id": "frontend-04",
+          "question": "关于 let / const / var，下列说法正确的是？",
+          "options": ["var 具有块级作用域", "let 在同一作用域可重复声明", "const 声明的变量不能再重新赋值", "let 存在变量提升且初始化前可用"],
+          "answer": "C",
+          "explanation": "const 声明常量，一旦赋值不能再重新绑定（对象的属性仍可修改）；var 只有函数作用域且会变量提升；let 有块级作用域但不能重复声明，声明前访问会报暂时性死区错误。"
+        },
+        {
+          "id": "frontend-05",
+          "question": "对数组 [1, 2, 2, 3, 3, 3] 去重，最简洁的做法是？",
+          "options": ["new Set(arr) 后再转回数组", "双层 for 循环去重", "sort 后比较相邻元素", "用 indexOf 逐个判断"],
+          "answer": "A",
+          "explanation": "Set 天然去重且不改变插入顺序，[...new Set(arr)] 一行即可；其他方法也能实现但代码更长、复杂度更高。"
+        },
+        {
+          "id": "frontend-06",
+          "question": "HTML 中用于定义表格中一行（行）的标签是？",
+          "options": ["<td>", "<th>", "<tr>", "<table>"],
+          "answer": "C",
+          "explanation": "tr（table row）定义表格行；td 定义单元格，th 定义表头单元格，table 定义整个表格。"
+        },
+        {
+          "id": "frontend-07",
+          "question": "box-sizing: border-box 的作用是？",
+          "options": ["让 padding 和 border 计入元素宽高", "让宽高只包含内容区", "禁用盒模型", "让外边距合并"],
+          "answer": "A",
+          "explanation": "border-box 下，width/height 包含 content + padding + border，布局时更易控制总尺寸；默认的 content-box 只把 padding/border 计算在宽高之外。"
+        },
+        {
+          "id": "frontend-08",
+          "question": "position: fixed 的元素相对于什么定位？",
+          "options": ["最近的定位祖先", "浏览器视口（viewport）", "父元素", "body 的内容区"],
+          "answer": "B",
+          "explanation": "fixed 相对于浏览器视口定位，不随滚动条移动；relative/absolute 才相对最近的定位祖先（absolute）或自身（relative）定位。"
+        },
+        {
+          "id": "frontend-09",
+          "question": "事件冒泡过程中，阻止事件继续向父级传播的方法是？",
+          "options": ["event.preventDefault()", "event.stopPropagation()", "return false 且不阻止默认", "event.cancelBubble = true 之外无其他方法"],
+          "answer": "B",
+          "explanation": "stopPropagation() 阻止事件继续冒泡（向父级传播）；preventDefault() 只取消浏览器默认行为（如链接跳转），不阻止传播。"
+        },
+        {
+          "id": "frontend-10",
+          "question": "关于 == 与 === 的区别，下列说法正确的是？",
+          "options": ["== 比较前会做类型转换，=== 不做类型转换", "=== 比较前会做类型转换", "两者完全等价", "== 只比较引用类型"],
+          "answer": "A",
+          "explanation": "== 会先进行隐式类型转换再比较（如 '1' == 1 为 true）；=== 要求类型和值都相等（'1' === 1 为 false）。建议一律使用 ===。"
+        },
+        {
+          "id": "frontend-11",
+          "question": "typeof null 的返回值是？",
+          "options": ["\"null\"", "\"object\"", "\"undefined\"", "\"number\""],
+          "answer": "B",
+          "explanation": "这是 JavaScript 的历史遗留 bug：typeof null 返回 \"object\"。null 本身是空值，判断时建议用 === null。"
+        },
+        {
+          "id": "frontend-12",
+          "question": "让元素隐藏且完全不占页面空间的 CSS 属性是？",
+          "options": ["visibility: hidden", "opacity: 0", "display: none", "position: absolute"],
+          "answer": "C",
+          "explanation": "display: none 使元素不渲染、不占空间；visibility: hidden 隐藏但保留占位；opacity: 0 视觉透明但仍可交互、仍占空间。"
+        },
+        {
+          "id": "frontend-13",
+          "question": "CSS 伪类 :hover 表示什么状态？",
+          "options": ["元素获得焦点", "鼠标悬停在元素上", "元素被访问过", "元素处于激活按下状态"],
+          "answer": "B",
+          "explanation": ":hover 匹配鼠标悬停的元素；:focus 匹配获得焦点（如键盘 Tab 到输入框），:active 匹配正在被按下的元素。"
+        },
+        {
+          "id": "frontend-14",
+          "question": "localStorage 与 sessionStorage 的主要区别是？",
+          "options": ["localStorage 关闭标签页即清空", "sessionStorage 数据可长期保存，localStorage 随会话结束", "localStorage 持久保存，sessionStorage 随会话（标签页）结束而清除", "两者没有区别"],
+          "answer": "C",
+          "explanation": "localStorage 无过期时间，浏览器关闭后仍在；sessionStorage 只在当前标签页会话内有效，标签页关闭即清除。本项目登录态用 localStorage 模拟会话保持。"
+        },
+        {
+          "id": "frontend-15",
+          "question": "JSON.parse('{\"a\":1}') 的作用是？",
+          "options": ["把 JSON 字符串解析为 JavaScript 对象", "把对象序列化为字符串", "校验 JSON 语法并返回布尔值", "复制一个对象"],
+          "answer": "A",
+          "explanation": "JSON.parse 将 JSON 字符串解析为 JS 对象/数组；JSON.stringify 是反向操作（对象 → 字符串）。项目 utils/storage.js 即用这两个方法封装存取。"
+        },
+        {
+          "id": "frontend-16",
+          "question": "箭头函数与普通函数的一个重要区别是？",
+          "options": ["箭头函数有自己的 this", "箭头函数不绑定自己的 this，继承外层作用域", "箭头函数可以用作构造函数", "箭头函数有 arguments 对象"],
+          "answer": "B",
+          "explanation": "箭头函数没有自己的 this（继承定义时外层作用域的 this），也没有自己的 arguments，且不能作为构造函数（不能 new）。"
+        },
+        {
+          "id": "frontend-17",
+          "question": "<meta charset=\"UTF-8\"> 的作用是？",
+          "options": ["声明页面使用的字符编码", "设置页面关键字", "适配移动端视口", "设置页面描述"],
+          "answer": "A",
+          "explanation": "charset 声明文档字符编码为 UTF-8，避免中文等字符乱码；keywords/description 用于 SEO，viewport 用于移动端适配。"
+        },
+        {
+          "id": "frontend-18",
+          "question": "CSS 中 z-index 要生效，元素需要满足什么条件？",
+          "options": ["必须是普通文档流元素", "必须是定位元素（position 非 static）", "必须设置 float", "必须是块级元素"],
+          "answer": "B",
+          "explanation": "z-index 只对定位元素（position: relative/absolute/fixed/sticky）以及 flex/grid 子项生效；static 定位下 z-index 无效。"
+        },
+        {
+          "id": "frontend-19",
+          "question": "数组方法中，从数组尾部移除并返回最后一个元素的是？",
+          "options": ["shift()", "unshift()", "pop()", "push()"],
+          "answer": "C",
+          "explanation": "pop() 删除并返回尾部元素；push() 尾部追加；shift() 删除并返回头部元素；unshift() 头部插入。"
+        },
+        {
+          "id": "frontend-20",
+          "question": "Promise 在 JavaScript 中的主要用途是？",
+          "options": ["同步阻塞代码", "处理异步操作，避免回调地狱", "替代所有循环", "操作 DOM 的样式"],
+          "answer": "B",
+          "explanation": "Promise 是异步编程的解决方案，用链式调用（then/catch）替代层层嵌套的回调，配合 async/await 让异步代码更可读。"
+        }
+      ]
+    },
+    {
+      "id": "vue",
+      "name": "Vue 3",
+      "desc": "组合式 API · 模板语法 · 组件通信",
+      "questions": [
+        {
+          "id": "vue-01",
+          "question": "Vue 3 组合式 API 中，组件逻辑的入口函数是？",
+          "options": ["data()", "setup()", "created", "mounted"],
+          "answer": "B",
+          "explanation": "setup() 是组合式 API 的入口，在组件创建前执行，ref / reactive / computed / watch 等都在其中使用；data / created 属于选项式 API。"
+        },
+        {
+          "id": "vue-02",
+          "question": "实现表单输入的双向绑定的指令是？",
+          "options": ["v-bind", "v-on", "v-model", "v-for"],
+          "answer": "C",
+          "explanation": "v-model 在表单元素上实现数据与视图双向绑定（本质是 value + input 事件的语法糖）；v-bind 单向传值，v-on 绑定事件，v-for 渲染列表。"
+        },
+        {
+          "id": "vue-03",
+          "question": "关于计算属性 computed，下列说法正确的是？",
+          "options": ["只有依赖变化时才重新计算，有缓存", "每次访问都重新执行一遍", "适合做有副作用的操作", "必须带参数使用"],
+          "answer": "A",
+          "explanation": "computed 基于响应式依赖缓存，依赖不变时多次访问直接返回缓存结果；有副作用的逻辑应放在 watch 或方法中。"
+        },
+        {
+          "id": "vue-04",
+          "question": "Vue 3 官方的全局状态管理库是？",
+          "options": ["vue-router", "Pinia", "axios", "Vite"],
+          "answer": "B",
+          "explanation": "Pinia 是 Vue 3 官方推荐的状态管理库（本项目用户状态即存放于 Pinia store）；vue-router 管路由，axios 发请求，Vite 是构建工具。"
+        },
+        {
+          "id": "vue-05",
+          "question": "v-for 渲染列表时为每个项指定 key 的主要作用是？",
+          "options": ["让样式生效", "帮助 diff 算法识别节点、提升复用与渲染性能", "key 必须唯一且是数字", "加速模板编译"],
+          "answer": "B",
+          "explanation": "key 让虚拟 DOM diff 能准确识别哪些项被增删改，避免就地复用导致的渲染错乱，并提升性能；key 值要求唯一但类型不限（数字 / 字符串均可）。"
+        },
+        {
+          "id": "vue-06",
+          "question": "ref 与 reactive 的区别，下列说法正确的是？",
+          "options": ["ref 只能用于对象", "reactive 适合基本类型，ref 适合引用类型", "ref 适合基本类型与简单值，reactive 适合对象/数组", "两者完全相同"],
+          "answer": "C",
+          "explanation": "ref 通过 .value 访问，适合基本类型（也能包对象）；reactive 直接访问属性，适合深层对象/数组。模板中 ref 会自动解包，无需写 .value。"
+        },
+        {
+          "id": "vue-07",
+          "question": "想要在某个响应式值变化时执行副作用（如发请求、写日志），应使用？",
+          "options": ["computed", "watch", "methods", "template 插值"],
+          "answer": "B",
+          "explanation": "watch 监听响应式数据变化并执行回调（副作用）；computed 用于派生纯计算值，不应有副作用。"
+        },
+        {
+          "id": "vue-08",
+          "question": "v-if 与 v-show 的区别，下列说法正确的是？",
+          "options": ["v-if 通过 display 切换，元素始终存在", "v-show 通过 display: none 切换，元素始终在 DOM 中", "两者性能完全相同", "v-if 适合频繁切换的场景"],
+          "answer": "B",
+          "explanation": "v-if 为条件渲染：为 false 时元素直接不渲染（销毁/重建，切换成本高）；v-show 只是切换 display，元素始终存在，适合频繁切换。"
+        },
+        {
+          "id": "vue-09",
+          "question": "组合式 API 中，组件挂载完成后执行的钩子是？",
+          "options": ["onMounted", "onCreated", "onSetup", "onReady"],
+          "answer": "A",
+          "explanation": "onMounted 在组件挂载到 DOM 后执行，适合做 DOM 操作、发请求等；Vue 3 组合式 API 用 onMounted，选项式对应 mounted。"
+        },
+        {
+          "id": "vue-10",
+          "question": "父组件向子组件传递数据，子组件通过什么接收？",
+          "options": ["emit", "props", "provide", "slot 的 name"],
+          "answer": "B",
+          "explanation": "父组件通过属性绑定（:xxx=\"值\"）传值，子组件用 defineProps 声明接收；emit 是子向父传值，provide/inject 用于跨层级注入。"
+        },
+        {
+          "id": "vue-11",
+          "question": "子组件向父组件发送事件，应使用？",
+          "options": ["defineProps", "defineEmits + emit", "直接修改父组件的 props", "v-model"],
+          "answer": "B",
+          "explanation": "子组件用 defineEmits 声明事件，通过 emit('事件名', 参数) 触发，父组件用 @事件名 监听；props 是单向的，子组件不能直接改。"
+        },
+        {
+          "id": "vue-12",
+          "question": "vue-router 中，编程式跳转到指定路由的方法是？",
+          "options": ["router.push({ name: 'home' })", "window.location = 'home'", "router.reload()", "location.href = '#'"],
+          "answer": "A",
+          "explanation": "router.push 是路由编程式导航的标准方式，支持路径或命名路由对象；直接改 location 会整页刷新，丢失 SPA 体验。"
+        },
+        {
+          "id": "vue-13",
+          "question": "路由路径 /user/:id 中，组件里读取动态参数 id 的方式是？",
+          "options": ["route.query.id", "route.params.id", "route.meta.id", "route.name"],
+          "answer": "B",
+          "explanation": "路径中的 :id 动态段存放在 route.params 中（route.params.id）；query 对应 ?key=value 查询参数，meta 是路由元信息。"
+        },
+        {
+          "id": "vue-14",
+          "question": "路由全局前置守卫 router.beforeEach 的典型用途是？",
+          "options": ["修改页面标题", "登录态校验与访问控制", "打包代码", "定义组件样式"],
+          "answer": "B",
+          "explanation": "beforeEach 在每次路由跳转前执行，常用于登录态校验（本项目据此把未登录用户重定向到 /login）、权限控制等；标题设置一般在 afterEach 或组件内。"
+        },
+        {
+          "id": "vue-15",
+          "question": "<script setup> 中定义的变量和函数，在模板中？",
+          "options": ["需要手动 return 才能使用", "自动暴露给模板使用", "只能在 script 内使用", "必须加 $ 前缀"],
+          "answer": "B",
+          "explanation": "<script setup> 中顶层声明的变量、函数、import 的组件都会自动暴露给模板，无需 return（这是与普通 setup() 的最大便利之一）。"
+        },
+        {
+          "id": "vue-16",
+          "question": "Vue 模板中，在标签内插入响应式文本的语法是？",
+          "options": ["${ }", "{{ }}", "<% %>", "[ ]"],
+          "answer": "B",
+          "explanation": "{{ }} 是 Vue 模板插值语法，内部表达式的结果会响应式渲染；${} 是模板字符串语法，<% %> 是 EJS 等模板引擎语法。"
+        },
+        {
+          "id": "vue-17",
+          "question": "事件绑定中，@click.stop 的作用是？",
+          "options": ["阻止默认行为", "阻止事件冒泡", "阻止事件捕获", "停止响应式更新"],
+          "answer": "B",
+          "explanation": ".stop 是事件修饰符，等价于调用 event.stopPropagation() 阻止冒泡；.prevent 才对应 preventDefault() 阻止默认行为。"
+        },
+        {
+          "id": "vue-18",
+          "question": "v-for 遍历对象 { a: 1, b: 2 } 时，最常见的解构写法是？",
+          "options": ["v-for=\"value in obj\" 只能取到键名", "v-for=\"(value, key, index) in obj\"", "v-for=\"key in obj\" 只能取到值", "对象不能 v-for"],
+          "answer": "B",
+          "explanation": "遍历对象时 (value, key, index) 分别对应值、键、索引；遍历数组时 (item, index) 对应元素与索引。"
+        },
+        {
+          "id": "vue-19",
+          "question": "provide / inject 的主要使用场景是？",
+          "options": ["父子组件间频繁传值", "跨多层级组件共享数据，避免逐层传递 props", "路由跳转传参", "表单校验"],
+          "answer": "B",
+          "explanation": "provide 在祖先组件提供数据，inject 在后代组件注入，适合跨多层传递（如主题、当前用户）；简单父子传值仍推荐 props/emit。"
+        },
+        {
+          "id": "vue-20",
+          "question": "Vue 3 中创建并挂载应用的正确代码是？",
+          "options": ["new Vue().mount('#app')", "createApp(App).mount('#app')", "Vue.render(App)", "createApp('#app', App)"],
+          "answer": "B",
+          "explanation": "Vue 3 通过 createApp(App).mount('#app') 创建并挂载根组件（项目 main.js 正是这样）；new Vue() 是 Vue 2 的全局构造器写法。"
+        }
+      ]
+    },
+    {
+      "id": "cpp",
+      "name": "C++ 基础",
+      "desc": "指针引用 · STL · 面向对象",
+      "questions": [
+        {
+          "id": "cpp-01",
+          "question": "关于引用（reference），下列说法正确的是？",
+          "options": ["引用可以重新绑定到其他变量", "引用必须初始化，且之后不能改绑", "引用可以不初始化", "引用可以指向空（nullptr）"],
+          "answer": "B",
+          "explanation": "引用是已存在对象的别名，声明时必须初始化且终生绑定该对象；指针才可以在初始化后改变指向，也可以为 nullptr。"
+        },
+        {
+          "id": "cpp-02",
+          "question": "向 vector 尾部添加一个元素，应使用？",
+          "options": ["push_back()", "insert() 不带迭代器", "append()", "add()"],
+          "answer": "A",
+          "explanation": "push_back() 在 vector 尾部追加元素，均摊 O(1)；insert 需要指定位置迭代器；append / add 不是 vector 的成员方法。"
+        },
+        {
+          "id": "cpp-03",
+          "question": "std::map 的底层实现是？",
+          "options": ["哈希表", "红黑树", "跳表", "连续数组"],
+          "answer": "B",
+          "explanation": "std::map 底层是红黑树（有序，键按升序排列，操作 O(log n)）；哈希表对应 std::unordered_map（无序，平均 O(1)）。两者不要混淆。"
+        },
+        {
+          "id": "cpp-04",
+          "question": "C++ 构造函数不能声明为？",
+          "options": ["内联函数", "重载函数", "虚函数", "成员函数"],
+          "answer": "C",
+          "explanation": "构造对象时虚表（vtable）还未建立完成，无法通过虚表调用，因此构造函数不能是虚函数；析构函数则可以且常被声明为虚函数。"
+        },
+        {
+          "id": "cpp-05",
+          "question": "关于智能指针 std::unique_ptr，下列说法正确的是？",
+          "options": ["可以随意拷贝复制", "独占所有权，禁止拷贝但可移动", "多个指针共享同一对象", "使用后必须手动 delete"],
+          "answer": "B",
+          "explanation": "unique_ptr 独占对象所有权，不可拷贝（拷贝构造被删除），但可用 std::move 转移所有权；shared_ptr 才支持共享所有权。智能指针自动管理释放，无需手动 delete。"
+        },
+        {
+          "id": "cpp-06",
+          "question": "指针和引用的区别，下列说法正确的是？",
+          "options": ["指针必须在定义时初始化", "引用可以重新指向别的对象", "指针可以重新赋值指向其他对象，引用不可", "引用可以为空"],
+          "answer": "C",
+          "explanation": "指针是存储地址的变量，可随时重新赋值，可为 nullptr；引用是别名，初始化后不可改绑，也不能为空。"
+        },
+        {
+          "id": "cpp-07",
+          "question": "vector 与普通数组相比，最重要的优势是？",
+          "options": ["访问更快", "支持动态扩容，大小可增长", "只能存整数", "不占用内存"],
+          "answer": "B",
+          "explanation": "vector 封装了动态数组，插入超过容量时自动扩容；普通数组大小固定（栈数组）或需手动管理（new[]）。"
+        },
+        {
+          "id": "cpp-08",
+          "question": "连接两个 string 对象 s1、s2，最简洁的写法是？",
+          "options": ["strcat(s1, s2)", "s1 + s2", "s1.append(s2) 之外还有更简单写法", "memcpy(s1, s2)"],
+          "answer": "B",
+          "explanation": "std::string 重载了 + 运算符，s1 + s2 即可拼接；strcat / memcpy 是 C 风格字符数组操作，不适合直接用于 string 对象。"
+        },
+        {
+          "id": "cpp-09",
+          "question": "函数重载（overload）指的是？",
+          "options": ["同名函数，参数列表不同", "不同名的函数", "同一个函数在多个文件定义", "虚函数"],
+          "answer": "A",
+          "explanation": "重载：同一作用域下函数名相同、参数个数或类型不同，编译器根据实参选择调用版本；注意返回值类型不能作为重载区分依据。"
+        },
+        {
+          "id": "cpp-10",
+          "question": "公有继承（public）下，基类的 public 成员在派生类中的访问级别是？",
+          "options": ["private", "protected", "public", "不可访问"],
+          "answer": "C",
+          "explanation": "public 继承保持基类成员的访问级别不变：public 仍是 public，protected 仍是 protected；protected/private 继承才会降级。"
+        },
+        {
+          "id": "cpp-11",
+          "question": "虚函数（virtual）的作用是？",
+          "options": ["加快编译", "实现运行时多态，通过基类指针调用派生类实现", "禁止继承", "让函数变为内联"],
+          "answer": "B",
+          "explanation": "虚函数支持运行时多态：基类指针/引用指向派生类对象时，调用虚函数会分发到派生类的实现（通过虚表 vtable）。"
+        },
+        {
+          "id": "cpp-12",
+          "question": "包含纯虚函数（= 0）的类称为？",
+          "options": ["模板类", "抽象类，不能实例化", "静态类", "友元类"],
+          "answer": "B",
+          "explanation": "含有纯虚函数的类是抽象类，不能创建对象，只能作为基类被继承；派生类必须实现所有纯虚函数后才能实例化。"
+        },
+        {
+          "id": "cpp-13",
+          "question": "C++11 中 auto 关键字的作用是？",
+          "options": ["声明自动存储期变量", "由编译器根据初始化表达式推导类型", "强制指定类型", "声明全局变量"],
+          "answer": "B",
+          "explanation": "C++11 起 auto 用于类型推导：auto x = 3 推导为 int。常用于迭代器、lambda 等长类型名场景；注意 auto 必须初始化。"
+        },
+        {
+          "id": "cpp-14",
+          "question": "命名空间（namespace）的主要作用是？",
+          "options": ["加速编译", "避免全局命名冲突，组织代码", "分配内存", "定义类"],
+          "answer": "B",
+          "explanation": "namespace 把标识符分组，避免不同库/模块间同名函数、变量冲突，如 std 就是标准库命名空间。"
+        },
+        {
+          "id": "cpp-15",
+          "question": "在成员函数声明末尾加 const（如 int get() const）表示？",
+          "options": ["该函数不能修改对象成员（mutable 除外）", "该函数返回常量", "该函数是静态的", "该函数是虚函数"],
+          "answer": "A",
+          "explanation": "const 成员函数承诺不修改对象的非 mutable 成员，可在 const 对象上调用，是良好的接口设计约定。"
+        },
+        {
+          "id": "cpp-16",
+          "question": "构造函数初始化列表（: x(val)）相比在函数体内赋值，特点是？",
+          "options": ["只能初始化基本类型", "在成员构造时直接初始化，更高效且能初始化 const/引用成员", "语法错误", "与函数体赋值完全等价"],
+          "answer": "B",
+          "explanation": "初始化列表在成员被构造时直接初始化（一次构造）；函数体赋值是先默认构造再赋值（多一步）。const 成员和引用成员只能在初始化列表初始化。"
+        },
+        {
+          "id": "cpp-17",
+          "question": "使用 new 在堆上分配的对象，释放时应使用？",
+          "options": ["delete", "free", "malloc(0)", "不需要释放"],
+          "answer": "A",
+          "explanation": "new/delete 配套使用：new 分配并调用构造函数，delete 调用析构函数并释放；new[]/delete[] 配套数组。C 的 malloc/free 不调用构造析构。"
+        },
+        {
+          "id": "cpp-18",
+          "question": "遍历 vector<int> v 的所有元素，标准迭代器写法是？",
+          "options": ["for (auto it = v.begin(); it != v.end(); ++it)", "for (int i = 0; i < v.size; i++)", "while (v.next())", "for (it : v)"],
+          "answer": "A",
+          "explanation": "迭代器遍历：begin() 指向首元素，end() 指向尾后位置，!= 判断结束；C++11 也支持基于范围的 for（for (int x : v)）更简洁。"
+        },
+        {
+          "id": "cpp-19",
+          "question": "对 vector<int> v 升序排序，标准写法是？",
+          "options": ["sort(v)", "sort(v.begin(), v.end())", "v.sort()", "std::order(v)"],
+          "answer": "B",
+          "explanation": "std::sort 需要传入迭代器区间 [first, last)：sort(v.begin(), v.end()) 默认升序；自定义排序可传第三个比较函数/仿函数/lambda。"
+        },
+        {
+          "id": "cpp-20",
+          "question": "判断整数 n 是否为奇数，最快的位运算写法是？",
+          "options": ["n % 2 == 1 之外没有更快写法", "(n & 1) == 1", "(n | 1) == 0", "(n ^ 1) == n"],
+          "answer": "B",
+          "explanation": "二进制最低位为 1 则是奇数：n & 1 只取最低位，比取模更快。注意负数：n & 1 结果仍能正确判断奇偶。"
+        }
+      ]
+    },
+    {
+      "id": "dsa",
+      "name": "数据结构与算法",
+      "desc": "栈 · 排序 · 查找 · 二叉树",
+      "questions": [
+        {
+          "id": "dsa-01",
+          "question": "栈（Stack）的特点是？",
+          "options": ["先进先出（FIFO）", "后进先出（LIFO）", "支持按下标随机访问", "两端都可以入队出队"],
+          "answer": "B",
+          "explanation": "栈只允许在一端（栈顶）插入和删除，后进先出；先进先出是队列（Queue）的特点。"
+        },
+        {
+          "id": "dsa-02",
+          "question": "二分查找适用的前提条件是？",
+          "options": ["数组无序即可", "数据必须有序（且支持随机访问）", "数据必须存储在链表中", "数据量必须小于 1000"],
+          "answer": "B",
+          "explanation": "二分查找每次根据中间值排除一半区间，前提是数据有序且支持 O(1) 随机访问（数组）；链表不支持随机访问，不适合直接二分。"
+        },
+        {
+          "id": "dsa-03",
+          "question": "快速排序的平均时间复杂度是？",
+          "options": ["O(n)", "O(n log n)", "O(n²)", "O(log n)"],
+          "answer": "B",
+          "explanation": "快速排序平均与最好情况为 O(n log n)，最坏情况（每次划分极不平衡）退化到 O(n²)。"
+        },
+        {
+          "id": "dsa-04",
+          "question": "二叉树前序遍历的访问顺序是？",
+          "options": ["根 → 左子树 → 右子树", "左子树 → 根 → 右子树", "左子树 → 右子树 → 根", "右子树 → 根 → 左子树"],
+          "answer": "A",
+          "explanation": "前序（先序）：根左右；中序：左根右；后序：左右根。记忆口诀：按根的位置命名。"
+        },
+        {
+          "id": "dsa-05",
+          "question": "哈希表（Hash Table）查找操作的平均时间复杂度是？",
+          "options": ["O(n)", "O(log n)", "O(1)", "O(n²)"],
+          "answer": "C",
+          "explanation": "理想情况下通过哈希函数直接定位桶，平均 O(1)；发生大量冲突时（如链表法退化为长链）最坏退化为 O(n)。"
+        },
+        {
+          "id": "dsa-06",
+          "question": "队列（Queue）的特点是？",
+          "options": ["先进先出（FIFO）", "后进先出（LIFO）", "随机访问", "只能插入不能删除"],
+          "answer": "A",
+          "explanation": "队列一端入队、另一端出队，先进先出；广度优先搜索（BFS）正是利用队列逐层扩展。"
+        },
+        {
+          "id": "dsa-07",
+          "question": "在已知插入位置的情况下，链表插入一个新节点的时间复杂度是？",
+          "options": ["O(n)", "O(1)", "O(log n)", "O(n²)"],
+          "answer": "B",
+          "explanation": "链表插入只改相邻节点的指针，已知位置时 O(1)；但查找该位置需要遍历，是 O(n)。数组插入则需移动后续元素，为 O(n)。"
+        },
+        {
+          "id": "dsa-08",
+          "question": "二叉树中序遍历（对二叉搜索树）输出的顺序是？",
+          "options": ["无序", "升序（从小到大）", "降序", "按层顺序"],
+          "answer": "B",
+          "explanation": "二叉搜索树左 < 根 < 右，中序遍历（左根右）恰好按升序输出所有节点，这是 BST 的重要性质。"
+        },
+        {
+          "id": "dsa-09",
+          "question": "深度优先搜索（DFS）通常借助什么结构实现（非递归）？",
+          "options": ["队列", "栈", "哈希表", "双向链表"],
+          "answer": "B",
+          "explanation": "DFS 借助栈（递归本质也是系统栈）实现回溯；BFS 借助队列实现逐层扩展。"
+        },
+        {
+          "id": "dsa-10",
+          "question": "二叉堆（Heap）满足的关键性质是？",
+          "options": ["任一节点都不大于（或不小于）其子节点", "任意节点都比所有叶子大", "是完全无序的", "必须是满二叉树"],
+          "answer": "A",
+          "explanation": "堆序性：大根堆中父节点 ≥ 子节点，小根堆反之；且堆是完全二叉树（除最后一层外都填满、最后一层靠左），可用数组存储。"
+        },
+        {
+          "id": "dsa-11",
+          "question": "归并排序的一个显著优点是？",
+          "options": ["最坏情况也是 O(n log n) 且稳定", "不需要额外空间", "比快排永远快", "可以原地不稳定排序"],
+          "answer": "A",
+          "explanation": "归并排序最坏/平均都是 O(n log n)，且是稳定排序；代价是需要 O(n) 的辅助空间。快排最坏 O(n²) 且不稳定。"
+        },
+        {
+          "id": "dsa-12",
+          "question": "冒泡排序最坏情况下的时间复杂度是？",
+          "options": ["O(n)", "O(n log n)", "O(n²)", "O(1)"],
+          "answer": "C",
+          "explanation": "冒泡排序需要两两比较并交换，最坏（逆序）与平均均为 O(n²)；最好情况（已有序+优化标志）可到 O(n)。"
+        },
+        {
+          "id": "dsa-13",
+          "question": "Dijkstra（迪杰斯特拉）算法解决的问题是？",
+          "options": ["单源最短路径（边权非负）", "最小生成树", "拓扑排序", "最大流"],
+          "answer": "A",
+          "explanation": "Dijkstra 求单源点到其他所有点的最短路径，要求边权非负；负权边要用 Bellman-Ford / SPFA。最小生成树是 Prim / Kruskal。"
+        },
+        {
+          "id": "dsa-14",
+          "question": "动态规划（DP）适用的两个关键特征是？",
+          "options": ["重叠子问题 + 最优子结构", "贪心选择 + 无后效性", "数据量大 + 随机访问", "图论 + 树结构"],
+          "answer": "A",
+          "explanation": "DP 要求问题可分解为子问题且子问题重叠（可记忆化复用），并具有最优子结构（整体最优由子问题最优构成）。"
+        },
+        {
+          "id": "dsa-15",
+          "question": "贪心算法的核心思想是？",
+          "options": ["每一步做当前看来最优的选择", "枚举所有方案取最优", "分治后合并", "随机尝试"],
+          "answer": "A",
+          "explanation": "贪心在每一步都做局部最优选择，期望最终得到全局最优；只有满足贪心选择性质的问题才适用（如活动安排、部分背包）。"
+        },
+        {
+          "id": "dsa-16",
+          "question": "树中节点的“度”指的是？",
+          "options": ["该节点的子节点个数", "树的层数", "节点的深度", "节点到根的距离"],
+          "answer": "A",
+          "explanation": "节点的度 = 其子节点（直接分支）的个数；树的度 = 所有节点度的最大值；叶子节点的度为 0。"
+        },
+        {
+          "id": "dsa-17",
+          "question": "平衡二叉树（AVL 树）的定义是？",
+          "options": ["任意节点左右子树高度差不超过 1", "所有节点只有一个子节点", "节点值都相同", "深度一定是 log n"],
+          "answer": "A",
+          "explanation": "AVL 树要求任一节点的左右子树高度差（平衡因子）绝对值 ≤ 1，通过旋转保持平衡，保证查找 O(log n)。"
+        },
+        {
+          "id": "dsa-18",
+          "question": "拓扑排序适用的图是？",
+          "options": ["任意图", "有向无环图（DAG）", "无向图", "带负权边的图"],
+          "answer": "B",
+          "explanation": "拓扑排序是对有向无环图（DAG）的顶点排序，使每条边从前向后；常用于任务调度、课程先修关系。有环则不存在拓扑序。"
+        },
+        {
+          "id": "dsa-19",
+          "question": "算法时间复杂度 O(1) 表示？",
+          "options": ["运行时间与数据规模 n 无关，常数时间", "运行 1 毫秒", "只执行 1 条语句", "需要 1 个变量"],
+          "answer": "A",
+          "explanation": "O(1) 表示操作时间不随输入规模增长，是常数时间（如数组按下标访问）；不等于字面上的 1 次或 1 秒。"
+        },
+        {
+          "id": "dsa-20",
+          "question": "递归函数必须包含的要素是？",
+          "options": ["循环语句", "边界条件（终止条件）+ 递归调用", "全局变量", "动态分配内存"],
+          "answer": "B",
+          "explanation": "递归需要：①明确的终止条件（避免无限递归栈溢出）；②向终止条件收敛的递归调用。典型如阶乘、斐波那契、二叉树遍历。"
+        }
+      ]
+    },
+    {
+      "id": "contest",
+      "name": "竞赛思维",
+      "desc": "蓝桥杯 / ACM 常见套路",
+      "questions": [
+        {
+          "id": "contest-01",
+          "question": "竞赛中常写的 #include <bits/stdc++.h> 的作用是？",
+          "options": ["只包含 iostream", "一次包含全部标准库头文件", "只包含算法头文件", "它是一个自定义头文件，必须自己创建"],
+          "answer": "B",
+          "explanation": "bits/stdc++.h 是 GNU 扩展的万能头文件，一次引入全部标准库（algorithm、vector、iostream 等），比赛常用；但工程开发中建议按需包含，以缩短编译时间。"
+        },
+        {
+          "id": "contest-02",
+          "question": "判断 n 是否为素数，循环上界优化为？",
+          "options": ["for (int i = 2; i * i <= n; i++)", "for (int i = 2; i < n; i++)", "for (int i = 1; i <= n; i++)", "while (true)"],
+          "answer": "A",
+          "explanation": "若 n 有大于 sqrt(n) 的因子，则必有小于 sqrt(n) 的因子与之配对，因此只需试除到 i*i <= n，复杂度从 O(n) 降到 O(√n)。"
+        },
+        {
+          "id": "contest-03",
+          "question": "C++ 中表达式 a % b（a、b 为整数且 b ≠ 0）的结果符号？",
+          "options": ["与 a 相同", "与 b 相同", "恒为正", "恒为负"],
+          "answer": "A",
+          "explanation": "C++ 的 % 结果符号与被除数 a 相同：如 -7 % 3 == -1、7 % -3 == 1。注意这与数学取模（结果非负）不同，处理负数时需自行修正。"
+        },
+        {
+          "id": "contest-04",
+          "question": "两个 100 位的大整数相加，常用做法是？",
+          "options": ["直接用 long long 相加", "用数组 / 字符串模拟竖式加法", "转成 double 计算", "用宏定义扩大范围"],
+          "answer": "B",
+          "explanation": "long long 最大约 9×10^18，装不下 100 位整数；高精度加法用数组或字符串逐位相加、处理进位即可，这是竞赛中的基础套路。"
+        },
+        {
+          "id": "contest-05",
+          "question": "竞赛中加速 cin / cout 读入输出的常用写法是？",
+          "options": ["ios::sync_with_stdio(false);", "每次输出用 endl", "关闭缓冲区", "改用 cout.flush()"],
+          "answer": "A",
+          "explanation": "ios::sync_with_stdio(false) 取消 cin 与 C 标准 IO 的同步，可显著加快读入；配套建议 cin.tie(nullptr)。注意：混用 printf/scanf 与 cin/cout 时开启同步更安全。"
+        },
+        {
+          "id": "contest-06",
+          "question": "前缀和数组的主要用途是？",
+          "options": ["快速求任意区间的和（O(1)）", "排序", "去重", "判断素数"],
+          "answer": "A",
+          "explanation": "预处理前缀和 S[i] = 前 i 项和，则区间 [l, r] 的和 = S[r] - S[l-1]，一次查询 O(1)，适合大量区间求和问题。"
+        },
+        {
+          "id": "contest-07",
+          "question": "差分数组的主要用途是？",
+          "options": ["对数组的某个区间统一加减一个值（O(1) 修改）", "求最大值", "排序", "二分查找"],
+          "answer": "A",
+          "explanation": "差分数组在区间 [l, r] 统一加 x：d[l] += x、d[r+1] -= x，最后前缀和还原原数组。多次区间修改时极为高效。"
+        },
+        {
+          "id": "contest-08",
+          "question": "关于竞赛读入优化，下列说法正确的是？",
+          "options": ["scanf 一定比 cin 慢", "自写 getchar 快读通常比默认 cin 快", "printf 一定比 cout 慢", "读入速度不影响比赛成绩"],
+          "answer": "B",
+          "explanation": "数据量大的题目，自写 getchar 快读或关闭同步的 cin 能显著提升读入速度；默认 cin 因与 C IO 同步较慢。数据小时差异可忽略。"
+        },
+        {
+          "id": "contest-09",
+          "question": "“二分答案”适用的前提是？",
+          "options": ["答案具有单调性（可行性与答案单调变化）", "数据必须是无序的", "只能用于数组", "必须用递归实现"],
+          "answer": "A",
+          "explanation": "当问题的可行性与答案满足单调关系（如越大越可行）时，可二分答案，再用 O(n) 的 check 函数验证，把最优化问题转成判定问题。"
+        },
+        {
+          "id": "contest-10",
+          "question": "状态压缩 DP 中，“压缩状态”通常使用什么来表示？",
+          "options": ["位运算（整数每一位表示一个元素的选取状态）", "字符串", "浮点数", "链表"],
+          "answer": "A",
+          "explanation": "状态压缩用整数的二进制位表示集合成员（如 n 个元素的子集用一个 n 位整数），配合位运算（& | ^ <<）实现高效的集合操作。"
+        },
+        {
+          "id": "contest-11",
+          "question": "快速幂（a^b mod m）的时间复杂度是？",
+          "options": ["O(b)", "O(log b)", "O(b²)", "O(1)"],
+          "answer": "B",
+          "explanation": "快速幂把指数按二进制分解，每次平方底数，循环次数为 b 的二进制位数，即 O(log b)。例如 2^100 只需约 7 次乘法。"
+        },
+        {
+          "id": "contest-12",
+          "question": "求两个整数最大公约数（GCD）的标准算法是？",
+          "options": ["欧几里得算法（辗转相除法）", "冒泡排序", "哈希查找", "快速幂"],
+          "answer": "A",
+          "explanation": "gcd(a, b) = gcd(b, a % b)，递归至余数为 0，即欧几里得算法，复杂度 O(log min(a,b))；C++ 可直接用 std::gcd。"
+        },
+        {
+          "id": "contest-13",
+          "question": "竞赛中比较两个浮点数是否相等，推荐的做法是？",
+          "options": ["直接使用 == 比较", "用绝对值差与极小值 eps 比较（如 fabs(a-b) < 1e-9）", "转换为字符串比较", "四舍五入取整后比较"],
+          "answer": "B",
+          "explanation": "浮点数二进制表示有误差，直接 == 可能误判；用 fabs(a-b) <= eps（如 1e-6 ~ 1e-9）判断近似相等是竞赛通用做法。"
+        },
+        {
+          "id": "contest-14",
+          "question": "经验上，1 秒内 C++ 可执行的简单运算量级约为？",
+          "options": ["10 万次", "1 亿次（1e8）左右", "1 万亿次", "1 千次"],
+          "answer": "B",
+          "explanation": "主流评测机 1 秒大约能跑 1e8 次简单运算，设计算法时据此估算：O(n²) 的 n=1e5 就不合适，而 O(n log n) 的 n=1e6 可行。"
+        },
+        {
+          "id": "contest-15",
+          "question": "STL 中 priority_queue（优先队列）默认是什么堆？",
+          "options": ["大根堆（最大值优先）", "小根堆", "随机堆", "斐波那契堆"],
+          "answer": "A",
+          "explanation": "priority_queue<int> 默认是大根堆，top() 返回最大元素；取小根堆需传 greater<int> 作为比较器。常用于堆优化 Dijkstra、贪心取最值。"
+        },
+        {
+          "id": "contest-16",
+          "question": "next_permutation 函数的作用是？",
+          "options": ["生成序列的下一个字典序排列", "求排列数", "随机打乱数组", "排序数组"],
+          "answer": "A",
+          "explanation": "next_permutation 把序列改为下一个字典序更大的排列，配合 do-while 可枚举所有排列（需先排序保证从最小开始）。"
+        },
+        {
+          "id": "contest-17",
+          "question": "int 类型（32 位）能表示的最大值是？",
+          "options": ["2^31 - 1（约 21 亿）", "2^32 - 1", "2^63 - 1", "10^10"],
+          "answer": "A",
+          "explanation": "32 位 int 用一位存符号，最大值 2^31 - 1 ≈ 2.1×10^9；超出需用 long long（2^63 - 1）或 __int128 / 高精度。"
+        },
+        {
+          "id": "contest-18",
+          "question": "字符串哈希（如 BKDR 哈希）的主要用途是？",
+          "options": ["把字符串映射为整数以便快速比较", "给字符串排序", "压缩字符串", "加密密码"],
+          "answer": "A",
+          "explanation": "字符串哈希把字符串映射为一个（或多个）整数，O(1) 比较两个子串是否相等，常用于字符串匹配、去重；注意用双哈希防冲突。"
+        },
+        {
+          "id": "contest-19",
+          "question": "尺取法（双指针 / 滑动窗口）适用于什么类型的问题？",
+          "options": ["连续区间满足某种条件的最短/最长区间", "求全排列", "图的最短路", "大数运算"],
+          "answer": "A",
+          "explanation": "尺取法用左右两个指针维护一个滑动窗口，在指针单调移动的前提下把 O(n²) 降到 O(n)，典型如“和 ≥ S 的最短子数组”。"
+        },
+        {
+          "id": "contest-20",
+          "question": "竞赛中为什么避免频繁使用 endl 换行？",
+          "options": ["endl 会刷新缓冲区，频繁使用拖慢输出", "endl 语法错误", "endl 不能换行", "endl 只适用于数组"],
+          "answer": "A",
+          "explanation": "endl 在输出换行的同时刷新输出缓冲区，频繁 flush 很慢；大数据量输出建议用 '\\n' 换行，最后再统一 flush。"
+        }
+      ]
+    }
+  ]
+}
