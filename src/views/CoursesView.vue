@@ -48,6 +48,11 @@ const filterTabs = computed(() => {
   ]
 })
 
+// 路线 id → 名称映射（关联路线 chips 展示用）
+const laneNameMap = Object.fromEntries(
+  courses.roadmap.map((r) => [r.lane, r.laneName])
+)
+
 // 有外链的条目点击跳转新窗口；无外链的不触发跳转
 function openContent(item) {
   if (item.link) {
@@ -159,14 +164,34 @@ function openContent(item) {
             >
               {{ TYPE_LABELS[item.type] || item.type }}
             </span>
-            <span class="content-card__level">{{ item.level }}</span>
+            <div class="content-card__badges">
+              <span v-if="item.free" class="badge-free">免费</span>
+              <span class="content-card__level">{{ item.level }}</span>
+            </div>
           </div>
           <div class="content-card__title">{{ item.title }}</div>
           <div class="content-card__org">{{ item.org }}</div>
           <div class="content-card__intro">{{ item.intro }}</div>
+
+          <ul
+            v-if="item.highlights && item.highlights.length"
+            class="content-card__points"
+          >
+            <li v-for="h in item.highlights" :key="h">{{ h }}</li>
+          </ul>
+
           <div class="content-card__foot">
+            <template v-if="item.lanes && item.lanes.length">
+              <span v-for="l in item.lanes" :key="l" class="lane-chip">
+                {{ laneNameMap[l] || l }}
+              </span>
+            </template>
             <span v-for="t in item.tags" :key="t" class="tag">{{ t }}</span>
-            <span v-if="!item.link" class="content-card__nolink-tip">暂无外链</span>
+          </div>
+
+          <div class="content-card__action">
+            <span v-if="item.link">前往学习 →</span>
+            <span v-else class="content-card__action--none">课程项目 · 无外链</span>
           </div>
         </button>
       </div>
@@ -431,6 +456,8 @@ function openContent(item) {
   background: #fff;
   text-align: left;
   transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
 }
 
 .content-card:hover {
@@ -443,6 +470,21 @@ function openContent(item) {
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+.content-card__badges {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.badge-free {
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 6px;
+  background: rgba(82, 196, 26, 0.12);
+  color: #389e0d;
+  font-weight: 600;
 }
 
 .content-card__type {
@@ -501,6 +543,32 @@ function openContent(item) {
   margin-top: 8px;
 }
 
+.content-card__points {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.content-card__points li {
+  position: relative;
+  padding-left: 14px;
+  font-size: 12.5px;
+  color: #374151;
+  line-height: 1.5;
+}
+
+.content-card__points li::before {
+  content: '';
+  position: absolute;
+  left: 2px;
+  top: 8px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--color-primary);
+}
+
 .content-card__foot {
   display: flex;
   flex-wrap: wrap;
@@ -509,9 +577,27 @@ function openContent(item) {
   margin-top: 10px;
 }
 
-.content-card__nolink-tip {
-  color: #b6bcc6;
+.lane-chip {
   font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 6px;
+  background: #f3e8ff;
+  color: #7c3aed;
+  border: 1px solid #e9d5ff;
+}
+
+.content-card__action {
+  margin-top: auto;
+  padding-top: 10px;
+  border-top: 1px solid #f0f2f5;
+  font-size: 12px;
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.content-card__action--none {
+  color: #b6bcc6;
+  font-weight: 400;
 }
 
 .content-card--nolink:hover {
