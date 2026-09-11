@@ -1,9 +1,16 @@
 <script setup>
 import { ref, computed } from 'vue'
 import examplesData from '@/data/examples.json'
+import { highlight } from '@/utils/highlight'
+import { copyText } from '@/utils/clipboard'
+import CodePracticeModal from '@/components/CodePracticeModal.vue'
+import ProblemBank from '@/components/ProblemBank.vue'
 
 const categories = examplesData.categories
 const examples = examplesData.examples
+
+// ===== 视图切换：examples 示例代码 / bank 题库练习 =====
+const viewMode = ref('examples')
 
 // ===== 分类切换 =====
 const activeCategory = ref(categories[0]?.id ?? 'cpp')
@@ -21,10 +28,14 @@ const counts = computed(() => {
 // ===== 当前展示的示例（默认选中该分类第一个） =====
 const activeExample = ref(activeList.value[0] || null)
 
+// ===== 练习对话框开关 =====
+const practiceVisible = ref(false)
+
 function switchCategory(id) {
   activeCategory.value = id
   activeExample.value = activeList.value[0] || null
   copyState.value = 'idle'
+  practiceVisible.value = false
 }
 
 function selectExample(id) {
@@ -32,73 +43,18 @@ function selectExample(id) {
   if (ex) {
     activeExample.value = ex
     copyState.value = 'idle'
+    practiceVisible.value = false
   }
 }
 
-// ===== 轻量语法高亮（零依赖，转义后按 token 着色） =====
-const KEYWORDS = {
-  cpp: new Set([
-    'auto','bool','break','case','catch','char','class','const','continue',
-    'default','delete','do','double','else','enum','false','float','for',
-    'friend','goto','if','inline','int','long','namespace','new','nullptr',
-    'operator','private','protected','public','register','return','short',
-    'signed','sizeof','static','struct','switch','template','this','throw',
-    'true','try','typedef','typename','union','unsigned','using','virtual',
-    'void','volatile','while','std','vector','string','cout','cin','endl',
-    'include','define'
-  ]),
-  java: new Set([
-    'abstract','assert','boolean','break','byte','case','catch','char','class',
-    'const','continue','default','do','double','else','enum','extends','final',
-    'finally','float','for','goto','if','implements','import','instanceof',
-    'int','interface','long','native','new','package','private','protected',
-    'public','return','short','static','strictfp','super','switch','synchronized',
-    'this','throw','throws','transient','try','void','volatile','while','true',
-    'false','null','var','public','String','System','Math','Integer','List',
-    'Map','Set','ArrayList','HashMap','HashSet','Arrays','Collections',
-    'Comparator','Map.Entry'
-  ]),
-  frontend: new Set([
-    'const','let','var','function','return','if','else','for','while','do',
-    'switch','case','break','continue','new','delete','typeof','instanceof',
-    'in','of','class','extends','super','this','async','await','try','catch',
-    'finally','throw','export','import','from','default','null','undefined',
-    'true','false','document','window','console','Promise','Set','Map','Array',
-    'Object','JSON','localStorage','navigator','fetch','Error','Date',
-    'setTimeout','clearTimeout','addEventListener'
-  ])
-}
-
-// HTML 转义（先转义，后续 token 着色不会破坏结构）
-function escapeHtml(s) {
-  return s
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-}
-
-// 依次匹配：注释/预处理 → 字符串/字符 → 数字 → 标识符
-const TOKEN_REG =
-  /(\/\/[^\n]*|\/\*[\s\S]*?\*\/|#[^\n]*)|("(?:[^"\\\n]|\\.)*"|'(?:[^'\\\n]|\\.)*'|`(?:[^`\\]|\\.)*`)|(\b\d+(?:\.\d+)?\b)|([A-Za-z_$][\w$]*)/g
-
-function highlight(code, lang) {
-  const kw = KEYWORDS[lang] || new Set()
-  return escapeHtml(code).replace(TOKEN_REG, (m, comment, str, num, ident) => {
-    if (comment) return `<span class="tok-comment">${m}</span>`
-    if (str) return `<span class="tok-string">${m}</span>`
-    if (num) return `<span class="tok-number">${m}</span>`
-    if (ident) return kw.has(m) ? `<span class="tok-keyword">${m}</span>` : m
-    return m
-  })
-}
-
+// ===== 语法高亮（共用 src/utils/highlight.js） =====
 const highlighted = computed(() =>
   activeExample.value
     ? highlight(activeExample.value.code, activeExample.value.category)
     : ''
 )
 
-// ===== 一键复制（clipboard API 优先，execCommand 降级） =====
+// ===== 一键复制（共用 src/utils/clipboard.js，Clipboard API 优先 + execCommand 降级） =====
 const copyState = ref('idle') // idle | copied | failed
 let copyTimer = null
 
@@ -111,33 +67,7 @@ const copyLabel = computed(() => {
 async function copyCode() {
   const code = activeExample.value?.code
   if (!code) return
-  let ok = false
-  // 优先 Clipboard API（需要 https / localhost 安全上下文）
-  try {
-    if (navigator.clipboard?.writeText) {
-      await navigator.clipboard.writeText(code)
-      ok = true
-    }
-  } catch {
-    ok = false
-  }
-  // 降级方案：Clipboard API 不可用或写入失败时，用隐藏 textarea + execCommand
-  if (!ok) {
-    try {
-      const ta = document.createElement('textarea')
-      ta.value = code
-      ta.style.position = 'fixed'
-      ta.style.opacity = '0'
-      document.body.appendChild(ta)
-      ta.focus()
-      ta.select()
-      ta.setSelectionRange(0, code.length) // iOS 兼容
-      ok = document.execCommand('copy')
-      document.body.removeChild(ta)
-    } catch {
-      ok = false
-    }
-  }
+  const ok = await copyText(code)
   copyState.value = ok ? 'copied' : 'failed'
   clearTimeout(copyTimer)
   copyTimer = setTimeout(() => (copyState.value = 'idle'), 1600)
@@ -147,64 +77,108 @@ async function copyCode() {
 <template>
   <div class="page">
     <h1 class="page__title">示例代码</h1>
-    <p class="page__subtitle">C++ / Java / 前端示例 · 语法高亮 · 一键复制</p>
+    <p class="page__subtitle">C++ / Java / 前端示例 · 语法高亮 · 一键复制 · 补全练习 · 难度题库</p>
 
-    <!-- 分类切换 -->
-    <div class="ex-tabs" role="tablist">
+    <!-- 视图切换：示例代码 / 题库练习 -->
+    <div class="view-tabs" role="tablist">
       <button
-        v-for="cat in categories"
-        :key="cat.id"
-        class="ex-tab"
-        :class="{ 'ex-tab--active': cat.id === activeCategory }"
+        class="view-tab"
+        :class="{ 'view-tab--active': viewMode === 'examples' }"
         role="tab"
-        :aria-selected="cat.id === activeCategory"
-        @click="switchCategory(cat.id)"
+        :aria-selected="viewMode === 'examples'"
+        @click="viewMode = 'examples'"
       >
-        {{ cat.name }}
-        <span class="ex-tab__count">{{ counts[cat.id] || 0 }}</span>
+        示例代码
+      </button>
+      <button
+        class="view-tab"
+        :class="{ 'view-tab--active': viewMode === 'bank' }"
+        role="tab"
+        :aria-selected="viewMode === 'bank'"
+        @click="viewMode = 'bank'"
+      >
+        题库练习
       </button>
     </div>
 
-    <div class="ex-main">
-      <!-- 示例列表 -->
-      <aside class="card ex-list">
-        <h2 class="ex-list__title">示例列表</h2>
-        <p class="ex-list__desc">{{ categories.find((c) => c.id === activeCategory)?.desc }}</p>
-        <ul class="ex-list__items">
-          <li
-            v-for="ex in activeList"
-            :key="ex.id"
-            class="ex-list__item"
-            :class="{ 'ex-list__item--active': ex.id === activeExample?.id }"
-            @click="selectExample(ex.id)"
-          >
-            <span class="ex-list__name">{{ ex.title }}</span>
-            <span class="ex-list__tags">{{ ex.tags.join(' · ') }}</span>
-          </li>
-        </ul>
-      </aside>
+    <!-- ===== 示例代码视图 ===== -->
+    <template v-if="viewMode === 'examples'">
+      <!-- 分类切换 -->
+      <div class="ex-tabs" role="tablist">
+        <button
+          v-for="cat in categories"
+          :key="cat.id"
+          class="ex-tab"
+          :class="{ 'ex-tab--active': cat.id === activeCategory }"
+          role="tab"
+          :aria-selected="cat.id === activeCategory"
+          @click="switchCategory(cat.id)"
+        >
+          {{ cat.name }}
+          <span class="ex-tab__count">{{ counts[cat.id] || 0 }}</span>
+        </button>
+      </div>
 
-      <!-- 代码展示 + 一键复制 -->
-      <section class="card ex-code">
-        <div class="ex-code__head">
-          <div class="ex-code__info">
-            <h2 class="ex-code__title">{{ activeExample?.title }}</h2>
-            <p class="ex-code__desc">{{ activeExample?.description }}</p>
+      <div class="ex-main">
+        <!-- 示例列表 -->
+        <aside class="card ex-list">
+          <h2 class="ex-list__title">示例列表</h2>
+          <p class="ex-list__desc">{{ categories.find((c) => c.id === activeCategory)?.desc }}</p>
+          <ul class="ex-list__items">
+            <li
+              v-for="ex in activeList"
+              :key="ex.id"
+              class="ex-list__item"
+              :class="{ 'ex-list__item--active': ex.id === activeExample?.id }"
+              @click="selectExample(ex.id)"
+            >
+              <span class="ex-list__name">{{ ex.title }}</span>
+              <span class="ex-list__tags">{{ ex.tags.join(' · ') }}</span>
+            </li>
+          </ul>
+        </aside>
+
+        <!-- 代码展示 + 一键复制 + 开始练习 -->
+        <section class="card ex-code">
+          <div class="ex-code__head">
+            <div class="ex-code__info">
+              <h2 class="ex-code__title">{{ activeExample?.title }}</h2>
+              <p class="ex-code__desc">{{ activeExample?.description }}</p>
+            </div>
+            <div class="ex-code__actions">
+              <button
+                class="btn ex-code__copy"
+                :class="{
+                  'ex-code__copy--ok': copyState === 'copied',
+                  'ex-code__copy--fail': copyState === 'failed'
+                }"
+                @click="copyCode"
+              >
+                {{ copyLabel }}
+              </button>
+              <button
+                v-if="activeExample?.practice"
+                class="btn btn--ghost ex-code__practice"
+                @click="practiceVisible = true"
+              >
+                开始练习
+              </button>
+            </div>
           </div>
-          <button
-            class="btn ex-code__copy"
-            :class="{
-              'ex-code__copy--ok': copyState === 'copied',
-              'ex-code__copy--fail': copyState === 'failed'
-            }"
-            @click="copyCode"
-          >
-            {{ copyLabel }}
-          </button>
-        </div>
-        <pre class="ex-code__pre"><code class="ex-code__code" v-html="highlighted"></code></pre>
-      </section>
-    </div>
+          <pre class="ex-code__pre"><code class="ex-code__code" v-html="highlighted"></code></pre>
+        </section>
+      </div>
+
+      <!-- 代码补全练习对话框 -->
+      <CodePracticeModal
+        :example="activeExample"
+        :visible="practiceVisible"
+        @update:visible="practiceVisible = $event"
+      />
+    </template>
+
+    <!-- ===== 题库练习视图 ===== -->
+    <ProblemBank v-else />
   </div>
 </template>
 
@@ -218,6 +192,35 @@ async function copyCode() {
   color: var(--color-text-secondary);
   font-size: 13px;
   margin-bottom: 20px;
+}
+
+/* ===== 视图切换（下划线式标签页） ===== */
+.view-tabs {
+  display: flex;
+  gap: 4px;
+  border-bottom: 2px solid #e5e8ee;
+  margin-bottom: 16px;
+}
+
+.view-tab {
+  padding: 8px 18px;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  background: transparent;
+  color: var(--color-text-secondary);
+  font-size: 15px;
+  transition: all 0.2s;
+}
+
+.view-tab:hover {
+  color: var(--color-primary);
+}
+
+.view-tab--active {
+  color: var(--color-primary);
+  font-weight: 600;
+  border-bottom-color: var(--color-primary);
 }
 
 /* ===== 分类 tab ===== */
@@ -350,8 +353,14 @@ async function copyCode() {
   font-size: 12px;
 }
 
-.ex-code__copy {
+.ex-code__actions {
+  display: flex;
+  gap: 10px;
   flex-shrink: 0;
+}
+
+.ex-code__copy,
+.ex-code__practice {
   padding: 6px 16px;
   font-size: 13px;
 }
@@ -404,38 +413,6 @@ async function copyCode() {
 
   .ex-list__items {
     max-height: 260px;
-  }
-}
-
-/* 移动端微调 */
-@media (max-width: 768px) {
-  .page__title {
-    font-size: 20px;
-  }
-
-  .ex-tab {
-    padding: 8px 14px;
-    font-size: 13px;
-  }
-
-  .ex-code__head {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 10px;
-  }
-
-  .ex-code__copy {
-    align-self: flex-start;
-  }
-
-  .ex-code__pre {
-    padding: 12px 14px;
-    font-size: 12px;
-    line-height: 1.6;
-  }
-
-  .ex-list__items {
-    max-height: 220px;
   }
 }
 </style>
