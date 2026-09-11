@@ -192,7 +192,7 @@ function goPractice(groupId) {
         </div>
         <div class="feedback__exp">解析：{{ item.question.explanation }}</div>
         <button class="btn btn--ghost btn--sm" @click="goPractice(item.group.id)">
-          去练这组 → /quiz?group={{ item.group.id }}
+          去练这组 →
         </button>
       </article>
     </section>
@@ -222,7 +222,7 @@ function goPractice(groupId) {
         </div>
         <div class="feedback__exp">解析：{{ item.question.explanation }}</div>
         <div class="wrong-actions">
-          <button class="btn btn--sm" @click="goPractice(item.group.id)">去重练 → /quiz?group={{ item.group.id }}</button>
+          <button class="btn btn--sm" @click="goPractice(item.group.id)">去重练 →</button>
           <button class="btn btn--ghost btn--sm" @click="removeWrong(item.question.id)">移出错题本</button>
         </div>
       </article>
