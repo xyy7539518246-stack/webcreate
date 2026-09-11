@@ -12,7 +12,10 @@ export function getStorage(key, fallback = null) {
     const raw = localStorage.getItem(fullKey(key))
     return raw === null ? fallback : JSON.parse(raw)
   } catch {
-    return fallback
+    // JSON.parse 失败：字符串型字段（如 token）可能被外部以纯文本直接写入，
+    // 此时原样返回原始值，避免登录态被静默丢弃；对象/数组字段仍回退默认值
+    const raw = localStorage.getItem(fullKey(key))
+    return typeof fallback === 'string' ? raw : fallback
   }
 }
 

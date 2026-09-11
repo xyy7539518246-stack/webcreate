@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { getStorage } from '@/utils/storage'
 
 const routes = [
   {
@@ -71,7 +72,7 @@ const router = createRouter({
 
 // 全局前置守卫：登录态校验（本地模拟）
 router.beforeEach((to) => {
-  const token = localStorage.getItem('webcreate_token')
+  const token = getStorage('token', '')
   if (to.meta.requiresAuth && !token) {
     return { name: 'login', query: { redirect: to.fullPath } }
   }
