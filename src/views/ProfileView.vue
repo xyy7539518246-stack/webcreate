@@ -11,15 +11,39 @@ const userStore = useUserStore()
 
 const lanes = courses.roadmap
 
-// 当前方向名称
-const currentLaneName = computed(() => {
-  const direction = userStore.user?.direction
-  const lane = lanes.find((l) => l.lane === direction)
-  return lane ? lane.laneName : '未选择'
-})
+// 当前已选方向名称列表（多选）
+const currentLaneNames = computed(() =>
+  userStore.directionList
+    .map((key) => lanes.find((l) => l.lane === key)?.laneName)
+    .filter(Boolean)
+)
 
-function chooseDirection(lane) {
-  userStore.setDirection(lane)
+// 学习方向编辑状态：false = 已确定展示态；true = 多选编辑态
+const editing = ref(false)
+const draft = ref([])
+
+// 点击「重新选择」：以当前已选方向为草稿进入编辑态
+function startEdit() {
+  draft.value = [...userStore.directionList]
+  editing.value = true
+}
+
+// 多选切换
+function toggleDirection(lane) {
+  draft.value = draft.value.includes(lane)
+    ? draft.value.filter((l) => l !== lane)
+    : [...draft.value, lane]
+}
+
+// 点击「确定」：保存草稿并退出编辑态
+function confirmDirection() {
+  userStore.setDirections(draft.value)
+  editing.value = false
+}
+
+// 清除当前草稿选择
+function clearDraft() {
+  draft.value = []
 }
 
 // ===== 题库学习数据（localStorage） =====
@@ -112,26 +136,41 @@ function goPractice(groupId) {
     <section class="page__section card">
       <h2>学习方向</h2>
       <template v-if="userStore.isLoggedIn">
-        <p class="page__info">当前方向：{{ currentLaneName }}</p>
-        <div class="direction-tabs">
-          <button
-            v-for="l in lanes"
-            :key="l.lane"
-            class="direction-tab"
-            :class="{ 'direction-tab--active': userStore.user?.direction === l.lane }"
-            @click="chooseDirection(l.lane)"
-          >
-            {{ l.laneName }}
-          </button>
-          <button
-            v-if="userStore.user?.direction"
-            class="direction-tab direction-tab--clear"
-            @click="chooseDirection('')"
-          >
-            清除方向
-          </button>
-        </div>
-        <p class="page__hint">选择后将同步到首页「我的学习路线」区块</p>
+        <!-- 已确定且非编辑态：展示当前方向 + 重新选择 -->
+        <template v-if="!editing && currentLaneNames.length">
+          <p class="page__info">当前方向：{{ currentLaneNames.join('、') }}</p>
+          <button class="btn btn--ghost btn--sm" @click="startEdit">重新选择</button>
+          <p class="page__hint">选择后将同步到首页「我的学习路线」区块</p>
+        </template>
+
+        <!-- 选择编辑态（含首次未选择） -->
+        <template v-else>
+          <p class="page__info">
+            当前方向：{{ currentLaneNames.length ? currentLaneNames.join('、') : '未选择' }}
+          </p>
+          <p class="page__hint">可多选，选择后点击「确定」保存，将同步到首页「我的学习路线」区块</p>
+          <div class="direction-tabs">
+            <button
+              v-for="l in lanes"
+              :key="l.lane"
+              class="direction-tab"
+              :class="{ 'direction-tab--active': draft.includes(l.lane) }"
+              @click="toggleDirection(l.lane)"
+            >
+              {{ l.laneName }}
+            </button>
+          </div>
+          <div class="direction-actions">
+            <button class="btn btn--sm" @click="confirmDirection">确定</button>
+            <button
+              v-if="draft.length"
+              class="btn btn--ghost btn--sm"
+              @click="clearDraft"
+            >
+              清除选择
+            </button>
+          </div>
+        </template>
       </template>
       <p v-else class="page__placeholder">登录后可选择学习方向</p>
     </section>
@@ -303,14 +342,11 @@ function goPractice(groupId) {
   font-weight: 600;
 }
 
-.direction-tab--clear {
-  color: #d93026;
-  border-color: #e5b3b0;
-}
-
-.direction-tab--clear:hover {
-  background: rgba(217, 48, 38, 0.06);
-  color: #d93026;
+.direction-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
 }
 
 .page__placeholder {

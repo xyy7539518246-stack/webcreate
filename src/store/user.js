@@ -10,9 +10,16 @@ const USERS_KEY = 'users'
 // 验证码记录：手机号 → { code, expireAt }（每个手机号对应一个验证码）
 const CODES_KEY = 'codes'
 
-// 合法学习方向：空（未选择）+ 学习资源 courses.json 中定义的全部路线
+// 合法学习方向 key：学习资源 courses.json 中定义的全部路线
 // 后续新增路线只需改 courses.json，此处自动生效
-const VALID_DIRECTIONS = ['', ...courses.roadmap.map((r) => r.lane)]
+const LANE_KEYS = courses.roadmap.map((r) => r.lane)
+
+// 归一化方向数据为数组（兼容旧版单字符串存储：'' / 'web' → [] / ['web']）
+function normalizeDirections(d) {
+  if (Array.isArray(d)) return d.filter((x) => LANE_KEYS.includes(x))
+  if (typeof d === 'string') return d && LANE_KEYS.includes(d) ? [d] : []
+  return []
+}
 
 // 验证码有效期：60 秒
 export const CODE_TTL = 60 * 1000
@@ -36,7 +43,9 @@ export const useUserStore = defineStore('user', {
   }),
 
   getters: {
-    isLoggedIn: (state) => !!state.token
+    isLoggedIn: (state) => !!state.token,
+    // 当前用户已选学习方向数组（多选，兼容旧版字符串存储）
+    directionList: (state) => normalizeDirections(state.user?.direction)
   },
 
   actions: {
@@ -106,7 +115,7 @@ export const useUserStore = defineStore('user', {
         username: phone,
         nickname: `用户${phone.slice(-4)}`,
         password,
-        direction: '', // 学习方向：web / contest / 空（未选择）
+        direction: [], // 学习方向（多选）：courses.json 中路线 key 的数组，未选择为空数组
         createdAt: Date.now()
       }
       this.users.push(user)
@@ -153,22 +162,21 @@ export const useUserStore = defineStore('user', {
       setStorage(USER_KEY, user)
     },
 
-    /* ============ 学习方向 ============ */
+    /* ============ 学习方向（多选） ============ */
 
-    // 设置学习方向：空（清除）或 courses.json 中的任一路线，同步更新用户库与当前会话
-    setDirection(direction) {
-      if (!VALID_DIRECTIONS.includes(direction)) {
-        return { ok: false, message: '无效的学习方向' }
-      }
+    // 设置学习方向：传入 courses.json 中路线 key 的数组（可空数组表示清除），
+    // 自动过滤非法值与去重，同步更新用户库与当前会话
+    setDirections(directions) {
       if (!this.user) {
         return { ok: false, message: '请先登录' }
       }
+      const next = normalizeDirections(directions)
       const target = this.findByPhone(this.user.phone)
       if (target) {
-        target.direction = direction
+        target.direction = next
         this.saveUsers()
       }
-      this.user = { ...this.user, direction }
+      this.user = { ...this.user, direction: next }
       setStorage(USER_KEY, this.user)
       return { ok: true, user: this.user }
     },

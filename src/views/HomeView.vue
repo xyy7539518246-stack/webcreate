@@ -1,5 +1,6 @@
 <script setup>
-import { computed } from 'vue'
+import { ref, computed } from 'vue'
+import CheckInCard from '@/components/CheckInCard.vue'
 import { useUserStore } from '@/store/user'
 import courses from '@/data/courses.json'
 
@@ -16,18 +17,39 @@ const modules = [
 // ===== 学习方向：从学习资源路线数据中选择 =====
 const lanes = courses.roadmap
 
-// 当前用户已选方向对应的路线（未选返回 null）
-const myLane = computed(() => {
-  const direction = userStore.user?.direction
-  return lanes.find((l) => l.lane === direction) || null
-})
+// 当前用户已选方向对应的路线列表（多选，按 courses.json 顺序）
+const myLanes = computed(() =>
+  userStore.directionList
+    .map((key) => lanes.find((l) => l.lane === key))
+    .filter(Boolean)
+)
 
-function chooseDirection(lane) {
-  userStore.setDirection(lane)
+// 学习方向编辑状态：true = 多选编辑中；false = 展示已选路线
+const editing = ref(false)
+const draft = ref([])
+
+// 点击「重新选择」：以当前已选方向为草稿进入编辑态
+function startEdit() {
+  draft.value = [...userStore.directionList]
+  editing.value = true
 }
 
-function clearDirection() {
-  userStore.setDirection('')
+// 多选切换
+function toggleDirection(lane) {
+  draft.value = draft.value.includes(lane)
+    ? draft.value.filter((l) => l !== lane)
+    : [...draft.value, lane]
+}
+
+// 点击「确定」：保存草稿并退出编辑态
+function confirmDirection() {
+  userStore.setDirections(draft.value)
+  editing.value = false
+}
+
+// 清除当前草稿选择
+function clearDraft() {
+  draft.value = []
 }
 </script>
 
@@ -62,44 +84,60 @@ function clearDirection() {
         登录后选择学习方向，首页将为你展示专属学习路线
       </p>
 
-      <!-- 已登录但未选择方向 -->
-      <div v-else-if="!myLane" class="lane-pick">
-        <p class="home__tip">选择你的学习方向，立即为你输出对应学习路线</p>
+      <!-- 已登录：编辑中 或 尚未确定方向 → 多选编辑界面 -->
+      <div v-else-if="editing || !myLanes.length" class="lane-pick">
+        <p class="home__tip">
+          {{ myLanes.length ? '可多选，调整后点击「确定」保存' : '学习方向可多选，点击「确定」后为你输出对应学习路线' }}
+        </p>
         <div class="lane-options">
           <button
             v-for="l in lanes"
             :key="l.lane"
             class="lane-option"
-            @click="chooseDirection(l.lane)"
+            :class="{ 'lane-option--active': draft.includes(l.lane) }"
+            @click="toggleDirection(l.lane)"
           >
             <span class="lane-option__name">{{ l.laneName }}</span>
             <span class="lane-option__desc">{{ l.desc }}</span>
-            <span class="lane-option__meta">{{ l.phases.length }} 个阶段 · 点击选择</span>
+            <span class="lane-option__meta">
+              {{ l.phases.length }} 个阶段 · {{ draft.includes(l.lane) ? '已选，点击取消' : '点击选择' }}
+            </span>
           </button>
+        </div>
+        <div class="lane-actions">
+          <button class="btn btn--sm" @click="confirmDirection">确定</button>
+          <button v-if="draft.length" class="btn btn--ghost btn--sm" @click="clearDraft">清除选择</button>
         </div>
       </div>
 
-      <!-- 已选择方向：展示对应学习路线 -->
-      <div v-else class="my-lane">
+      <!-- 已登录且已确定方向：展示对应学习路线（多条） -->
+      <div v-else class="my-lanes">
         <div class="my-lane__head">
           <div class="my-lane__titles">
-            <span class="my-lane__name">{{ myLane.laneName }}</span>
-            <span class="my-lane__desc">{{ myLane.desc }}</span>
+            <span class="my-lane__name">已选 {{ myLanes.length }} 条学习路线</span>
+            <span class="my-lane__desc">{{ myLanes.map((l) => l.laneName).join('、') }}</span>
           </div>
-          <button class="my-lane__switch" @click="clearDirection">切换方向</button>
+          <button class="my-lane__switch" @click="startEdit">重新选择</button>
         </div>
-        <ol class="phase-list">
-          <li v-for="phase in myLane.phases" :key="phase.no" class="phase-item">
-            <span class="phase__no">{{ phase.no }}</span>
-            <div class="phase__body">
-              <div class="phase__title">{{ phase.title }}</div>
-              <div class="phase__meta">{{ phase.goal }} · {{ phase.duration }}</div>
-              <div class="phase__topics">
-                <span v-for="t in phase.topics" :key="t" class="tag">{{ t }}</span>
+        <div v-for="lane in myLanes" :key="lane.lane" class="my-lane">
+          <div class="my-lane__subhead">
+            <span class="my-lane__name">{{ lane.laneName }}</span>
+            <span class="my-lane__desc">{{ lane.desc }}</span>
+          </div>
+          <ol class="phase-list">
+            <li v-for="phase in lane.phases" :key="phase.no" class="phase-item">
+              <span class="phase__no">{{ phase.no }}</span>
+              <div class="phase__body">
+                <div class="phase__title">{{ phase.title }}</div>
+                <div class="phase__meta">{{ phase.goal }} · {{ phase.duration }}</div>
+                <div class="phase__topics">
+                  <span v-for="t in phase.topics" :key="t" class="tag">{{ t }}</span>
+                </div>
               </div>
-            </div>
-          </li>
-        </ol>
+            </li>
+          </ol>
+          <CheckInCard :lane="lane" :phone="userStore.user?.phone" />
+        </div>
       </div>
     </section>
   </div>
@@ -216,6 +254,41 @@ function clearDirection() {
   padding: 2px 8px;
   border-radius: 6px;
   background: #eef2ff;
+}
+
+/* 方向卡片选中态（多选） */
+.lane-option--active {
+  border-color: var(--color-primary);
+  background: rgba(47, 107, 255, 0.05);
+  box-shadow: 0 4px 14px rgba(47, 107, 255, 0.12);
+}
+
+/* 选择操作行 */
+.lane-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+/* 多路线容器 */
+.my-lanes {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.my-lane__subhead {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.my-lane + .my-lane {
+  padding-top: 24px;
+  border-top: 1px solid #eceef2;
 }
 
 /* 已选路线 */
