@@ -23,3 +23,6 @@ Thumbs.db
 
 # 测试
 coverage/
+
+# 课程提交材料（实践报告不入库，单独提交）
+docs/*.docx
