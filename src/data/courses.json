@@ -315,6 +315,13 @@
       "intro": "本项目对应的课程设计（课程号 07100130），覆盖前端三件套、Vue 3 组件化、静态部署与 AI 工具使用边界。",
       "tags": ["课程", "课设项目"],
       "level": "入门",
+      "free": true,
+      "highlights": [
+        "本校课程，含完整课设要求与评分标准",
+        "从前端三件套到部署上线全流程",
+        "结合 AI 工具开发实践与规范"
+      ],
+      "lanes": ["web"],
       "link": ""
     },
     {
@@ -325,6 +332,13 @@
       "intro": "国家精品课程平台，含程序设计、数据结构、Web 开发等系统课程，多为高校名师讲授，适合按体系系统学习。",
       "tags": ["课程", "系统学习"],
       "level": "入门",
+      "free": true,
+      "highlights": [
+        "国家精品课程，高校名师主讲",
+        "课程体系完整，含作业与考试",
+        "修满可获得认证证书"
+      ],
+      "lanes": ["web", "java", "contest"],
       "link": "https://www.icourse163.org/"
     },
     {
@@ -335,6 +349,13 @@
       "intro": "官方入门教程与 API 文档，含响应式、组件、路由等完整体系，适合系统学习 Vue 3。",
       "tags": ["教程", "官方文档"],
       "level": "入门",
+      "free": true,
+      "highlights": [
+        "官方出品，权威且持续更新",
+        "交互式教程，边学边练",
+        "完整覆盖响应式、组件、路由"
+      ],
+      "lanes": ["web", "frontend-pro"],
       "link": "https://cn.vuejs.org/"
     },
     {
@@ -345,6 +366,13 @@
       "intro": "深入浅出的 JS 教程，从语言基础到异步编程、模块化，适合系统补齐 JavaScript 短板。",
       "tags": ["教程", "深入"],
       "level": "进阶",
+      "free": true,
+      "highlights": [
+        "深入浅出，从基础到异步编程",
+        "章节短小精悍，适合碎片学习",
+        "含大量可运行的在线示例"
+      ],
+      "lanes": ["web", "frontend-pro"],
       "link": "https://zh.javascript.info/"
     },
     {
@@ -355,6 +383,13 @@
       "intro": "涵盖 HTML/CSS/JS/Java/C++/Python 等大量编程入门教程，语法速查与快速上手很方便，适合新手查漏补缺。",
       "tags": ["教程", "语法速查"],
       "level": "入门",
+      "free": true,
+      "highlights": [
+        "覆盖十余种编程语言与技术栈",
+        "语法速查方便，随用随查",
+        "免费阅读，新手友好"
+      ],
+      "lanes": ["web", "java", "contest"],
       "link": "https://www.runoob.com/"
     },
     {
@@ -365,6 +400,13 @@
       "intro": "Web 开发权威文档，覆盖 HTML / CSS / JavaScript 全部内容，遇到兼容性问题首选查阅。",
       "tags": ["文档", "查漏补缺"],
       "level": "入门",
+      "free": true,
+      "highlights": [
+        "Web 开发权威参考，内容全面",
+        "含浏览器兼容性数据与示例",
+        "免费持续更新，开发者必备"
+      ],
+      "lanes": ["web", "frontend-pro"],
       "link": "https://developer.mozilla.org/zh-CN/"
     },
     {
@@ -375,6 +417,13 @@
       "intro": "C / C++ 标准库与语言的权威参考手册，涵盖 STL、算法、并发等全部细节，竞赛与开发查阅必备。",
       "tags": ["文档", "C/C++ 权威"],
       "level": "进阶",
+      "free": true,
+      "highlights": [
+        "C/C++ 标准库权威参考",
+        "STL 与算法细节全覆盖",
+        "竞赛与开发查阅必备"
+      ],
+      "lanes": ["contest", "java"],
       "link": "https://zh.cppreference.com/"
     },
     {
@@ -385,6 +434,13 @@
       "intro": "JavaScript 的超集，官方文档含手册、配置与类型进阶示例，是前端进阶方向的必读资料。",
       "tags": ["文档", "类型系统"],
       "level": "进阶",
+      "free": true,
+      "highlights": [
+        "TypeScript 官方手册与配置说明",
+        "类型系统讲解深入",
+        "含类型进阶实战示例"
+      ],
+      "lanes": ["frontend-pro"],
       "link": "https://www.typescriptlang.org/"
     },
     {
@@ -395,6 +451,13 @@
       "intro": "免费且带实战项目的编程学习平台，通过闯关式练习巩固前端技能，完成后可获得认证。",
       "tags": ["实战", "免费"],
       "level": "入门",
+      "free": true,
+      "highlights": [
+        "完全免费且带实战项目",
+        "闯关式练习，即时反馈",
+        "完成后可获得免费认证"
+      ],
+      "lanes": ["web", "frontend-pro"],
       "link": "https://www.freecodecamp.org/chinese/"
     },
     {
@@ -405,6 +468,13 @@
       "intro": "在线刷题与周赛平台，覆盖面试高频题与竞赛题，支持多种语言，是日常训练与面试准备的重要工具。",
       "tags": ["刷题", "周赛"],
       "level": "入门",
+      "free": true,
+      "highlights": [
+        "覆盖面试高频与竞赛题目",
+        "支持多语言在线判题",
+        "每周周赛检验训练水平"
+      ],
+      "lanes": ["contest", "java"],
       "link": "https://leetcode.cn/"
     },
     {
@@ -415,6 +485,13 @@
       "intro": "国内主流算法竞赛刷题平台，含历年真题、题单、题解与模拟赛，是竞赛训练的主战场之一。",
       "tags": ["刷题", "竞赛 OJ"],
       "level": "入门",
+      "free": true,
+      "highlights": [
+        "国内主流竞赛刷题平台",
+        "含历年真题与精选题单",
+        "题解社区活跃，适合自学"
+      ],
+      "lanes": ["contest"],
       "link": "https://www.luogu.com.cn/"
     },
     {
@@ -425,6 +502,13 @@
       "intro": "校招笔试面试刷题、竞赛题库与面经分享，Java / C++ / 前端岗位备考的常用平台。",
       "tags": ["刷题", "校招"],
       "level": "入门",
+      "free": true,
+      "highlights": [
+        "校招笔试面试题库齐全",
+        "竞赛与企业真题实战",
+        "面经分享丰富，贴近求职"
+      ],
+      "lanes": ["java", "contest"],
       "link": "https://www.nowcoder.com/"
     },
     {
@@ -435,6 +519,13 @@
       "intro": "含 C/C++、Java、Python 组别，题目由易到难，是入门级竞赛的首选，适合大一到大三同学积累经验。",
       "tags": ["省赛", "C/C++ 组"],
       "level": "入门",
+      "free": false,
+      "highlights": [
+        "入门级竞赛首选，获奖面宽",
+        "含 C/C++、Java、Python 组别",
+        "题目由易到难，梯度合理"
+      ],
+      "lanes": ["contest"],
       "link": "https://dasai.lanqiao.cn/"
     },
     {
@@ -445,6 +536,13 @@
       "intro": "以团队为单位参赛，题目分基础、进阶、登顶三个层级，重团队配合与基本功，获奖面较宽。",
       "tags": ["团队赛", "分级题目"],
       "level": "入门",
+      "free": false,
+      "highlights": [
+        "以团队为单位参赛",
+        "题目分基础/进阶/登顶三层",
+        "重配合与基本功，适合组队"
+      ],
+      "lanes": ["contest"],
       "link": "https://gplt.patest.cn/"
     },
     {
@@ -455,6 +553,13 @@
       "intro": "国内高水平算法竞赛，含省赛、全国赛，题目质量高、竞争激烈，适合冲击奖项的进阶选手。",
       "tags": ["省赛", "国赛"],
       "level": "进阶",
+      "free": false,
+      "highlights": [
+        "国内高水平算法赛事",
+        "含省赛与全国赛",
+        "题目质量高，进阶冲奖"
+      ],
+      "lanes": ["contest"],
       "link": "https://ccpc.io/"
     },
     {
@@ -465,6 +570,13 @@
       "intro": "全球顶级算法赛事，3 人一队现场解题，是算法能力的最高检验，也是保研与求职的硬通货。",
       "tags": ["国际赛", "组队赛"],
       "level": "进阶",
+      "free": false,
+      "highlights": [
+        "全球顶级算法赛事",
+        "3 人一队现场解题",
+        "保研求职硬通货"
+      ],
+      "lanes": ["contest"],
       "link": "https://icpc.global/"
     }
   ]

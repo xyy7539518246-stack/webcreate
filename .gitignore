@@ -23,3 +23,6 @@ Thumbs.db
 
 # 测试
 coverage/
+
+# 课程提交材料（docs 目录整体脱离版本控制，单独提交）
+docs/

@@ -12,11 +12,12 @@
 
 ## 功能特性
 
-- **登录认证**：账号密码登录、登录会话保持（本地模拟）、表单校验、退出登录
-- **学习资源**：知识点分类导航、学习路线图展示、课程/竞赛内容浏览
+- **登录认证**：账号密码登录、注册、忘记密码、登录会话保持（本地模拟）、表单校验、退出登录
+- **学习资源**：知识点分类导航、学习路线图展示、课程/竞赛内容浏览（含亮点要点与免费标识）
 - **题库练习**：按知识点练习、即时判题、答题记录与错题本
-- **示例代码**：C++ / Java / 前端示例代码浏览、语法高亮与一键复制
-- **AI 问答**：输入问题获取解答，本地知识检索 + AI 辅助生成（含降级方案）
+- **示例代码**：C++ / Java / 前端示例代码浏览、语法高亮、一键复制、代码补全练习与难度题库（基础 / 进阶 / 高级）
+- **AI 问答**：输入问题获取解答，本地知识检索 + DeepSeek API 辅助生成（Key 本地配置，含降级方案）
+- **每日打卡**：首页学习路线配套的每日打卡记录（学习激励）
 - **个人中心**：学习记录、收藏、错题本（数据本地化存储）
 
 ## 技术栈
@@ -29,35 +30,55 @@
 | 数据存储 | 本地数据（JSON）+ localStorage |
 | 开发工具 | VS Code（Volar / ESLint / Prettier / Live Server） |
 | 版本管理 | Git + GitHub |
-| 部署工具 | 静态托管平台 |
+| 部署工具 | 静态托管平台（GitHub Pages） |
 | AI 开发工具 | 代码辅助类、需求分析类、问题排查类 |
 
 ## 项目结构
 
 ```text
 webcreate/
-├── index.html              # 入口 HTML
-├── vite.config.js          # Vite 配置
-├── package.json            # 依赖与脚本
-├── .gitignore              # 忽略文件配置（node_modules / dist 等）
-├── README.md               # 项目说明（本文件）
+├── index.html                  # 入口 HTML
+├── vite.config.js              # Vite 配置（GitHub Pages base 与开发代理）
+├── package.json                # 依赖与脚本
+├── .gitignore                  # 忽略文件配置（node_modules / dist / *.log 等）
+├── README.md                   # 项目说明（本文件）
+├── .github/workflows/deploy.yml # GitHub Actions 自动构建部署
+├── scripts/postbuild.mjs       # 构建后处理（生成 404.html 路由回退）
+├── docs/                       # 课程实践报告与生成/校验脚本
 ├── src/
-│   ├── main.js             # 应用入口
-│   ├── App.vue             # 根组件
-│   ├── router/             # 路由配置
-│   ├── views/              # 页面层
-│   │   ├── LoginView.vue       # 登录页      /login
-│   │   ├── HomeView.vue        # 导航首页    /
-│   │   ├── CoursesView.vue     # 学习资源页  /courses
-│   │   ├── QuizView.vue        # 题库练习页  /quiz
-│   │   ├── ExamplesView.vue    # 代码示例页  /examples
-│   │   ├── AssistantView.vue   # AI 问答页   /assistant
-│   │   └── ProfileView.vue     # 个人中心页  /profile
-│   ├── components/         # 组件层（导航 / 列表 / 表单 / 图表等）
-│   ├── store/              # 状态与数据层
-│   ├── utils/              # 校验、权限、存储工具
-│   └── data/               # 本地数据（JSON）
-└── dist/                   # 构建产物（不纳入版本管理）
+│   ├── main.js                 # 应用入口
+│   ├── App.vue                 # 根组件
+│   ├── router/index.js         # 路由配置（9 个页面 + 登录守卫）
+│   ├── views/                  # 页面层
+│   │   ├── LoginView.vue           # 登录页        /login
+│   │   ├── RegisterView.vue        # 注册页        /register
+│   │   ├── ForgotPasswordView.vue  # 忘记密码页    /forgot-password
+│   │   ├── HomeView.vue            # 导航首页      /（学习路线 + 每日打卡）
+│   │   ├── CoursesView.vue         # 学习资源页    /courses
+│   │   ├── QuizView.vue            # 题库练习页    /quiz
+│   │   ├── ExamplesView.vue        # 代码示例页    /examples
+│   │   ├── AssistantView.vue       # AI 问答页     /assistant
+│   │   └── ProfileView.vue         # 个人中心页    /profile
+│   ├── components/             # 组件层
+│   │   ├── NavBar.vue              # 顶部导航
+│   │   ├── CheckInCard.vue         # 每日打卡卡片
+│   │   ├── CodePracticeModal.vue   # 代码补全练习弹窗（挖空判题）
+│   │   └── ProblemBank.vue         # 难度题库（基础 / 进阶 / 高级）
+│   ├── store/user.js           # 用户状态（Pinia + localStorage）
+│   ├── utils/                  # 工具层
+│   │   ├── storage.js              # localStorage 封装
+│   │   ├── validate.js             # 表单校验
+│   │   ├── assistant.js            # AI 本地知识检索
+│   │   ├── checkin.js              # 每日打卡逻辑
+│   │   ├── clipboard.js            # 一键复制
+│   │   └── highlight.js            # 代码语法高亮
+│   └── data/                   # 本地数据（JSON）
+│       ├── courses.json            # 学习资源（知识点 / 路线 / 课程竞赛）
+│       ├── quiz.json               # 题库（按知识点分组，含答案与解析）
+│       ├── examples.json           # 示例代码（17 例，含补全练习挖空）
+│       ├── problems.json           # 难度题库（24 题）
+│       └── assistant.json          # AI 本地知识库
+└── dist/                       # 构建产物（不纳入版本管理）
 ```
 
 ## 快速开始
@@ -149,12 +170,13 @@ npm run preview
 ## 路线图
 
 - [x] 项目初始化与仓库托管
-- [ ] 登录认证与页面骨架
-- [ ] 学习资源与题库模块
-- [x] 示例代码模块（C++ / Java / 前端示例，分类切换、语法高亮与一键复制）
-- [ ] AI 问答模块
-- [ ] 线上部署与功能测试
-- [ ] 演示视频与课程报告
+- [x] 登录认证与页面骨架（登录 / 注册 / 忘记密码）
+- [x] 学习资源与题库模块
+- [x] 示例代码模块（C++ / Java / 前端示例，含补全练习与难度题库）
+- [x] AI 问答模块（本地知识库 + DeepSeek API）
+- [x] 线上部署与功能测试（GitHub Pages 三分支工作流）
+- [x] 课程实践报告（见 `docs/`）
+- [ ] 演示视频
 
 ## 版权与致谢
 
